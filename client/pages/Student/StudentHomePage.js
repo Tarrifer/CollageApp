@@ -1,36 +1,44 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 
 const StudentHomePage = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>My College App</Text>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>My College App</Text>
+        </View>
+        <TouchableOpacity style={styles.bigCard}>
+          <Text style={styles.bigCardText}>Big Card</Text>
+        </TouchableOpacity>
+        <View style={styles.cards}>
+          <TouchableOpacity style={styles.card}>
+            <Text style={styles.cardText}>ERP</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.card}>
+            <Text style={styles.cardText}>Timetable</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.card}>
+            <Text style={styles.cardText}>Attendance</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.card}>
+            <Text style={styles.cardText}>Calendar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.card}>
+            <Text style={styles.cardText}>Library</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.card}>
+            <Text style={styles.cardText}>Report</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <TouchableOpacity style={styles.bigCard}>
-        <Text style={styles.bigCardText}>Big Card</Text>
-      </TouchableOpacity>
-      <View style={styles.cards}>
-        <TouchableOpacity style={styles.card}>
-          <Text style={styles.cardText}>ERP</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
-          <Text style={styles.cardText}>Timetable</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
-          <Text style={styles.cardText}>Attendance</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
-          <Text style={styles.cardText}>Calendar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
-          <Text style={styles.cardText}>Library</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
-          <Text style={styles.cardText}>Report</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -38,6 +46,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f0f0f0",
+  },
+  scrollContainer: {
+    flexGrow: 1,
   },
   bigCard: {
     margin: 20,

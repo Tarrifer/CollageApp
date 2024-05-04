@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -40,11 +40,6 @@ const SignupPage = () => {
   const [userImage, setUserImage] = useState(null);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    if (userType !== "Master Admin") {
-      setUserImage(null);
-    }
-  }, [userType]);
   const handleImageUpload = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== "granted") {
@@ -524,14 +519,6 @@ const styles = StyleSheet.create({
   },
   uploadButton: {
     backgroundColor: "#FEBE10",
-    borderRadius: 6,
-    padding: 15,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 10,
-  },
-  removeButton: {
-    backgroundColor: "red",
     borderRadius: 6,
     padding: 15,
     alignItems: "center",

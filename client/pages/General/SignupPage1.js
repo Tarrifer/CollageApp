@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,7 +9,6 @@ import {
   TextInput,
   Pressable,
   ScrollView,
-  Alert,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -17,12 +16,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+// import { ImagePicker } from "expo-image-picker";
+import Constants from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
-
 const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState(""); // Added state for confirm password
   const [name, setName] = useState("");
   const [schoolName, setSchoolName] = useState("");
   const [department, setDepartment] = useState("");
@@ -37,26 +37,20 @@ const SignupPage = () => {
   const [postcode, setPostcode] = useState("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
-  const [userImage, setUserImage] = useState(null);
+  const [userImage, setUserImage] = useState(null); // Added state for user image
   const navigation = useNavigation();
 
-  useEffect(() => {
-    if (userType !== "Master Admin") {
-      setUserImage(null);
-    }
-  }, [userType]);
-  const handleImageUpload = async () => {
+  const handleRegister = async () => {
+    // Check if permission to access the camera roll is granted
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== "granted") {
-      Alert.alert(
-        "Permission Required",
-        "Please grant permission to access photos"
-      );
+      alert("Permission to access the camera roll is required!");
       return;
     }
 
     try {
-      const result = await ImagePicker.launchImageLibraryAsync({
+      // Launch the image picker
+      let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [4, 3],
@@ -64,48 +58,61 @@ const SignupPage = () => {
       });
 
       if (!result.canceled) {
-        if (result.assets && result.assets.length > 0) {
-          setUserImage(result.assets[0].uri);
-        }
+        // Set the user image state with the selected image
+        setUserImage(result.uri);
+      }
+    } catch (error) {
+      console.log("Error picking an image:", error);
+    }
+
+    // Rest of your registration logic...
+  };
+
+  const handleImageUpload = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        setUserImage(result.uri);
       }
     } catch (error) {
       console.log("Error selecting image:", error);
-      Alert.alert("Error", "An error occurred while selecting image");
+      // Handle the error here, such as displaying an error message to the user
     }
   };
+  //   const handleRegister = () => {
+  //     const user = {
+  //       name: name,
+  //       email: email,
+  //       password: password,
+  //     };
 
-  const handleRemoveImage = () => {
-    setUserImage(null);
-  };
-
-  const handleSignup = () => {
-    if (
-      !email ||
-      !password ||
-      !confirmPassword ||
-      !name ||
-      !schoolName ||
-      !department ||
-      !registerNumber ||
-      !rollNumber ||
-      !phoneNumber ||
-      !userType ||
-      !userImage
-    ) {
-      Alert.alert("Error", "Please fill in all fields");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      Alert.alert("Error", "Passwords do not match");
-      return;
-    }
-
-    // Signup logic
-    // ...
-
-    navigation.navigate("OTPVerification", { userType });
-  };
+  //     //   send a POST  request to the backend API to register the user
+  //     axios
+  //       .post("http://localhost:8000/register", user)
+  //       .then((response) => {
+  //         console.log(response);
+  //         Alert.alert(
+  //           "Registration successful",
+  //           "You have been registered Successfully"
+  //         );
+  //         setName("");
+  //         setEmail("");
+  //         setPassword("");
+  //       })
+  //       .catch((error) => {
+  //         Alert.alert(
+  //           "Registration Error",
+  //           "An error occurred while registering"
+  //         );
+  //         console.log("registration failed", error);
+  //       });
+  //   };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -289,39 +296,57 @@ const SignupPage = () => {
             </View>
           </View>
 
-          {/* Image upload */}
-          {!userImage && userType !== "Master Admin" && (
+          {/* <View style={styles.inputContainer}>
+            <Pressable
+              onPress={handleImageUpload}
+              style={{
+                backgroundColor: "#FEBE10",
+                borderRadius: 6,
+                padding: 15,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{ color: "white", fontSize: 16, fontWeight: "bold" }}
+              >
+                Upload Image
+              </Text>
+            </Pressable>
+          </View> */}
+          {userType !== "Master Admin" && (
             <View style={styles.inputContainer}>
               <Pressable
                 onPress={handleImageUpload}
-                style={styles.uploadButton}
+                style={{
+                  backgroundColor: "#FEBE10",
+                  borderRadius: 6,
+                  padding: 15,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
               >
-                <Text style={styles.buttonText}>Upload Image</Text>
+                <Text
+                  style={{ color: "white", fontSize: 16, fontWeight: "bold" }}
+                >
+                  Upload Image
+                </Text>
               </Pressable>
             </View>
+          )}
+
+          {userImage && (
+            <Image
+              source={{ uri: userImage }}
+              style={{ width: 200, height: 200, marginTop: 10 }}
+            />
           )}
           {userImage && (
-            <View style={styles.inputContainer}>
-              <Pressable
-                onPress={handleRemoveImage}
-                style={styles.removeButton}
-              >
-                <Text style={styles.buttonText}>Remove Image</Text>
-              </Pressable>
-              <Image source={{ uri: userImage }} style={styles.imagePreview} />
-            </View>
+            <Image
+              source={{ uri: userImage }}
+              style={{ width: 200, height: 200, marginTop: 10 }}
+            />
           )}
-          {/* <View style={styles.inputContainer}>
-            <Pressable onPress={handleImageUpload} style={styles.uploadButton}>
-              <Text style={styles.buttonText}>Upload Image</Text>
-            </Pressable>
-            {userImage && (
-              <Image
-                source={{ uri: userImage.assets[0].uri }}
-                style={styles.imagePreview}
-              />
-            )}
-          </View> */}
 
           {/* Additional fields for Master Admin */}
           {userType === "Master Admin" && (
@@ -442,6 +467,7 @@ const SignupPage = () => {
               </>
             </KeyboardAvoidingView>
           )}
+
           <View
             style={{
               marginTop: 12,
@@ -458,15 +484,44 @@ const SignupPage = () => {
           </View>
 
           <View style={{ marginTop: 20 }} />
-          <Pressable onPress={handleSignup} style={styles.registerButton}>
-            <Text style={styles.buttonText}>Register</Text>
+
+          <Pressable
+            onPress={() =>
+              navigation.navigate("OTPVerification", { userType: userType })
+            }
+            style={{
+              width: 200,
+              backgroundColor: "#FEBE10",
+              borderRadius: 6,
+              marginLeft: "auto",
+              marginRight: "auto",
+              padding: 15,
+            }}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                color: "white",
+                fontSize: 16,
+                fontWeight: "bold",
+              }}
+            >
+              Register
+            </Text>
           </Pressable>
 
           <Pressable
             onPress={() => navigation.goBack()}
-            style={styles.goBackButton}
+            style={{ marginTop: 15 }}
           >
-            <Text style={styles.buttonText}>
+            <Text
+              style={{
+                textAlign: "center",
+                color: "gray",
+                fontSize: 16,
+                marginBottom: 20,
+              }}
+            >
               Already have an account? Sign In
             </Text>
           </Pressable>
@@ -521,42 +576,5 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 5,
-  },
-  uploadButton: {
-    backgroundColor: "#FEBE10",
-    borderRadius: 6,
-    padding: 15,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 10,
-  },
-  removeButton: {
-    backgroundColor: "red",
-    borderRadius: 6,
-    padding: 15,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 10,
-  },
-  imagePreview: {
-    width: 200,
-    height: 200,
-    marginTop: 10,
-  },
-  registerButton: {
-    width: 200,
-    backgroundColor: "#FEBE10",
-    borderRadius: 6,
-    padding: 15,
-    alignItems: "center",
-    marginTop: 20,
-  },
-  goBackButton: {
-    marginTop: 15,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });
