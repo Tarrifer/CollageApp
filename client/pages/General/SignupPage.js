@@ -41,7 +41,7 @@ const SignupPage = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (userType !== "Master Admin") {
+    if (userType == "Master Admin") {
       setUserImage(null);
     }
   }, [userType]);
@@ -90,7 +90,7 @@ const SignupPage = () => {
       !rollNumber ||
       !phoneNumber ||
       !userType ||
-      !userImage
+      (userType !== "Master Admin" && !userImage)
     ) {
       Alert.alert("Error", "Please fill in all fields");
       return;
@@ -442,7 +442,7 @@ const SignupPage = () => {
               </>
             </KeyboardAvoidingView>
           )}
-          <View
+          {/* <View
             style={{
               marginTop: 12,
               flexDirection: "row",
@@ -455,9 +455,13 @@ const SignupPage = () => {
             <Text style={{ color: "#007FFF", fontWeight: "500" }}>
               Forgot Password
             </Text>
-          </View>
+          </View> */}
 
-          <View style={{ marginTop: 20 }} />
+          <View style={styles.additionalLinksContainer}>
+            <Text style={styles.text}>Keep me logged in</Text>
+            <Text style={styles.additionalLinksText}>Forgot Password</Text>
+          </View>
+          <View style={{ marginTop: 10 }} />
           <Pressable onPress={handleSignup} style={styles.registerButton}>
             <Text style={styles.buttonText}>Register</Text>
           </Pressable>
@@ -466,10 +470,12 @@ const SignupPage = () => {
             onPress={() => navigation.goBack()}
             style={styles.goBackButton}
           >
-            <Text style={styles.buttonText}>
-              Already have an account? Sign In
+            <Text style={styles.text}>
+              Already have an account?{" "}
+              <Text style={styles.signIn}>Sign In</Text>
             </Text>
           </Pressable>
+          <View style={{ marginBottom: 10 }} />
         </KeyboardAvoidingView>
       </ScrollView>
     </SafeAreaView>
@@ -484,6 +490,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
     marginTop: 50,
+  },
+  text: {
+    color: "gray",
+    fontSize: 14,
+    paddingEnd: 10,
   },
   scrollContainer: {
     flexGrow: 1,
@@ -558,5 +569,27 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  additionalLinksContainer: {
+    marginTop: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20, // Adjust this value as needed
+  },
+
+  additionalLinksText: {
+    paddingLeft: 5,
+    color: "#007FFF",
+    fontWeight: "500",
+  },
+
+  buttonContainer: {
+    marginTop: 20, // Adjust this value as needed
+  },
+  signIn: {
+    color: "blue",
+    fontSize: 14,
+    marginBottom: 10,
   },
 });
