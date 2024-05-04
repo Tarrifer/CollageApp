@@ -129,7 +129,12 @@ const LoginPage = () => {
         <View style={styles.footer}>
           <Text style={styles.footerText}>Keep me logged in</Text>
 
-          <Text style={styles.forgotPassword}>Forgot Password</Text>
+          <Text
+            onPress={() => navigation.navigate("ForgotPassword")}
+            style={styles.forgotPassword}
+          >
+            Forgot Password
+          </Text>
         </View>
 
         <View style={styles.buttonContainer}>
@@ -142,7 +147,8 @@ const LoginPage = () => {
             style={styles.signupButton}
           >
             <Text style={styles.signupButtonText}>
-              Don't have an account? Sign Up
+              Don't have an account?{" "}
+              <Text style={{ color: "blue" }}>Sign Up</Text>
             </Text>
           </Pressable>
         </View>
