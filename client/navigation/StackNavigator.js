@@ -25,6 +25,12 @@ import MAdminOnlineLibrary from "../features/MasterAdminFeatures/MAdminOnlineLib
 import MAdminRegistrationApproval from "../features/MasterAdminFeatures/MAdminRegistrationApproval";
 import MAdminReports from "../features/MasterAdminFeatures/MAdminReports";
 import MACustomization from "../features/MasterAdminFeatures/MACustomization";
+import MAdminCreationScreen from "../features/MasterAdminFeatures/MAdminCreationScreen";
+import MAdminViewScreen from "../features/MasterAdminFeatures/MAdminViewScreen";
+
+import StudentApprovalScreen from "../features/MasterAdminFeatures/StudentApprovalScreen";
+import TeacherApprovalScreen from "../features/MasterAdminFeatures/TeacherApprovalScreen";
+import AdminApprovalScreen from "../features/MasterAdminFeatures/AdminApprovalScreen";
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
@@ -78,32 +84,32 @@ const StackNavigator = () => {
       <Stack.Screen
         name="GeneralNotification"
         component={GeneralNotificationScreen}
-        options={{ title: "Notification", headerShown: false }}
+        options={{ title: "General Notification", headerShown: false }}
       />
       <Stack.Screen
         name="TechnicalNotification"
         component={TechnicalNotificationScreen}
-        options={{ title: "Notification", headerShown: false }}
+        options={{ title: "Technical Notification", headerShown: false }}
       />
       <Stack.Screen
         name="NonTechnicalNotification"
         component={NonTechnicalNotificationScreen}
-        options={{ title: "Notification", headerShown: false }}
+        options={{ title: "Non-Technical Notification", headerShown: false }}
       />
       <Stack.Screen
         name="DataBaseCreation"
         component={MAdminDataBaseCreation}
-        options={{ title: "DataBaseCreation", headerShown: false }}
+        options={{ title: "Database Creation", headerShown: false }}
       />
       <Stack.Screen
         name="CalendarCreation"
         component={MAdminCalendarCreation}
-        options={{ title: "CalendarCreation", headerShown: false }}
+        options={{ title: "Calendar Creation", headerShown: false }}
       />
       <Stack.Screen
         name="ERPLink"
         component={MAdminERPLink}
-        options={{ title: "ERPLink", headerShown: false }}
+        options={{ title: "ERP Link", headerShown: false }}
       />
       <Stack.Screen
         name="Monitoring"
@@ -113,22 +119,47 @@ const StackNavigator = () => {
       <Stack.Screen
         name="OnlineLibrary"
         component={MAdminOnlineLibrary}
-        options={{ title: "OnlineLibrary", headerShown: false }}
+        options={{ title: "Online Library", headerShown: false }}
       />
       <Stack.Screen
         name="RegistrationApproval"
         component={MAdminRegistrationApproval}
-        options={{ title: "RegistrationApproval", headerShown: false }}
+        options={{ title: "Registration Approval", headerShown: true }}
+      />
+      <Stack.Screen
+        name="StudentApproval"
+        component={StudentApprovalScreen}
+        options={{ title: "Student Approval Screen", headerShown: true }}
+      />
+      <Stack.Screen
+        name="TeacherApproval"
+        component={TeacherApprovalScreen}
+        options={{ title: "Teacher Approval Screen", headerShown: true }}
+      />
+      <Stack.Screen
+        name="AdminApproval"
+        component={AdminApprovalScreen}
+        options={{ title: "Admin Approval Screen", headerShown: true }}
       />
       <Stack.Screen
         name="MasterReports"
         component={MAdminReports}
-        options={{ title: "MasterReports", headerShown: false }}
+        options={{ title: "Master Reports", headerShown: false }}
       />
       <Stack.Screen
         name="Customization"
         component={MACustomization}
-        options={{ title: "MACustomization", headerShown: false }}
+        options={{ title: "Customization", headerShown: false }}
+      />
+      <Stack.Screen
+        name="CreationScreen"
+        component={MAdminCreationScreen}
+        options={{ title: "Creation Screen", headerShown: false }}
+      />
+      <Stack.Screen
+        name="ViewScreen"
+        component={MAdminViewScreen}
+        options={{ title: "View Screen", headerShown: false }}
       />
     </Stack.Navigator>
   );

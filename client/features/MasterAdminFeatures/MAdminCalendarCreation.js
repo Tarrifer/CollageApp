@@ -59,7 +59,7 @@ const MAdminCalendarCreation = () => {
       </View>
 
       <Calendar
-        current={new Date()}
+        current={new Date().toISOString().split("T")[0]}
         onDayPress={handleDatePress}
         markedDates={{ [selectedDate]: { selected: true, marked: true } }}
       />
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   inputContainer: {
-    marginBottom: 10,
+    marginVertical: 14,
   },
   label: {
     fontSize: 16,
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     padding: 15,
-    backgroundColor: "#fff",
+    backgroundColor: "#AFE1AF",
     borderRadius: 10,
     marginBottom: 10,
     borderWidth: 1,
@@ -156,17 +156,25 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   eventName: {
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: "bold",
   },
   eventDate: {
     color: "gray",
+    fontWeight: "bold",
+    fontSize: 16,
   },
   eventDescription: {
     marginTop: 5,
+    fontSize: 16,
   },
   deleteButton: {
-    color: "red",
+    backgroundColor: "red",
+    color: "white",
+    padding: 10,
+    borderRadius: 5,
+    fontSize: 20,
+    fontWeight: "bold",
     marginLeft: 10,
   },
 });

@@ -17,9 +17,13 @@ const MasterAdminHomePage = () => {
   const handleNotifications = () => {
     navigation.navigate("Notification");
   };
+  // const openDrawer = () => {
+  //   navigation.dispatch(DrawerActions.openDrawer());
+  // };
   const openDrawer = () => {
-    navigation.dispatch(DrawerActions.openDrawer());
+    navigation.navigate("DrawerOpen");
   };
+
   const handleCardPress = (screenName) => {
     navigation.navigate(screenName);
   };

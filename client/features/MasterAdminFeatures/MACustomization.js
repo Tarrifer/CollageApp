@@ -1,10 +1,20 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Switch,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
 const MACustomization = ({ onImageSelect }) => {
   const [image, setImage] = useState(null);
-
+  const [showERP, setShowERP] = useState(false);
+  const [showOnlineLibrary, setShowOnlineLibrary] = useState(false);
+  const [showHomeImage, setShowHomeImage] = useState(false);
+  const [showHomeImageText, setShowHomeImageText] = useState(false);
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -15,7 +25,7 @@ const MACustomization = ({ onImageSelect }) => {
 
     if (!result.canceled && result.assets.length > 0) {
       setImage(result.assets[0].uri);
-      onImageSelect(result.assets[0].uri); // Pass the selected image URI to the parent component
+      onImageSelect(result.assets[0].uri);
     }
   };
 
@@ -25,6 +35,39 @@ const MACustomization = ({ onImageSelect }) => {
         <Text style={styles.buttonText}>Upload Image</Text>
       </TouchableOpacity>
       {image && <Image source={{ uri: image }} style={styles.image} />}
+
+      {/* Add Toggle for Show ERP Card */}
+      <View style={styles.toggleContainer}>
+        <Text style={styles.text}>Show ERP Card</Text>
+        <Switch value={showERP} onValueChange={(value) => setShowERP(value)} />
+      </View>
+
+      {/* Add Toggle for Show Online Library Card */}
+      <View style={styles.toggleContainer}>
+        <Text style={styles.text}>Show Online Library</Text>
+        <Switch
+          value={showOnlineLibrary}
+          onValueChange={(value) => setShowOnlineLibrary(value)}
+        />
+      </View>
+
+      {/* Add Toggle for Show Home Image */}
+      <View style={styles.toggleContainer}>
+        <Text style={styles.text}>Show Home Image</Text>
+        <Switch
+          value={showHomeImage}
+          onValueChange={(value) => setShowHomeImage(value)}
+        />
+      </View>
+
+      {/* Add Toggle for Show Home Image Text */}
+      <View style={styles.toggleContainer}>
+        <Text style={styles.text}>Show Home Image Text</Text>
+        <Switch
+          value={showHomeImageText}
+          onValueChange={(value) => setShowHomeImageText(value)}
+        />
+      </View>
     </View>
   );
 };
@@ -34,7 +77,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#96DED1",
+  },
+  text: {
+    fontWeight: "900",
+    fontSize: 20,
+    color: "#008080",
   },
   button: {
     backgroundColor: "#007FFF",
@@ -54,6 +102,12 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     borderRadius: 10,
   },
+  toggleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "80%",
+    marginBottom: 10,
+  },
 });
-
 export default MACustomization;
