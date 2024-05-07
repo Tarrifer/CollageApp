@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  Alert,
 } from "react-native";
 
 const MAdminCreationScreen = () => {
@@ -46,6 +47,33 @@ const MAdminCreationScreen = () => {
     setSemesters(updatedSemesters);
   };
 
+  // const handleCreate = () => {
+  //   // Validate all fields are filled
+  //   if (
+  //     !courseType ||
+  //     !school ||
+  //     !department ||
+  //     !semesterCount ||
+  //     semesters.some((semester) =>
+  //       semester.subjects.some(
+  //         (subject) =>
+  //           !subject.name || !subject.code || !subject.credits || !subject.type
+  //       )
+  //     )
+  //   ) {
+  //     alert("Please fill in all details");
+  //     return;
+  //   }
+
+  //   console.log("Creating Database Entries...");
+  //   console.log("Course Type:", courseType);
+  //   console.log("School:", school);
+  //   console.log("Department:", department);
+  //   console.log("Semester Count:", semesterCount);
+  //   console.log("Semesters:", semesters);
+
+  //   // Logic to add database entries
+  // };
   const handleCreate = () => {
     // Validate all fields are filled
     if (
@@ -64,16 +92,25 @@ const MAdminCreationScreen = () => {
       return;
     }
 
-    console.log("Creating Database Entries...");
-    console.log("Course Type:", courseType);
-    console.log("School:", school);
-    console.log("Department:", department);
-    console.log("Semester Count:", semesterCount);
-    console.log("Semesters:", semesters);
-
-    // Logic to add database entries
+    // Show alert when entries are created
+    Alert.alert("Entries Created!", "Entries have been successfully created.", [
+      { text: "OK", onPress: () => handleReset() }, // Add a callback to reset the inputs and semesters
+    ]);
   };
-
+  console.log("Creating Database Entries...");
+  console.log("Course Type:", courseType);
+  console.log("School:", school);
+  console.log("Department:", department);
+  console.log("Semester Count:", semesterCount);
+  console.log("Semesters:", semesters);
+  const handleReset = () => {
+    // Reset all inputs and semesters to empty values
+    setCourseType("");
+    setSchool("");
+    setDepartment("");
+    setSemesterCount("");
+    setSemesters([]);
+  };
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.heading}>
@@ -110,12 +147,12 @@ const MAdminCreationScreen = () => {
       />
 
       {semesters.map((semester, semesterIndex) => (
-        <View key={semesterIndex}>
+        <View key={`semester-${semesterIndex}`}>
           <Text style={styles.semesterHeading}>
             Semester {semester.semesterNumber}
           </Text>
           {semester.subjects.map((subject, subjectIndex) => (
-            <View key={subjectIndex}>
+            <View key={`subject-${semesterIndex}-${subjectIndex}`}>
               <Text style={styles.sectionHeading}>
                 Subject {subjectIndex + 1}
               </Text>

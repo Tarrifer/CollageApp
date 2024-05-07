@@ -6,8 +6,9 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-
+import { useNavigation } from "@react-navigation/native";
 const Tab = createMaterialTopTabNavigator();
 
 const ApprovalCard = ({
@@ -19,24 +20,132 @@ const ApprovalCard = ({
   onApprove,
   onView,
   onReject,
+  onDelete,
 }) => {
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Pending":
+        return "#007FFF"; // Blue color for pending status
+      case "Approved":
+        return "green"; // Green color for approved status
+      case "Rejected":
+        return "red"; // Red color for rejected status
+      default:
+        return "#000"; // Default black color
+    }
+  };
+  const navigation = useNavigation();
   return (
     <TouchableOpacity style={styles.card}>
       <Text style={styles.cardText}>Name: {name}</Text>
       <Text style={styles.cardText}>School: {school}</Text>
       <Text style={styles.cardText}>Department: {department}</Text>
       <Text style={styles.cardText}>Year of Admission: {year}</Text>
-      <Text style={styles.cardStatus}>Status: {status}</Text>
+      <Text
+        style={[
+          styles.cardStatus,
+          { color: getStatusColor(status) }, // Set text color based on status
+        ]}
+      >
+        Status: {status}
+      </Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={onApprove}>
-          <Text style={styles.buttonText}>Approve</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={onView}>
-          <Text style={styles.buttonText}>View</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={onReject}>
-          <Text style={styles.buttonText}>Reject</Text>
-        </TouchableOpacity>
+        {status === "Pending" && (
+          <>
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: "green" }]}
+              onPress={() => {
+                Alert.alert(
+                  "Confirm Approval",
+                  "Are you sure you want to approve?",
+                  [
+                    {
+                      text: "No",
+                      style: "cancel",
+                    },
+                    {
+                      text: "Yes",
+                      onPress: onApprove,
+                    },
+                  ]
+                );
+              }}
+            >
+              <Text style={styles.buttonText}>Approve</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: "#6490E8" }]}
+              onPress={onView}
+            >
+              <Text
+                onPress={() => {
+                  onView();
+                  navigation.navigate("CandidateDetailsViewScreen", {
+                    name,
+                    school,
+                    department,
+                    year,
+                    status,
+                  });
+                }}
+                style={styles.buttonText}
+              >
+                View
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: "red" }]}
+              onPress={() => {
+                Alert.alert(
+                  "Confirm Approval",
+                  "Are you sure you want to reject?",
+                  [
+                    {
+                      text: "No",
+                      style: "cancel",
+                    },
+                    {
+                      text: "Yes",
+                      onPress: onReject,
+                    },
+                  ]
+                );
+              }}
+            >
+              <Text style={styles.buttonText}>Reject</Text>
+            </TouchableOpacity>
+          </>
+        )}
+        {(status === "Approved" || status === "Rejected") && (
+          <>
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: "#6490E8" }]}
+              onPress={onView}
+            >
+              <Text
+                onPress={() => {
+                  onView();
+                  navigation.navigate("CandidateDetailsViewScreen", {
+                    name,
+                    school,
+                    department,
+                    year,
+                    status,
+                  });
+                }}
+                style={styles.buttonText}
+              >
+                View
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: "red" }]}
+              onPress={onDelete}
+            >
+              <Text style={styles.buttonText}>Delete</Text>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -75,6 +184,7 @@ const PendingApproval = () => {
   const handleApprove = (id) => {
     // Handle approve action
     console.log(`Approved student with ID: ${id}`);
+    setStudents(students.filter((student) => student.id !== id));
   };
 
   const handleView = (id) => {
@@ -131,19 +241,14 @@ const AcceptedApproval = () => {
     // Add more teacher data as needed
   ]);
 
-  const handleApprove = (id) => {
-    // Handle approve action
-    console.log(`Approved teacher with ID: ${id}`);
-  };
-
   const handleView = (id) => {
     // Handle view action
     console.log(`View teacher with ID: ${id}`);
   };
 
-  const handleReject = (id) => {
-    // Handle reject action
-    console.log(`Rejected teacher with ID: ${id}`);
+  const handleDelete = (id) => {
+    // Handle delete action
+    console.log(`Deleted teacher with ID: ${id}`);
     setTeachers(teachers.filter((teacher) => teacher.id !== id));
   };
 
@@ -155,9 +260,8 @@ const AcceptedApproval = () => {
           name={teacher.name}
           department={teacher.department}
           status={teacher.status}
-          onApprove={() => handleApprove(teacher.id)}
           onView={() => handleView(teacher.id)}
-          onReject={() => handleReject(teacher.id)}
+          onDelete={() => handleDelete(teacher.id)}
         />
       ))}
     </ScrollView>
@@ -185,19 +289,14 @@ const RejectedApproval = () => {
     // Add more admin data as needed
   ]);
 
-  const handleApprove = (id) => {
-    // Handle approve action
-    console.log(`Approved admin with ID: ${id}`);
-  };
-
   const handleView = (id) => {
     // Handle view action
     console.log(`View admin with ID: ${id}`);
   };
 
-  const handleReject = (id) => {
-    // Handle reject action
-    console.log(`Rejected admin with ID: ${id}`);
+  const handleDelete = (id) => {
+    // Handle delete action
+    console.log(`Deleted admin with ID: ${id}`);
     setAdmins(admins.filter((admin) => admin.id !== id));
   };
 
@@ -208,9 +307,8 @@ const RejectedApproval = () => {
           key={admin.id}
           name={admin.name}
           status={admin.status}
-          onApprove={() => handleApprove(admin.id)}
           onView={() => handleView(admin.id)}
-          onReject={() => handleReject(admin.id)}
+          onDelete={() => handleDelete(admin.id)}
         />
       ))}
     </ScrollView>
@@ -249,7 +347,7 @@ const styles = StyleSheet.create({
   },
   cardStatus: {
     fontSize: 16,
-    color: "#007FFF",
+    marginBottom: 5,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -257,7 +355,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   button: {
-    backgroundColor: "#6490E8",
     padding: 10,
     borderRadius: 5,
     flex: 1,

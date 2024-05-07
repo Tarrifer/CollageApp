@@ -31,6 +31,8 @@ import MAdminViewScreen from "../features/MasterAdminFeatures/MAdminViewScreen";
 import StudentApprovalScreen from "../features/MasterAdminFeatures/StudentApprovalScreen";
 import TeacherApprovalScreen from "../features/MasterAdminFeatures/TeacherApprovalScreen";
 import AdminApprovalScreen from "../features/MasterAdminFeatures/AdminApprovalScreen";
+import CandidateDetailsViewScreen from "../features/MasterAdminFeatures/CandidateDetailsViewScreen";
+import SettingsScreen from "../screens/SettingsScreen";
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
@@ -160,6 +162,16 @@ const StackNavigator = () => {
         name="ViewScreen"
         component={MAdminViewScreen}
         options={{ title: "View Screen", headerShown: false }}
+      />
+      <Stack.Screen
+        name="CandidateDetailsViewScreen"
+        component={CandidateDetailsViewScreen}
+        options={{ title: "View Screen", headerShown: false }}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ title: "Settings", headerShown: true }}
       />
     </Stack.Navigator>
   );

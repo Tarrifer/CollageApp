@@ -4,10 +4,10 @@
     "slug": "CollageApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/signUp.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/mainLogo.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "lightblue"
     },

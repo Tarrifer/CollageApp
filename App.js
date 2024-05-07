@@ -11,7 +11,7 @@ export default function App() {
         // Prevent the splash screen from auto-hiding
         await SplashScreen.preventAutoHideAsync();
         // Artificial delay to simulate loading
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         // After the delay, hide the splash screen
         await SplashScreen.hideAsync();
       } catch (e) {

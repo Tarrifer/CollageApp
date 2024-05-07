@@ -119,7 +119,7 @@ const SignupPage = () => {
           />
         </View>
 
-        <KeyboardAvoidingView style={styles.formContainer} behavior="padding">
+        <KeyboardAvoidingView style={styles.formContainer}>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>User Type:</Text>
             <Picker
@@ -325,7 +325,7 @@ const SignupPage = () => {
 
           {/* Additional fields for Master Admin */}
           {userType === "Master Admin" && (
-            <KeyboardAvoidingView behavior="padding">
+            <KeyboardAvoidingView>
               <>
                 <View style={styles.inputContainer}>
                   <View style={styles.inputWrapper}>
@@ -457,10 +457,10 @@ const SignupPage = () => {
             </Text>
           </View> */}
 
-          <View style={styles.additionalLinksContainer}>
+          {/* <View style={styles.additionalLinksContainer}>
             <Text style={styles.text}>Keep me logged in</Text>
             <Text style={styles.additionalLinksText}>Forgot Password</Text>
-          </View>
+          </View> */}
           <View style={{ marginTop: 10 }} />
           <Pressable onPress={handleSignup} style={styles.registerButton}>
             <Text style={styles.buttonText}>Register</Text>
@@ -500,7 +500,10 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   logoContainer: {
+    borderRadius: 75,
+    overflow: "hidden",
     alignItems: "center",
+    justifyContent: "center",
     marginTop: 20,
   },
   logo: {

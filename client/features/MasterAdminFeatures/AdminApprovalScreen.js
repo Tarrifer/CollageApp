@@ -6,8 +6,9 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-
+import { useNavigation } from "@react-navigation/native";
 const Tab = createMaterialTopTabNavigator();
 
 const ApprovalCard = ({
@@ -33,7 +34,7 @@ const ApprovalCard = ({
         return "#000"; // Default black color
     }
   };
-
+  const navigation = useNavigation();
   return (
     <TouchableOpacity style={styles.card}>
       <Text style={styles.cardText}>Name: {name}</Text>
@@ -53,7 +54,22 @@ const ApprovalCard = ({
           <>
             <TouchableOpacity
               style={[styles.button, { backgroundColor: "green" }]}
-              onPress={onApprove}
+              onPress={() => {
+                Alert.alert(
+                  "Confirm Approval",
+                  "Are you sure you want to approve?",
+                  [
+                    {
+                      text: "No",
+                      style: "cancel",
+                    },
+                    {
+                      text: "Yes",
+                      onPress: onApprove,
+                    },
+                  ]
+                );
+              }}
             >
               <Text style={styles.buttonText}>Approve</Text>
             </TouchableOpacity>
@@ -61,11 +77,40 @@ const ApprovalCard = ({
               style={[styles.button, { backgroundColor: "#6490E8" }]}
               onPress={onView}
             >
-              <Text style={styles.buttonText}>View</Text>
+              <Text
+                onPress={() => {
+                  onView();
+                  navigation.navigate("CandidateDetailsViewScreen", {
+                    name,
+                    school,
+                    department,
+                    year,
+                    status,
+                  });
+                }}
+                style={styles.buttonText}
+              >
+                View
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.button, { backgroundColor: "red" }]}
-              onPress={onReject}
+              onPress={() => {
+                Alert.alert(
+                  "Confirm Approval",
+                  "Are you sure you want to reject?",
+                  [
+                    {
+                      text: "No",
+                      style: "cancel",
+                    },
+                    {
+                      text: "Yes",
+                      onPress: onReject,
+                    },
+                  ]
+                );
+              }}
             >
               <Text style={styles.buttonText}>Reject</Text>
             </TouchableOpacity>
@@ -73,9 +118,24 @@ const ApprovalCard = ({
         )}
         {(status === "Approved" || status === "Rejected") && (
           <>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={[styles.button, { backgroundColor: "#6490E8" }]}
               onPress={onView}
+            >
+              <Text style={styles.buttonText}>View</Text>
+            </TouchableOpacity> */}
+            <TouchableOpacity
+              style={[styles.button, { backgroundColor: "#6490E8" }]}
+              onPress={() => {
+                onView(); // Handle view action if needed
+                navigation.navigate("CandidateDetailsViewScreen", {
+                  name,
+                  school,
+                  department,
+                  year,
+                  status,
+                });
+              }}
             >
               <Text style={styles.buttonText}>View</Text>
             </TouchableOpacity>
@@ -125,6 +185,7 @@ const PendingApproval = () => {
   const handleApprove = (id) => {
     // Handle approve action
     console.log(`Approved student with ID: ${id}`);
+    setStudents(students.filter((student) => student.id !== id));
   };
 
   const handleView = (id) => {

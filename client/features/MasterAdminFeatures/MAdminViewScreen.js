@@ -190,7 +190,7 @@ const MAdminMAdminViewScreen = () => {
         </TouchableOpacity>
       </View>
       {cards.map((card) => (
-        <View style={styles.card}>
+        <View key={`card-${card.id}`} style={styles.card}>
           <Text style={styles.cardHeading}>Course Type:</Text>
           <TextInput
             style={[styles.input, isEditing ? null : styles.disabledInput]}

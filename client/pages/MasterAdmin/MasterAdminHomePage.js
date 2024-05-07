@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { DrawerActions } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
+import { DrawerActions, useNavigation } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -10,8 +9,9 @@ import {
   ScrollView,
   Image,
 } from "react-native";
+import { BigCardCollage } from "../../features/MasterAdminFeatures/MACustomization";
 
-const MasterAdminHomePage = () => {
+const MasterAdminHomePage = ({ route }) => {
   const navigation = useNavigation();
 
   const handleNotifications = () => {
@@ -24,10 +24,29 @@ const MasterAdminHomePage = () => {
     navigation.navigate("DrawerOpen");
   };
 
+  // const handleCardPress = (screenName) => {
+  //   if (screenName === "Customization") {
+  //     navigation.navigate(screenName, {
+  //       collageName: "Collage Name",
+  //       onCollageNameChange: setCollageName,
+  //     });
+  //   } else {
+  //     navigation.navigate(screenName);
+  //   }
+  // };
+  const [collageName, setCollageName] = useState(
+    route.params?.collageName || ""
+  );
+  const [image, setImage] = useState(route.params?.image || null);
+
+  useEffect(() => {
+    setCollageName(route.params?.collageName || "Collage Name");
+    setImage(route.params?.image || null);
+  }, [route.params?.collageName, route.params?.image]);
+
   const handleCardPress = (screenName) => {
     navigation.navigate(screenName);
   };
-
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
@@ -35,6 +54,7 @@ const MasterAdminHomePage = () => {
           <TouchableOpacity onPress={openDrawer} style={styles.iconContainer}>
             <Ionicons name="md-menu" size={30} color="white" />
           </TouchableOpacity>
+
           <Text style={styles.headerText}>My College App</Text>
           <TouchableOpacity
             onPress={handleNotifications}
@@ -43,64 +63,85 @@ const MasterAdminHomePage = () => {
             <Ionicons name="md-notifications" size={30} color="white" />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.bigCard}>
+
+        <BigCardCollage collageName={collageName} image={image} />
+
+        {/* <TouchableOpacity
+          onPress={() => handleCardPress("Customization")}
+          style={styles.bigCard}
+        >
           <Image
             source={require("../../image/3033337.png")}
             style={styles.bigCardImage}
           />
           <Text style={styles.bigCardText}>Collage Name</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={styles.features}>
           <Text style={styles.featuresText}>Features</Text>
         </View>
         <View style={styles.cards}>
           <TouchableOpacity
+            // key="DataBaseCreation"
             onPress={() => handleCardPress("DataBaseCreation")}
             style={styles.card}
           >
             <Text style={styles.cardText}>DataBase Creation</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            // key="RegistrationApproval"
             onPress={() => handleCardPress("RegistrationApproval")}
             style={styles.card}
           >
             <Text style={styles.cardText}>Registration Approval</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            // key="CalendarCreation"
             onPress={() => handleCardPress("CalendarCreation")}
             style={styles.card}
           >
             <Text style={styles.cardText}>Calendar Creation</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            // key="MasterReports"
             onPress={() => handleCardPress("MasterReports")}
             style={styles.card}
           >
             <Text style={styles.cardText}>Reports</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            // key="OnlineLibrary"
             onPress={() => handleCardPress("OnlineLibrary")}
             style={styles.card}
           >
             <Text style={styles.cardText}>Online Library</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            // key="ERPLink"
             onPress={() => handleCardPress("ERPLink")}
             style={styles.card}
           >
             <Text style={styles.cardText}>ERP Link</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            // key="Monitoring"
             onPress={() => handleCardPress("Monitoring")}
             style={styles.card}
           >
             <Text style={styles.cardText}>Monitoring</Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
+            // key="Customization"
             onPress={() => handleCardPress("Customization")}
             style={styles.card}
           >
             <Text style={styles.cardText}>Customization</Text>
+          </TouchableOpacity> */}
+          <TouchableOpacity
+            // key="Customization"
+            onPress={() => handleCardPress("Settings")}
+            style={styles.card}
+          >
+            <Text style={styles.cardText}>Settings</Text>
           </TouchableOpacity>
         </View>
       </View>

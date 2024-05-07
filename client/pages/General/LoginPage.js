@@ -9,6 +9,7 @@ import {
   TextInput,
   Pressable,
   Alert,
+  ScrollView,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -47,112 +48,114 @@ const LoginPage = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        <Image
-          style={styles.logo}
-          source={{
-            uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNK57Oj5ro7C-aFzfBHXuesubrY8lbH4Bxew&s.png",
-          }}
-        />
-      </View>
-      {/* User Type Selection */}
-      <View style={styles.header}>
-        <Text style={styles.title}>Login In to your Account</Text>
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>User Type:</Text>
-        <Picker
-          selectedValue={userType}
-          onValueChange={(itemValue, itemIndex) => setUserType(itemValue)}
-          style={styles.input}
-        >
-          <Picker.Item label="Choose User Type" value="" />
-          <Picker.Item label="Student" value="Student" />
-          <Picker.Item label="Teacher" value="Teacher" />
-          <Picker.Item label="Admin" value="Admin" />
-          <Picker.Item label="Master Admin" value="Master Admin" />
-        </Picker>
-      </View>
-
-      {/* College Selection */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>College:</Text>
-        <Picker
-          selectedValue={college}
-          onValueChange={(itemValue, itemIndex) => setCollege(itemValue)}
-          style={styles.input}
-        >
-          <Picker.Item label="Choose College" value="" />
-          <Picker.Item
-            label="Royal Global University"
-            value="Royal Global University"
+      <ScrollView>
+        <View style={styles.logoContainer}>
+          <Image
+            style={styles.logo}
+            source={{
+              uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNK57Oj5ro7C-aFzfBHXuesubrY8lbH4Bxew&s.png",
+            }}
           />
-          <Picker.Item label="Amita University" value="Amita University" />
-        </Picker>
-      </View>
-      <KeyboardAvoidingView>
+        </View>
+        {/* User Type Selection */}
+        <View style={styles.header}>
+          <Text style={styles.title}>Login In to your Account</Text>
+        </View>
         <View style={styles.inputContainer}>
-          <View style={styles.inputWrapper}>
-            <MaterialIcons
-              style={styles.inputIcon}
-              name="email"
-              size={24}
-              color="gray"
-            />
-            <TextInput
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              style={styles.input}
-              placeholder="Enter your Email"
-            />
-          </View>
+          <Text style={styles.label}>User Type:</Text>
+          <Picker
+            selectedValue={userType}
+            onValueChange={(itemValue, itemIndex) => setUserType(itemValue)}
+            style={styles.input}
+          >
+            <Picker.Item label="Choose User Type" value="" />
+            <Picker.Item label="Student" value="Student" />
+            <Picker.Item label="Teacher" value="Teacher" />
+            <Picker.Item label="Admin" value="Admin" />
+            <Picker.Item label="Master Admin" value="Master Admin" />
+          </Picker>
         </View>
 
+        {/* College Selection */}
         <View style={styles.inputContainer}>
-          <View style={styles.inputWrapper}>
-            <AntDesign
-              name="lock1"
-              size={24}
-              color="gray"
-              style={styles.inputIcon}
+          <Text style={styles.label}>College:</Text>
+          <Picker
+            selectedValue={college}
+            onValueChange={(itemValue, itemIndex) => setCollege(itemValue)}
+            style={styles.input}
+          >
+            <Picker.Item label="Choose College" value="" />
+            <Picker.Item
+              label="Royal Global University"
+              value="Royal Global University"
             />
-            <TextInput
-              value={password}
-              onChangeText={(text) => setPassword(text)}
-              secureTextEntry={true}
-              style={styles.input}
-              placeholder="Enter your Password"
-            />
+            <Picker.Item label="Amita University" value="Amita University" />
+          </Picker>
+        </View>
+        <KeyboardAvoidingView>
+          <View style={styles.inputContainer}>
+            <View style={styles.inputWrapper}>
+              <MaterialIcons
+                style={styles.inputIcon}
+                name="email"
+                size={24}
+                color="gray"
+              />
+              <TextInput
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+                style={styles.input}
+                placeholder="Enter your Email"
+              />
+            </View>
           </View>
-        </View>
 
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>Keep me logged in</Text>
+          <View style={styles.inputContainer}>
+            <View style={styles.inputWrapper}>
+              <AntDesign
+                name="lock1"
+                size={24}
+                color="gray"
+                style={styles.inputIcon}
+              />
+              <TextInput
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                secureTextEntry={true}
+                style={styles.input}
+                placeholder="Enter your Password"
+              />
+            </View>
+          </View>
 
-          <Text
-            onPress={() => navigation.navigate("ForgotPassword")}
-            style={styles.forgotPassword}
-          >
-            Forgot Password
-          </Text>
-        </View>
+          <View style={styles.footer}>
+            <Text style={styles.footerText}>Keep me logged in</Text>
 
-        <View style={styles.buttonContainer}>
-          <Pressable onPress={handleLogin} style={styles.button}>
-            <Text style={styles.buttonText}>Login</Text>
-          </Pressable>
-
-          <Pressable
-            onPress={() => navigation.navigate("Register")}
-            style={styles.signupButton}
-          >
-            <Text style={styles.signupButtonText}>
-              Don't have an account?{" "}
-              <Text style={{ color: "blue" }}>Sign Up</Text>
+            <Text
+              onPress={() => navigation.navigate("ForgotPassword")}
+              style={styles.forgotPassword}
+            >
+              Forgot Password
             </Text>
-          </Pressable>
-        </View>
-      </KeyboardAvoidingView>
+          </View>
+
+          <View style={styles.buttonContainer}>
+            <Pressable onPress={handleLogin} style={styles.button}>
+              <Text style={styles.buttonText}>Login</Text>
+            </Pressable>
+
+            <Pressable
+              onPress={() => navigation.navigate("Register")}
+              style={styles.signupButton}
+            >
+              <Text style={styles.signupButtonText}>
+                Don't have an account?{" "}
+                <Text style={{ color: "blue" }}>Sign Up</Text>
+              </Text>
+            </Pressable>
+          </View>
+        </KeyboardAvoidingView>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -165,6 +168,12 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
     marginTop: 50,
+  },
+  logoContainer: {
+    borderRadius: 75,
+    overflow: "hidden",
+    justifyContent: "center",
+    alignItems: "center",
   },
   logo: {
     width: 150,

@@ -1,14 +1,59 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Switch } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Switch,
+  TextInput,
+} from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
-const SettingsScreen = () => {
+const MACustomization = ({ onCollageNameChange }) => {
+  const [collageName, setCollageName] = useState();
+  const [image, setImage] = useState();
+
   const [showERP, setShowERP] = useState(false);
   const [showOnlineLibrary, setShowOnlineLibrary] = useState(false);
   const [showHomeImage, setShowHomeImage] = useState(false);
   const [showHomeImageText, setShowHomeImageText] = useState(false);
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled && result.assets.length > 0) {
+      setImage(result.assets[0].uri);
+    }
+  };
+  const handleCollageNameChange = (text) => {
+    setCollageName(text);
+  };
+
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={pickImage} style={styles.button}>
+        <Text style={styles.buttonText}>Upload Image</Text>
+      </TouchableOpacity>
+      {image && <Image source={{ uri: image }} style={styles.image} />}
+
+      <TextInput
+        style={styles.input}
+        placeholder="Enter Collage Name"
+        value={collageName}
+        onChangeText={handleCollageNameChange}
+      />
+      <TouchableOpacity style={styles.button}>
+        {/* <TouchableOpacity style={styles.button}> */}
+        <Text style={styles.buttonText}>Save Changes</Text>
+      </TouchableOpacity>
+      {/* Add Toggle for Show ERP Card */}
       <View style={styles.toggleContainer}>
         <Text style={styles.text}>Show ERP Card</Text>
         <Switch value={showERP} onValueChange={(value) => setShowERP(value)} />
@@ -88,4 +133,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
-export default SettingsScreen;
+export default MACustomization;
