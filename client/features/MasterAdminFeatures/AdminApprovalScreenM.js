@@ -9,6 +9,7 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import SearchUser from "../../components/SearchUser";
 const Tab = createMaterialTopTabNavigator();
 
 const ApprovalCard = ({
@@ -118,26 +119,25 @@ const ApprovalCard = ({
         )}
         {(status === "Approved" || status === "Rejected") && (
           <>
-            {/* <TouchableOpacity
+            <TouchableOpacity
               style={[styles.button, { backgroundColor: "#6490E8" }]}
               onPress={onView}
             >
-              <Text style={styles.buttonText}>View</Text>
-            </TouchableOpacity> */}
-            <TouchableOpacity
-              style={[styles.button, { backgroundColor: "#6490E8" }]}
-              onPress={() => {
-                onView(); // Handle view action if needed
-                navigation.navigate("CandidateDetailsViewScreen", {
-                  name,
-                  school,
-                  department,
-                  year,
-                  status,
-                });
-              }}
-            >
-              <Text style={styles.buttonText}>View</Text>
+              <Text
+                onPress={() => {
+                  onView();
+                  navigation.navigate("CandidateDetailsViewScreen", {
+                    name,
+                    school,
+                    department,
+                    year,
+                    status,
+                  });
+                }}
+                style={styles.buttonText}
+              >
+                View
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.button, { backgroundColor: "red" }]}
@@ -193,27 +193,104 @@ const PendingApproval = () => {
     console.log(`View student with ID: ${id}`);
   };
 
-  const handleReject = (id) => {
-    // Handle reject action
-    console.log(`Rejected student with ID: ${id}`);
-    setStudents(students.filter((student) => student.id !== id));
+  const RejectedApproval = () => {
+    // Dummy data for admin approval
+    const [admins, setAdmins] = React.useState([
+      {
+        id: 1,
+        name: "John Doe",
+        status: "Rejected",
+      },
+      {
+        id: 2,
+        name: "Jane Smith",
+        status: "Rejected",
+      },
+      {
+        id: 3,
+        name: "Alice Johnson",
+        status: "Rejected",
+      },
+      // Add more admin data as needed
+    ]);
+
+    const handleView = (id) => {
+      // Handle view action
+      console.log(`View admin with ID: ${id}`);
+    };
+
+    const handleDelete = (id) => {
+      // Handle delete action
+      console.log(`Deleted admin with ID: ${id}`);
+      setAdmins(admins.filter((admin) => admin.id !== id));
+    };
+    const handleSearch = (query) => {
+      const filteredAdmins = admins.filter((admin) => {
+        const name = admin.name ? admin.name.toLowerCase() : "";
+        const registrationNumber = admin.registrationNumber
+          ? admin.registrationNumber.toLowerCase()
+          : "";
+        return (
+          name.includes(query.toLowerCase()) ||
+          registrationNumber.includes(query.toLowerCase())
+        );
+      });
+      setAdmins(filteredAdmins);
+    };
+
+    return (
+      <ScrollView contentContainerStyle={styles.container}>
+        <SearchUser onSearch={handleSearch} />
+        {admins.length > 0 ? (
+          admins.map((admin) => (
+            <ApprovalCard
+              key={admin.id}
+              name={admin.name}
+              status={admin.status}
+              onView={() => handleView(admin.id)}
+              onDelete={() => handleDelete(admin.id)}
+            />
+          ))
+        ) : (
+          <Text>No results found</Text>
+        )}
+      </ScrollView>
+    );
+  };
+  const handleSearch = (query) => {
+    const filteredStudents = students.filter((student) => {
+      const name = student.name ? student.name.toLowerCase() : "";
+      const registrationNumber = student.registrationNumber
+        ? student.registrationNumber.toLowerCase()
+        : "";
+      return (
+        name.includes(query.toLowerCase()) ||
+        registrationNumber.includes(query.toLowerCase())
+      );
+    });
+    setStudents(filteredStudents);
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {students.map((student) => (
-        <ApprovalCard
-          key={student.id}
-          name={student.name}
-          school={student.school}
-          department={student.department}
-          year={student.year}
-          status={student.status}
-          onApprove={() => handleApprove(student.id)}
-          onView={() => handleView(student.id)}
-          onReject={() => handleReject(student.id)}
-        />
-      ))}
+      <SearchUser onSearch={handleSearch} />
+      {students.length > 0 ? (
+        students.map((student) => (
+          <ApprovalCard
+            key={student.id}
+            name={student.name}
+            school={student.school}
+            department={student.department}
+            year={student.year}
+            status={student.status}
+            onApprove={() => handleApprove(student.id)}
+            onView={() => handleView(student.id)}
+            onReject={() => handleReject(student.id)}
+          />
+        ))
+      ) : (
+        <Text>No results found</Text>
+      )}
     </ScrollView>
   );
 };
@@ -252,19 +329,37 @@ const AcceptedApproval = () => {
     console.log(`Deleted teacher with ID: ${id}`);
     setTeachers(teachers.filter((teacher) => teacher.id !== id));
   };
+  const handleSearch = (query) => {
+    const filteredTeachers = teachers.filter((teacher) => {
+      const name = teacher.name ? teacher.name.toLowerCase() : "";
+      const registrationNumber = teacher.registrationNumber
+        ? teacher.registrationNumber.toLowerCase()
+        : "";
+      return (
+        name.includes(query.toLowerCase()) ||
+        registrationNumber.includes(query.toLowerCase())
+      );
+    });
+    setTeachers(filteredTeachers);
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {teachers.map((teacher) => (
-        <ApprovalCard
-          key={teacher.id}
-          name={teacher.name}
-          department={teacher.department}
-          status={teacher.status}
-          onView={() => handleView(teacher.id)}
-          onDelete={() => handleDelete(teacher.id)}
-        />
-      ))}
+      <SearchUser onSearch={handleSearch} />
+      {teachers.length > 0 ? (
+        teachers.map((teacher) => (
+          <ApprovalCard
+            key={teacher.id}
+            name={teacher.name}
+            department={teacher.department}
+            status={teacher.status}
+            onView={() => handleView(teacher.id)}
+            onDelete={() => handleDelete(teacher.id)}
+          />
+        ))
+      ) : (
+        <Text>No results found</Text>
+      )}
     </ScrollView>
   );
 };
@@ -300,22 +395,39 @@ const RejectedApproval = () => {
     console.log(`Deleted admin with ID: ${id}`);
     setAdmins(admins.filter((admin) => admin.id !== id));
   };
+  const handleSearch = (query) => {
+    const filteredAdmins = admins.filter((admin) => {
+      const name = admin.name ? admin.name.toLowerCase() : "";
+      const registrationNumber = admin.registrationNumber
+        ? admin.registrationNumber.toLowerCase()
+        : "";
+      return (
+        name.includes(query.toLowerCase()) ||
+        registrationNumber.includes(query.toLowerCase())
+      );
+    });
+    setAdmins(filteredAdmins);
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {admins.map((admin) => (
-        <ApprovalCard
-          key={admin.id}
-          name={admin.name}
-          status={admin.status}
-          onView={() => handleView(admin.id)}
-          onDelete={() => handleDelete(admin.id)}
-        />
-      ))}
+      <SearchUser onSearch={handleSearch} />
+      {admins.length > 0 ? (
+        admins.map((admin) => (
+          <ApprovalCard
+            key={admin.id}
+            name={admin.name}
+            status={admin.status}
+            onView={() => handleView(admin.id)}
+            onDelete={() => handleDelete(admin.id)}
+          />
+        ))
+      ) : (
+        <Text>No results found</Text>
+      )}
     </ScrollView>
   );
 };
-
 const RegistrationApprovalTabs = () => {
   return (
     <Tab.Navigator>
@@ -326,7 +438,7 @@ const RegistrationApprovalTabs = () => {
   );
 };
 
-const AdminApprovalScreen = () => {
+const AdminApprovalScreenM = () => {
   return <RegistrationApprovalTabs />;
 };
 
@@ -368,4 +480,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AdminApprovalScreen;
+export default AdminApprovalScreenM;

@@ -9,9 +9,7 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
-import MasterAdminHomePage from "../../pages/MasterAdmin/MasterAdminHomePage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { BigCardCollage } from "../../features/MasterAdminFeatures/MACustomization";
 
 const BigCardCollage = ({ collageName, image }) => {
   const handleCardPress = () => {

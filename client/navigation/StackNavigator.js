@@ -27,10 +27,10 @@ import MAdminReports from "../features/MasterAdminFeatures/MAdminReports";
 import MACustomization from "../features/MasterAdminFeatures/MACustomization";
 import MAdminCreationScreen from "../features/MasterAdminFeatures/MAdminCreationScreen";
 import MAdminViewScreen from "../features/MasterAdminFeatures/MAdminViewScreen";
-
+import SearchUser from "../components/SearchUser";
 import StudentApprovalScreen from "../features/MasterAdminFeatures/StudentApprovalScreen";
 import TeacherApprovalScreen from "../features/MasterAdminFeatures/TeacherApprovalScreen";
-import AdminApprovalScreen from "../features/MasterAdminFeatures/AdminApprovalScreen";
+import AdminApprovalScreenM from "../features/MasterAdminFeatures/AdminApprovalScreenM";
 import CandidateDetailsViewScreen from "../features/MasterAdminFeatures/CandidateDetailsViewScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 
@@ -81,7 +81,7 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Notification"
         component={NotificationScreen}
-        options={{ title: "Notification", headerShown: false }}
+        options={{ title: "Notification", headerShown: true }}
       />
       <Stack.Screen
         name="GeneralNotification"
@@ -140,7 +140,7 @@ const StackNavigator = () => {
       />
       <Stack.Screen
         name="AdminApproval"
-        component={AdminApprovalScreen}
+        component={AdminApprovalScreenM}
         options={{ title: "Admin Approval Screen", headerShown: true }}
       />
       <Stack.Screen
@@ -151,7 +151,7 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Customization"
         component={MACustomization}
-        options={{ title: "Customization", headerShown: false }}
+        options={{ title: "Customization", headerShown: true }}
       />
       <Stack.Screen
         name="CreationScreen"
@@ -172,6 +172,11 @@ const StackNavigator = () => {
         name="Settings"
         component={SettingsScreen}
         options={{ title: "Settings", headerShown: true }}
+      />
+      <Stack.Screen
+        name="Search"
+        component={SearchUser}
+        options={{ title: "Search", headerShown: true }}
       />
     </Stack.Navigator>
   );

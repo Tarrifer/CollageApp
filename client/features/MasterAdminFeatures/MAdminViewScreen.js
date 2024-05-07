@@ -77,6 +77,7 @@ const MAdminMAdminViewScreen = () => {
   const [school, setLocalSchool] = useState(initialSchool);
   const [department, setLocalDepartment] = useState(initialDepartment);
   const [semesterCount, setLocalSemesterCount] = useState(initialSemesterCount);
+  const [noEntries, setNoEntries] = useState(false);
 
   const handleDeleteCard = (id) => {
     Alert.alert("Delete Card", "Are you sure you want to delete this card?", [
@@ -163,19 +164,60 @@ const MAdminMAdminViewScreen = () => {
     );
   };
 
+  const initialCards = [
+    {
+      id: 1,
+      courseType: initialCourseType,
+      school: initialSchool,
+      department: initialDepartment,
+      semesterCount: initialSemesterCount,
+      semesters: initialSemestersData,
+    },
+  ];
   const handleFilter = () => {
-    // Filter cards based on school or department
     if (!filter.trim()) {
-      setSemesters(initialSemesters);
+      // If the filter is empty, reset to show all cards and semesters
+      setCards([...initialCards]);
+      setSemesters([...initialSemesters]);
       return;
     }
-    const filteredSemesters = initialSemesters.filter(
-      (semester) =>
-        semester.school.toLowerCase().includes(filter.toLowerCase()) ||
-        semester.department.toLowerCase().includes(filter.toLowerCase())
-    );
+
+    const filteredCards = initialCards.filter((card) => {
+      const schoolMatch = card.school
+        .toLowerCase()
+        .includes(filter.toLowerCase());
+      const departmentMatch = card.department
+        .toLowerCase()
+        .includes(filter.toLowerCase());
+      return schoolMatch || departmentMatch;
+    });
+
+    // Filter semesters based on the filter input
+    const filteredSemesters = initialSemesters.filter((semester) => {
+      const schoolLowerCase = semester.school
+        ? semester.school.toLowerCase()
+        : "";
+      const departmentLowerCase = semester.department
+        ? semester.department.toLowerCase()
+        : "";
+      return (
+        schoolLowerCase.includes(filter.toLowerCase()) ||
+        departmentLowerCase.includes(filter.toLowerCase())
+      );
+    });
+
+    setCards(filteredCards);
     setSemesters(filteredSemesters);
+
+    if (filteredCards.length === 0) {
+      // Display no entries found text
+      setNoEntries(true);
+    } else {
+      // Hide no entries found text
+      setNoEntries(false);
+    }
   };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.filterContainer}>
@@ -189,6 +231,12 @@ const MAdminMAdminViewScreen = () => {
           <Text style={{ color: "white", fontWeight: "bold" }}>Filter</Text>
         </TouchableOpacity>
       </View>
+      {cards.length === 0 && noEntries && (
+        <View style={styles.noEntriesContainer}>
+          <Text style={styles.noEntriesText}>No entries found</Text>
+        </View>
+      )}
+
       {cards.map((card) => (
         <View key={`card-${card.id}`} style={styles.card}>
           <Text style={styles.cardHeading}>Course Type:</Text>
@@ -221,7 +269,7 @@ const MAdminMAdminViewScreen = () => {
             keyboardType="numeric"
           />
 
-          {semesters.map((semester, semesterIndex) => (
+          {card.semesters.map((semester, semesterIndex) => (
             <View
               key={`semester-${card.id}-${semesterIndex}`}
               style={styles.semesterContainer}
@@ -253,7 +301,7 @@ const MAdminMAdminViewScreen = () => {
                     }}
                     placeholder="Subject Name"
                   />
-                  {/* Add more input fields for subject details */}
+
                   <TextInput
                     style={[
                       styles.input,
@@ -492,6 +540,16 @@ const styles = StyleSheet.create({
   },
   disabledInput: {
     backgroundColor: "#f0f0f0",
+  },
+  noEntriesContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  noEntriesText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 export default MAdminMAdminViewScreen;

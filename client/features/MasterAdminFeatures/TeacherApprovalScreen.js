@@ -9,6 +9,7 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import SearchUser from "../../components/SearchUser";
 const Tab = createMaterialTopTabNavigator();
 
 const ApprovalCard = ({
@@ -41,7 +42,12 @@ const ApprovalCard = ({
       <Text style={styles.cardText}>School: {school}</Text>
       <Text style={styles.cardText}>Department: {department}</Text>
       <Text style={styles.cardText}>Year of Admission: {year}</Text>
-      <Text style={[styles.cardStatus, { color: getStatusColor(status) }]}>
+      <Text
+        style={[
+          styles.cardStatus,
+          { color: getStatusColor(status) }, // Set text color based on status
+        ]}
+      >
         Status: {status}
       </Text>
       <View style={styles.buttonContainer}>
@@ -192,22 +198,40 @@ const PendingApproval = () => {
     console.log(`Rejected student with ID: ${id}`);
     setStudents(students.filter((student) => student.id !== id));
   };
+  const handleSearch = (query) => {
+    const filteredStudents = students.filter((student) => {
+      const name = student.name ? student.name.toLowerCase() : "";
+      const registrationNumber = student.registrationNumber
+        ? student.registrationNumber.toLowerCase()
+        : "";
+      return (
+        name.includes(query.toLowerCase()) ||
+        registrationNumber.includes(query.toLowerCase())
+      );
+    });
+    setStudents(filteredStudents);
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {students.map((student) => (
-        <ApprovalCard
-          key={student.id}
-          name={student.name}
-          school={student.school}
-          department={student.department}
-          year={student.year}
-          status={student.status}
-          onApprove={() => handleApprove(student.id)}
-          onView={() => handleView(student.id)}
-          onReject={() => handleReject(student.id)}
-        />
-      ))}
+      <SearchUser onSearch={handleSearch} />
+      {students.length > 0 ? (
+        students.map((student) => (
+          <ApprovalCard
+            key={student.id}
+            name={student.name}
+            school={student.school}
+            department={student.department}
+            year={student.year}
+            status={student.status}
+            onApprove={() => handleApprove(student.id)}
+            onView={() => handleView(student.id)}
+            onReject={() => handleReject(student.id)}
+          />
+        ))
+      ) : (
+        <Text>No results found</Text>
+      )}
     </ScrollView>
   );
 };
@@ -246,19 +270,37 @@ const AcceptedApproval = () => {
     console.log(`Deleted teacher with ID: ${id}`);
     setTeachers(teachers.filter((teacher) => teacher.id !== id));
   };
+  const handleSearch = (query) => {
+    const filteredTeachers = teachers.filter((teacher) => {
+      const name = teacher.name ? teacher.name.toLowerCase() : "";
+      const registrationNumber = teacher.registrationNumber
+        ? teacher.registrationNumber.toLowerCase()
+        : "";
+      return (
+        name.includes(query.toLowerCase()) ||
+        registrationNumber.includes(query.toLowerCase())
+      );
+    });
+    setTeachers(filteredTeachers);
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {teachers.map((teacher) => (
-        <ApprovalCard
-          key={teacher.id}
-          name={teacher.name}
-          department={teacher.department}
-          status={teacher.status}
-          onView={() => handleView(teacher.id)}
-          onDelete={() => handleDelete(teacher.id)}
-        />
-      ))}
+      <SearchUser onSearch={handleSearch} />
+      {teachers.length > 0 ? (
+        teachers.map((teacher) => (
+          <ApprovalCard
+            key={teacher.id}
+            name={teacher.name}
+            department={teacher.department}
+            status={teacher.status}
+            onView={() => handleView(teacher.id)}
+            onDelete={() => handleDelete(teacher.id)}
+          />
+        ))
+      ) : (
+        <Text>No results found</Text>
+      )}
     </ScrollView>
   );
 };
@@ -294,22 +336,39 @@ const RejectedApproval = () => {
     console.log(`Deleted admin with ID: ${id}`);
     setAdmins(admins.filter((admin) => admin.id !== id));
   };
+  const handleSearch = (query) => {
+    const filteredAdmins = admins.filter((admin) => {
+      const name = admin.name ? admin.name.toLowerCase() : "";
+      const registrationNumber = admin.registrationNumber
+        ? admin.registrationNumber.toLowerCase()
+        : "";
+      return (
+        name.includes(query.toLowerCase()) ||
+        registrationNumber.includes(query.toLowerCase())
+      );
+    });
+    setAdmins(filteredAdmins);
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {admins.map((admin) => (
-        <ApprovalCard
-          key={admin.id}
-          name={admin.name}
-          status={admin.status}
-          onView={() => handleView(admin.id)}
-          onDelete={() => handleDelete(admin.id)}
-        />
-      ))}
+      <SearchUser onSearch={handleSearch} />
+      {admins.length > 0 ? (
+        admins.map((admin) => (
+          <ApprovalCard
+            key={admin.id}
+            name={admin.name}
+            status={admin.status}
+            onView={() => handleView(admin.id)}
+            onDelete={() => handleDelete(admin.id)}
+          />
+        ))
+      ) : (
+        <Text>No results found</Text>
+      )}
     </ScrollView>
   );
 };
-
 const RegistrationApprovalTabs = () => {
   return (
     <Tab.Navigator>

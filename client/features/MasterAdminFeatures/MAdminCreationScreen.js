@@ -91,18 +91,18 @@ const MAdminCreationScreen = () => {
       alert("Please fill in all details");
       return;
     }
-
+    console.log("Creating Database Entries...");
+    console.log("Course Type:", courseType);
+    console.log("School:", school);
+    console.log("Department:", department);
+    console.log("Semester Count:", semesterCount);
+    console.log("Semesters:", semesters);
     // Show alert when entries are created
     Alert.alert("Entries Created!", "Entries have been successfully created.", [
       { text: "OK", onPress: () => handleReset() }, // Add a callback to reset the inputs and semesters
     ]);
   };
-  console.log("Creating Database Entries...");
-  console.log("Course Type:", courseType);
-  console.log("School:", school);
-  console.log("Department:", department);
-  console.log("Semester Count:", semesterCount);
-  console.log("Semesters:", semesters);
+
   const handleReset = () => {
     // Reset all inputs and semesters to empty values
     setCourseType("");
