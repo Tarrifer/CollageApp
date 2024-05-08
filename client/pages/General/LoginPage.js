@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../context/actions/authActions";
 import {
   StyleSheet,
   Text,
@@ -15,12 +17,15 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
-
+// import { getUserType, setUserType } from "../../components/userType";
 const LoginPage = () => {
+  // const userType = getUserType();
+  // const setUserType = setUserType();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userType, setUserType] = useState(""); // Added state for user type
-  const [college, setCollege] = useState(""); // Added state for college
+  const [userType, setUserType] = useState("");
+  const [college, setCollege] = useState("");
   const navigation = useNavigation();
 
   const handleLogin = () => {
@@ -38,6 +43,8 @@ const LoginPage = () => {
 
     // Handle login logic (to be implemented with backend)
     // For now, navigate to OTP verification with user type
+    // setUserType(college);
+    dispatch(loginSuccess(userType));
     navigation.navigate("OTPVerification", { userType });
   };
 

@@ -18,6 +18,7 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "@react-navigation/stack": "^6.3.29",
+    "@reduxjs/toolkit": "^2.2.3",
     "expo": "^49.0.23",
     "expo-image-picker": "~14.3.2",
     "expo-splash-screen": "~0.20.5",
@@ -36,7 +37,9 @@
     "react-native-splash-screen": "^3.3.0",
     "react-native-switch-toggle": "^2.2.1",
     "react-native-tab-view": "^3.5.2",
-    "react-native-web": "~0.19.6"
+    "react-native-web": "~0.19.6",
+    "react-redux": "^9.1.2",
+    "redux": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

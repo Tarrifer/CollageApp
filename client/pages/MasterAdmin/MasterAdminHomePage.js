@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { BackHandler, Alert } from "react-native";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -13,7 +14,32 @@ import { BigCardCollage } from "../../features/MasterAdminFeatures/MACustomizati
 
 const MasterAdminHomePage = ({ route }) => {
   const navigation = useNavigation();
+  const handleBackPress = () => {
+    Alert.alert(
+      "Exit App",
+      "Are you sure you want to exit?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => null,
+          style: "cancel",
+        },
+        { text: "Exit", onPress: () => BackHandler.exitApp() },
+      ],
+      { cancelable: false }
+    );
+    return true;
+  };
 
+  // Add event listener for Android back button press
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      handleBackPress
+    );
+
+    return () => backHandler.remove();
+  }, []);
   const handleNotifications = () => {
     navigation.navigate("Notification");
   };
@@ -44,9 +70,17 @@ const MasterAdminHomePage = ({ route }) => {
     setImage(route.params?.image || null);
   }, [route.params?.collageName, route.params?.image]);
 
+  // const handleCardPress = (screenName) => {
+  //   navigation.navigate(screenName);
+  // };
   const handleCardPress = (screenName) => {
-    navigation.navigate(screenName);
+    if (screenName === "Customization") {
+      navigation.navigate(screenName);
+    } else {
+      navigation.navigate(screenName);
+    }
   };
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
@@ -64,7 +98,11 @@ const MasterAdminHomePage = ({ route }) => {
           </TouchableOpacity>
         </View>
 
-        <BigCardCollage collageName={collageName} image={image} />
+        <BigCardCollage
+          onPress={() => handleCardPress("Customization")}
+          collageName={collageName}
+          image={image}
+        />
 
         {/* <TouchableOpacity
           onPress={() => handleCardPress("Customization")}
@@ -110,7 +148,7 @@ const MasterAdminHomePage = ({ route }) => {
           </TouchableOpacity>
           <TouchableOpacity
             // key="OnlineLibrary"
-            onPress={() => handleCardPress("OnlineLibrary")}
+            onPress={() => handleCardPress("MasterOnlineLibrary")}
             style={styles.card}
           >
             <Text style={styles.cardText}>Online Library</Text>

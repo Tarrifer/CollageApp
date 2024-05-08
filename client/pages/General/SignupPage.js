@@ -11,6 +11,7 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
+// import { getUserType, setUserType } from "../../components/userType";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -20,6 +21,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
 const SignupPage = () => {
+  // const userType = getUserType();
+  // const setUserType = setUserType();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

@@ -9,18 +9,17 @@ import {
   Pressable,
   Alert,
 } from "react-native";
+// import getUserType from "../../components/userType";
 
 const OTPVerificationPage = ({ navigation, route }) => {
-  const { userType } = route.params; // Get the user type from the route params
-  const [otp, setOtp] = useState(""); // State for OTP
+  // const userType = getUserType();
+  const { userType } = route.params;
+  const [otp, setOtp] = useState("");
 
   const handleVerifyOTP = () => {
-    // Hardcoded OTP for demonstration, replace with actual OTP verification logic
     const correctOTP = "123456";
 
-    // Check if OTP is correct
     if (otp === correctOTP) {
-      // Implement navigation based on user type
       switch (userType) {
         case "Student":
           navigation.replace("StudentHome");
@@ -39,7 +38,6 @@ const OTPVerificationPage = ({ navigation, route }) => {
           console.log("Invalid user type");
       }
     } else {
-      // Display an alert indicating invalid OTP
       Alert.alert("Invalid OTP", "Please enter the correct OTP.", [
         { text: "OK" },
       ]);

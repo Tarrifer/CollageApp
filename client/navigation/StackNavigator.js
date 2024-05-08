@@ -1,6 +1,7 @@
 // StackNavigator.js
 
-import React from "react";
+import React, { useEffect } from "react";
+import { BackHandler, Alert } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import LoginPage from "../pages/General/LoginPage";
@@ -33,7 +34,12 @@ import TeacherApprovalScreen from "../features/MasterAdminFeatures/TeacherApprov
 import AdminApprovalScreenM from "../features/MasterAdminFeatures/AdminApprovalScreenM";
 import CandidateDetailsViewScreen from "../features/MasterAdminFeatures/CandidateDetailsViewScreen";
 import SettingsScreen from "../screens/SettingsScreen";
-
+import StudentAttendanceScreen from "../features/StudentFeatures/StudentAttendanceScreen";
+import StudentCalenderScreen from "../features/CalenderScreen";
+import StudentERPScreen from "../features/StudentFeatures/StudentERPScreen";
+import StudentTimetableScreen from "../features/StudentFeatures/StudentTimetableScreen";
+import StudentReportScreen from "../features/StudentFeatures/StudentReportScreen";
+import OnlineLibraryScreen from "../features/OnlineLibraryScreen";
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
   return (
@@ -119,7 +125,7 @@ const StackNavigator = () => {
         options={{ title: "Monitoring", headerShown: false }}
       />
       <Stack.Screen
-        name="OnlineLibrary"
+        name="MasterOnlineLibrary"
         component={MAdminOnlineLibrary}
         options={{ title: "Online Library", headerShown: false }}
       />
@@ -177,6 +183,36 @@ const StackNavigator = () => {
         name="Search"
         component={SearchUser}
         options={{ title: "Search", headerShown: true }}
+      />
+      <Stack.Screen
+        name="StudentAttendance"
+        component={StudentAttendanceScreen}
+        options={{ title: "Student Attendance", headerShown: true }}
+      />
+      <Stack.Screen
+        name="Calender"
+        component={StudentCalenderScreen}
+        options={{ title: "Student Calender", headerShown: true }}
+      />
+      <Stack.Screen
+        name="StudentERP"
+        component={StudentERPScreen}
+        options={{ title: "Student ERP", headerShown: true }}
+      />
+      <Stack.Screen
+        name="OnlineLibrary"
+        component={OnlineLibraryScreen}
+        options={{ title: "Online Library", headerShown: true }}
+      />
+      <Stack.Screen
+        name="StudentReport"
+        component={StudentReportScreen}
+        options={{ title: "Student Report", headerShown: true }}
+      />
+      <Stack.Screen
+        name="StudentTimetable"
+        component={StudentTimetableScreen}
+        options={{ title: "Student Timetable", headerShown: true }}
       />
     </Stack.Navigator>
   );

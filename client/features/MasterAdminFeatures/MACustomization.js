@@ -16,6 +16,7 @@ const BigCardCollage = ({ collageName, image }) => {
     // Navigate to the MasterAdminHomePage and pass collageName and image as route params
     navigation.navigate("Customization", { collageName, image });
   };
+
   const navigation = useNavigation();
   return (
     <View>
