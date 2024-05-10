@@ -130,6 +130,7 @@ const SignupPage = () => {
               onValueChange={(itemValue, itemIndex) => setUserType(itemValue)}
               style={styles.input}
             >
+              <Picker.Item label="Choose User Type" value="" />
               <Picker.Item label="Student" value="Student" />
               <Picker.Item label="Teacher" value="Teacher" />
               <Picker.Item label="Admin" value="Admin" />

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const StudentOnlineLibraryScreen = () => {
+const OnlineLibraryScreen = () => {
   return (
     <View>
       <Text>StudentOnlineLibraryScreen</Text>
@@ -9,6 +9,6 @@ const StudentOnlineLibraryScreen = () => {
   );
 };
 
-export default StudentOnlineLibraryScreen;
+export default OnlineLibraryScreen;
 
 const styles = StyleSheet.create({});

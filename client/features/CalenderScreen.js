@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const StudentCalenderScreen = () => {
+const CalenderScreen = () => {
   return (
     <View>
-      <Text>StudentCalenderScreen</Text>
+      <Text>CalenderScreen</Text>
     </View>
   );
 };
 
-export default StudentCalenderScreen;
+export default CalenderScreen;
 
 const styles = StyleSheet.create({});

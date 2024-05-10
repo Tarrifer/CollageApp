@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { BackHandler, Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import { logout } from "../../context/actions/authActions";
+import { CommonActions } from "@react-navigation/native";
 import {
   DrawerActions,
   useIsFocused,
@@ -17,9 +18,10 @@ import {
   Image,
 } from "react-native";
 // import { BigCardCollage } from "../../features/MasterAdminFeatures/MACustomization";
-
+// import DrawerNavigator from "../../navigation/DrawerNavigator";
 const TeacherHomePage = ({ route }) => {
   const navigation = useNavigation();
+
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const handleLogout = () => {
@@ -32,16 +34,20 @@ const TeacherHomePage = ({ route }) => {
           onPress: () => null,
           style: "cancel",
         },
-        { text: "Logout", onPress: () => handleLogoutConfirmation() }, // Call the logout confirmation function
+        { text: "Logout", onPress: () => handleLogoutConfirmation() },
       ],
       { cancelable: false }
     );
   };
 
   const handleLogoutConfirmation = () => {
-    // Perform logout logic here
-    dispatch(logout()); // Dispatch the logout action
-    navigation.navigate("Login"); // Navigate to the Login screen
+    dispatch(logout());
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      })
+    );
   };
   const handleBackPress = () => {
     if (isFocused) {
@@ -75,23 +81,14 @@ const TeacherHomePage = ({ route }) => {
   const handleNotifications = () => {
     navigation.navigate("Notification");
   };
-  // const openDrawer = () => {
-  //   navigation.dispatch(DrawerActions.openDrawer());
-  // };
   const openDrawer = () => {
-    navigation.navigate("DrawerOpen");
+    navigation.dispatch(DrawerActions.openDrawer());
   };
 
-  // const handleCardPress = (screenName) => {
-  //   if (screenName === "Customization") {
-  //     navigation.navigate(screenName, {
-  //       collageName: "Collage Name",
-  //       onCollageNameChange: setCollageName,
-  //     });
-  //   } else {
-  //     navigation.navigate(screenName);
-  //   }
+  // const toggleDrawer = () => {
+  //   navigation.dispatch(DrawerActions.toggleDrawer());
   // };
+
   const [collageName, setCollageName] = useState(
     route.params?.collageName || ""
   );
@@ -155,7 +152,7 @@ const TeacherHomePage = ({ route }) => {
             <Text style={styles.cardText}>Timetable</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => handleCardPress("Calendar")}
+            onPress={() => handleCardPress("Calender")}
             style={styles.card}
           >
             <Text style={styles.cardText}>Calendar</Text>
@@ -179,22 +176,15 @@ const TeacherHomePage = ({ route }) => {
             <Text style={styles.cardText}>ERP</Text>
           </TouchableOpacity>
 
-          {/* <TouchableOpacity
-            // key="Customization"
-            onPress={() => handleCardPress("Customization")}
-            style={styles.card}
-          >
-            <Text style={styles.cardText}>Customization</Text>
-          </TouchableOpacity> */}
           <TouchableOpacity
-            // key="Customization"
+            // key="settings"
             onPress={() => handleCardPress("Settings")}
             style={styles.card}
           >
             <Text style={styles.cardText}>Settings</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            // key="Customization"
+            // key="Log Out"
             onPress={handleLogout}
             style={styles.card}
           >

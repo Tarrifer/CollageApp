@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const HomeScree = () => {
+const PendingPage = () => {
   return (
     <View>
-      <Text>Home</Text>
+      <Text>Waiting for Master Admin Approval</Text>
     </View>
   );
 };
 
-export default HomeScree;
+export default PendingPage;
 
 const styles = StyleSheet.create({});

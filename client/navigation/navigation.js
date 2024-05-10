@@ -1,9 +1,18 @@
-// StackNavigator.js
+import React from "react";
 
-import React, { useEffect } from "react";
-import { BackHandler, Alert } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+// import { NavigationContainer } from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerContent,
+} from "@react-navigation/drawer";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../context/actions/authActions";
 import LoginPage from "../pages/General/LoginPage";
 import SignupPage from "../pages/General/SignupPage";
 import OTPVerificationPage from "../pages/General/OTPVerificationPage";
@@ -11,9 +20,7 @@ import StudentHomePage from "../pages/Student/StudentHomePage";
 import TeacherHomePage from "../pages/Teacher/TeacherHomePage";
 import AdminHomePage from "../pages/Admin/AdminHomePage";
 import MasterAdminHomePage from "../pages/MasterAdmin/MasterAdminHomePage";
-// import HomeNavigator from "../navigation/HomeNavigator";
 import ForgotPasswordPage from "../pages/General/ForgotPasswordPage";
-// import DrawerNavigator from "../navigation/DrawerNavigator";
 import NotificationScreen from "../components/NotificationScreen";
 import GeneralNotificationScreen from "../components/GeneralNotificationScreen";
 import TechnicalNotificationScreen from "../components/TechnicalNotificationScreen";
@@ -33,57 +40,139 @@ import StudentApprovalScreen from "../features/MasterAdminFeatures/StudentApprov
 import TeacherApprovalScreen from "../features/MasterAdminFeatures/TeacherApprovalScreen";
 import AdminApprovalScreenM from "../features/MasterAdminFeatures/AdminApprovalScreenM";
 import CandidateDetailsViewScreen from "../features/MasterAdminFeatures/CandidateDetailsViewScreen";
-import SettingsScreen from "../screens/SettingsScreen";
 import StudentAttendanceScreen from "../features/StudentFeatures/StudentAttendanceScreen";
-import StudentCalenderScreen from "../features/CalenderScreen";
 import StudentERPScreen from "../features/StudentFeatures/StudentERPScreen";
 import StudentTimetableScreen from "../features/StudentFeatures/StudentTimetableScreen";
 import StudentReportScreen from "../features/StudentFeatures/StudentReportScreen";
 import OnlineLibraryScreen from "../features/OnlineLibraryScreen";
-const Stack = createNativeStackNavigator();
-const StackNavigator = () => {
+import SettingsScreen from "../screens/SettingsScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import FeedbackScreen from "../screens/FeedbackScreen";
+// import CalenderScreen from "../features/CalenderScreen";
+import CalenderScreen from "../features/CalenderScreen";
+const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const CustomDrawerContent = (props) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { profile } = useSelector((state) => state.auth);
+  const handleLogout = () => {
+    dispatch(logout());
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      })
+    );
+  };
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Login"
-        component={LoginPage}
-        options={{ headerShown: false }}
+    <View style={{ flex: 1 }}>
+      <DrawerContentScrollView {...props}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: 20,
+            backgroundColor: "#f6f6f6",
+            marginBottom: 20,
+          }}
+        >
+          <View>
+            {/* <Text>{profile.fullname}</Text>
+            <Text>{profile.email}</Text> */}
+            <Text>Rahul Das</Text>
+            <Text>rahuldasnew2002@gmail.com</Text>
+          </View>
+          <Image
+            source={{
+              uri:
+                // profile.avatar ||
+                "https://images.unsplash.com/photo-1624243225303-261cc3cd2fbc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+            }}
+            style={{ width: 60, height: 60, borderRadius: 30 }}
+          />
+        </View>
+        <DrawerItemList {...props} />
+      </DrawerContentScrollView>
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          right: 0,
+          left: 0,
+          bottom: 50,
+          backgroundColor: "#f6f6f6",
+          padding: 20,
+        }}
+        onPress={handleLogout}
+      >
+        <Text>Log Out</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export const MainDrawerNavigator = () => {
+  const { userType } = useSelector((state) => state.auth);
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerShown: false,
+        headerStyle: {
+          backgroundColor: "transparent",
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerTitle: "",
+      }}
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+    >
+      {/* <Drawer.Screen name="Home" component={HomeStackNavigator} /> */}
+      {/* <Drawer.Screen name="Home" component={getHomeScreen(userType)} /> */}
+      <Drawer.Screen
+        name="Home"
+        component={
+          userType === "Student"
+            ? StudentHomePage
+            : userType === "Teacher"
+            ? TeacherHomePage
+            : userType === "Admin"
+            ? AdminHomePage
+            : MasterAdminHomePage
+        }
       />
-      <Stack.Screen
-        name="Register"
-        component={SignupPage}
-        options={{ headerShown: false }}
+      <Drawer.Screen
+        component={ProfileScreen}
+        name="Profile"
+        options={{ title: "Profile", headerShown: true }}
       />
-      <Stack.Screen
-        name="OTPVerification"
-        component={OTPVerificationPage}
-        options={{ headerShown: false }}
+      <Drawer.Screen
+        component={FeedbackScreen}
+        name="Feedback"
+        options={{ title: "Feedback", headerShown: true }}
       />
-      <Stack.Screen
-        name="StudentHome"
-        component={StudentHomePage}
-        options={{ title: "Student Home", headerShown: true }}
+      <Drawer.Screen
+        component={SettingsScreen}
+        name="Settings"
+        options={{ title: "Settings", headerShown: true }}
       />
-      <Stack.Screen
-        name="TeacherHome"
-        component={TeacherHomePage}
-        options={{ title: "Teacher Home", headerShown: true }}
-      />
-      <Stack.Screen
-        name="AdminHome"
-        component={AdminHomePage}
-        options={{ title: "Admin Home", headerShown: true }}
-      />
-      <Stack.Screen
-        name="MasterAdminHome"
-        component={MasterAdminHomePage}
-        options={{ title: "Master Admin Home", headerShown: true }}
-      />
-      <Stack.Screen
-        name="ForgotPassword"
-        component={ForgotPasswordPage}
-        options={{ title: "Master Admin Home", headerShown: true }}
-      />
+    </Drawer.Navigator>
+  );
+};
+
+export const AuthStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Login"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="Login" component={LoginPage} />
+      <Stack.Screen name="OTPVerification" component={OTPVerificationPage} />
+      <Stack.Screen name="Register" component={SignupPage} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPasswordPage} />
+      <Stack.Screen name="MainDrawer" component={MainDrawerNavigator} />
+
       <Stack.Screen
         name="Notification"
         component={NotificationScreen}
@@ -102,8 +191,12 @@ const StackNavigator = () => {
       <Stack.Screen
         name="NonTechnicalNotification"
         component={NonTechnicalNotificationScreen}
-        options={{ title: "Non-Technical Notification", headerShown: false }}
+        options={{
+          title: "Non-Technical Notification",
+          headerShown: false,
+        }}
       />
+
       <Stack.Screen
         name="DataBaseCreation"
         component={MAdminDataBaseCreation}
@@ -174,11 +267,7 @@ const StackNavigator = () => {
         component={CandidateDetailsViewScreen}
         options={{ title: "View Screen", headerShown: false }}
       />
-      <Stack.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{ title: "Settings", headerShown: true }}
-      />
+
       <Stack.Screen
         name="Search"
         component={SearchUser}
@@ -191,8 +280,8 @@ const StackNavigator = () => {
       />
       <Stack.Screen
         name="Calender"
-        component={StudentCalenderScreen}
-        options={{ title: "Student Calender", headerShown: true }}
+        component={CalenderScreen}
+        options={{ title: "Calender", headerShown: true }}
       />
       <Stack.Screen
         name="StudentERP"
@@ -217,83 +306,3 @@ const StackNavigator = () => {
     </Stack.Navigator>
   );
 };
-
-export default StackNavigator;
-
-{
-  /* <Stack.Screen
-          name="Home"
-          component={HomeNavigator}
-          options={{ headerShown: false }}
-        /> */
-}
-{
-  /* <Stack.Screen
-          name="DrawerNavigator" // Use a new screen to render the DrawerNavigator
-          component={DrawerNavigator}
-          options={{ headerShown: false }}
-        /> */
-}
-// import React from "react";
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// import { NavigationContainer } from "@react-navigation/native";
-// import LoginPage from "../pages/General/LoginPage";
-// import SignupPage from "../pages/General/SignupPage";
-// import OTPVerificationPage from "../pages/General/OTPVerificationPage";
-// import StudentHomePage from "../pages/Student/StudentHomePage";
-// import TeacherHomePage from "../pages/Teacher/TeacherHomePage";
-// import AdminHomePage from "../pages/Admin/AdminHomePage";
-// import MasterAdminHomePage from "../pages/MasterAdmin/MasterAdminHomePage";
-// import HomeNavigator from "./HomeNavigator";
-// const StackNavigator = () => {
-//   const Stack = createNativeStackNavigator();
-
-//   return (
-//     <NavigationContainer>
-//       <Stack.Navigator>
-//         <Stack.Screen
-//           name="Login"
-//           component={LoginPage}
-//           options={{ headerShown: false }}
-//         />
-//         <Stack.Screen
-//           name="Register"
-//           component={SignupPage}
-//           options={{ headerShown: false }}
-//         />
-//         <Stack.Screen
-//           name="OTPVerification"
-//           component={OTPVerificationPage}
-//           options={{ headerShown: false }}
-//         />
-//         <Stack.Screen
-//           name="StudentHome"
-//           component={StudentHomePage}
-//           options={{ title: "Student Home", headerShown: false }}
-//         />
-//         <Stack.Screen
-//           name="TeacherHome"
-//           component={TeacherHomePage}
-//           options={{ title: "Teacher Home", headerShown: false }}
-//         />
-//         <Stack.Screen
-//           name="AdminHome"
-//           component={AdminHomePage}
-//           options={{ title: "Admin Home", headerShown: false }}
-//         />
-//         <Stack.Screen
-//           name="MasterAdminHome"
-//           component={MasterAdminHomePage}
-//           options={{ title: "Master Admin Home", headerShown: false }}
-//         />
-//         <Stack.Screen
-//           name="Home"
-//           component={HomeNavigator}
-//           options={{ headerShown: false }}
-//         />
-//       </Stack.Navigator>
-//     </NavigationContainer>
-//   );
-// };
-
-// export default StackNavigator;

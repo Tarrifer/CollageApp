@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { BackHandler, Alert } from "react-native";
-import { DrawerActions, useNavigation } from "@react-navigation/native";
+import {
+  DrawerActions,
+  useNavigation,
+  useIsFocused,
+} from "@react-navigation/native";
 import {
   View,
   Text,
@@ -14,24 +18,29 @@ import { BigCardCollage } from "../../features/MasterAdminFeatures/MACustomizati
 
 const MasterAdminHomePage = ({ route }) => {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
+
   const handleBackPress = () => {
-    Alert.alert(
-      "Exit App",
-      "Are you sure you want to exit?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => null,
-          style: "cancel",
-        },
-        { text: "Exit", onPress: () => BackHandler.exitApp() },
-      ],
-      { cancelable: false }
-    );
-    return true;
+    if (isFocused) {
+      Alert.alert(
+        "Exit App",
+        "Are you sure you want to exit?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => null,
+            style: "cancel",
+          },
+          { text: "Exit", onPress: () => BackHandler.exitApp() },
+        ],
+        { cancelable: false }
+      );
+      return true;
+    } else {
+      return false;
+    }
   };
 
-  // Add event listener for Android back button press
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -39,7 +48,8 @@ const MasterAdminHomePage = ({ route }) => {
     );
 
     return () => backHandler.remove();
-  }, []);
+  }, [isFocused]); // Add isFocused to the dependency array
+
   const handleNotifications = () => {
     navigation.navigate("Notification");
   };
@@ -47,9 +57,8 @@ const MasterAdminHomePage = ({ route }) => {
   //   navigation.dispatch(DrawerActions.openDrawer());
   // };
   const openDrawer = () => {
-    navigation.navigate("DrawerOpen");
+    navigation.dispatch(DrawerActions.openDrawer());
   };
-
   // const handleCardPress = (screenName) => {
   //   if (screenName === "Customization") {
   //     navigation.navigate(screenName, {

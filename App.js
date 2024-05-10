@@ -1,11 +1,14 @@
 import "react-native-gesture-handler";
-import { Provider } from "react-redux";
-import store from "./client/context/store";
 import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import StackNavigator from "./client/navigation/StackNavigator";
+import { Provider } from "react-redux";
+import store from "./client/context/store";
+
 import * as SplashScreen from "expo-splash-screen";
 
+// import MainNavigator from "./client/navigation/MainNavigator";
+// import LoginProvider from "./client/context/LoginProvider";
+import { AuthStack } from "./client/navigation/navigation";
 export default function App() {
   useEffect(() => {
     async function prepare() {
@@ -27,120 +30,109 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <StackNavigator />
+        {/* <MainNavigator /> */}
+        <AuthStack />
       </NavigationContainer>
     </Provider>
   );
 }
 
-//---------------------hide splash screen---------------------------------------
-// import "react-native-gesture-handler";
-// import React, { useEffect } from "react";
-// import { NavigationContainer } from "@react-navigation/native";
-// import StackNavigator from "./client/navigation/StackNavigator";
-// import * as SplashScreen from "expo-splash-screen";
+// import * as React from 'react';
+// import { View, Text, Image, TouchableOpacity, Button } from 'react-native';
 
-// export default function App() {
-//   useEffect(() => {
-//     setTimeout(() => {
-//       SplashScreen.hideAsync();
-//     }, 900);
-//   }, []);
+// import {
+//   createDrawerNavigator,
+//   DrawerContentScrollView,
+//   DrawerItemList,
+// } from '@react-navigation/drawer';
+// import { NavigationContainer } from '@react-navigation/native';
 
+// function Home({ navigation }) {
 //   return (
-//     <NavigationContainer>
-//       <StackNavigator />
-//     </NavigationContainer>
+//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//       <Text>Home</Text>
+//       {/* <Button onPress={() => navigation.toggleDrawer()} title='test' /> */}
+//     </View>
 //   );
 // }
 
-//------------------------------- old code ---------------------------------------
-// import "react-native-gesture-handler";
-// import React, { useEffect, useState } from "react";
-// import { NavigationContainer } from "@react-navigation/native";
-// import StackNavigator from "./client/navigation/StackNavigator";
-// import * as SplashScreen from "expo-splash-screen";
-
-// SplashScreen.preventAutoHideAsync();
-
-// export default function App() {
-//   const [appIsReady, setAppIsReady] = useState(false);
-
-//   useEffect(() => {
-//     async function initializeApp() {
-//       try {
-//         await new Promise((resolve) => setTimeout(resolve, 5000));
-//       } catch (e) {
-//         console.warn(e);
-//       } finally {
-//         setAppIsReady(true);
-//         await SplashScreen.hideAsync();
-//       }
-//     }
-
-//     initializeApp();
-//   }, []);
-
-//   if (!appIsReady) {
-//     return null;
-//   }
-
+// function Tasks() {
 //   return (
-//     <NavigationContainer>
-//       <StackNavigator />
-//     </NavigationContainer>
+//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//       <Text>Tasks</Text>
+//     </View>
 //   );
 // }
-//--------------------------------------------------------------------
-// import "react-native-gesture-handler";
-// import { StatusBar } from "expo-status-bar";
-// import { View } from "react-native";
-// import { GestureHandlerRootView } from "react-native-gesture-handler";
-// import React, { useCallback, useEffect, useState } from "react";
-// import { NavigationContainer } from "@react-navigation/native";
-// import StackNavigator from "./client/navigation/StackNavigator";
-// import * as SplashScreen from "expo-splash-screen";
-// import Entypo from "@expo/vector-icons/Entypo";
-// import * as Font from "expo-font";
-// SplashScreen.preventAutoHideAsync();
+
+// const Drawer = createDrawerNavigator();
+
+// const CustomDrawer = props => {
+//   return (
+//     <View style={{ flex: 1 }}>
+//       <DrawerContentScrollView {...props}>
+//         <View
+//           style={{
+//             flexDirection: 'row',
+//             justifyContent: 'space-between',
+//             alignItems: 'center',
+//             padding: 20,
+//             backgroundColor: '#f6f6f6',
+//             marginBottom: 20,
+//           }}
+//         >
+//           <View>
+//             <Text>John Doe</Text>
+//             <Text>example@email.com</Text>
+//           </View>
+//           <Image
+//             source={{
+//               uri: 'https://images.unsplash.com/photo-1624243225303-261cc3cd2fbc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
+//             }}
+//             style={{ width: 60, height: 60, borderRadius: 30 }}
+//           />
+//         </View>
+//         <DrawerItemList {...props} />
+//       </DrawerContentScrollView>
+//       <TouchableOpacity
+//         style={{
+//           position: 'absolute',
+//           right: 0,
+//           left: 0,
+//           bottom: 50,
+//           backgroundColor: '#f6f6f6',
+//           padding: 20,
+//         }}
+//       >
+//         <Text>Log Out</Text>
+//       </TouchableOpacity>
+//     </View>
+//   );
+// };
+
+// const DrawerNavigator = () => {
+//   return (
+//     <Drawer.Navigator
+//       screenOptions={{
+//         headerShown: true,
+//         headerStyle: {
+//           backgroundColor: 'transparent',
+//           elevation: 0,
+//           shadowOpacity: 0,
+//         },
+//         headerTitle: '',
+//       }}
+//       drawerContent={props => <CustomDrawer {...props} />}
+//     >
+//       <Drawer.Screen component={Home} name='Home' />
+//       <Drawer.Screen component={Tasks} name='Tasks' />
+//     </Drawer.Navigator>
+//   );
+// };
 
 // export default function App() {
-//   const [appIsReady, setAppIsReady] = useState(false);
-
-//   useEffect(() => {
-//     async function initializeApp() {
-//       try {
-//         await Font.loadAsync(Entypo.font);
-//         await new Promise((resolve) => setTimeout(resolve, 2000));
-//       } catch (e) {
-//         console.warn(e);
-//       } finally {
-//         setAppIsReady(true);
-//         await SplashScreen.hideAsync();
-//       }
-//     }
-
-//     initializeApp();
-//   }, []);
-
-//   const onLayoutRootView = useCallback(async () => {
-//     if (appIsReady) {
-//       await SplashScreen.hideAsync();
-//     }
-//   }, [appIsReady]);
-
-//   if (!appIsReady) {
-//     return null;
-//   }
 //   return (
-//     <GestureHandlerRootView style={{ flex: 1 }}>
-//       <NavigationContainer>
-//         <StackNavigator />
-//       </NavigationContainer>
-//       <View style={{ position: "absolute", top: 20, right: 20 }}>
-//         <Entypo name="rocket" size={30} />
-//       </View>
-//       <StatusBar style="auto" />
-//     </GestureHandlerRootView>
+//     <NavigationContainer>
+//       <DrawerNavigator />
+//     </NavigationContainer>
 //   );
 // }
