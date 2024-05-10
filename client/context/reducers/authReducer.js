@@ -6,14 +6,18 @@ import {
   LOGOUT,
   SET_USER_TYPE,
   SET_IS_LOGGED_IN,
+  UPDATE_USER_PROFILE_PIC,
 } from "../actions/authActionTypes";
 
 const initialState = {
   isLoggedIn: false,
   userType: "",
+  userProfile: {
+    profilePic: "", // Initial profile picture URI
+    // Other profile properties
+  },
   // Other initial state properties
 };
-
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
@@ -47,6 +51,14 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggedIn: action.payload,
+      };
+    case UPDATE_USER_PROFILE_PIC:
+      return {
+        ...state,
+        userProfile: {
+          ...state.userProfile,
+          profilePic: action.payload,
+        },
       };
     default:
       return state;

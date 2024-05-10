@@ -57,6 +57,8 @@ const CustomDrawerContent = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.auth);
+  const { profilePic } = props;
+
   const handleLogout = () => {
     dispatch(logout());
     navigation.dispatch(
@@ -88,8 +90,8 @@ const CustomDrawerContent = (props) => {
           <Image
             source={{
               uri:
-                // profile.avatar ||
-                "https://images.unsplash.com/photo-1624243225303-261cc3cd2fbc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+                profilePic ||
+                "https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745.jpg", // Use profilePic here
             }}
             style={{ width: 60, height: 60, borderRadius: 30 }}
           />
@@ -114,7 +116,7 @@ const CustomDrawerContent = (props) => {
 };
 
 export const MainDrawerNavigator = () => {
-  const { userType } = useSelector((state) => state.auth);
+  const { userType, profilePic } = useSelector((state) => state.auth);
   return (
     <Drawer.Navigator
       screenOptions={{
