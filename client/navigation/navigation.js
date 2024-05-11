@@ -1,16 +1,15 @@
 import React from "react";
 
 import { createStackNavigator } from "@react-navigation/stack";
-// import { NavigationContainer } from "@react-navigation/native";
 import { CommonActions } from "@react-navigation/native";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerContent,
 } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
+
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../context/actions/authActions";
 import LoginPage from "../pages/General/LoginPage";
@@ -48,17 +47,19 @@ import OnlineLibraryScreen from "../features/OnlineLibraryScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import FeedbackScreen from "../screens/FeedbackScreen";
-// import CalenderScreen from "../features/CalenderScreen";
 import CalenderScreen from "../features/CalenderScreen";
+// import StudentDayTimetableScreen from "../features/StudentFeatures/StudentDayTimetableScreen";
+import EventTimetableScreen from "../features/StudentFeatures/EventTimetableScreen";
+import StudentSubjectTimetableScreen from "../features/StudentFeatures/StudentSubjectTimetableScreen";
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const { profile } = useSelector((state) => state.auth);
-  const { profilePic } = props;
-
+  const { profilePic, userName, userEmail } = useSelector(
+    (state) => state.auth
+  );
   const handleLogout = () => {
     dispatch(logout());
     navigation.dispatch(
@@ -68,34 +69,25 @@ const CustomDrawerContent = (props) => {
       })
     );
   };
+
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: 20,
-            backgroundColor: "#f6f6f6",
-            marginBottom: 20,
-          }}
-        >
-          <View>
-            {/* <Text>{profile.fullname}</Text>
-            <Text>{profile.email}</Text> */}
-            <Text>Rahul Das</Text>
-            <Text>rahuldasnew2002@gmail.com</Text>
-          </View>
-          <Image
-            source={{
-              uri:
-                profilePic ||
-                "https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745.jpg", // Use profilePic here
-            }}
-            style={{ width: 60, height: 60, borderRadius: 30 }}
-          />
+        <View style={{ alignItems: "center", paddingTop: 20 }}>
+          <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+            <Image
+              source={{
+                uri:
+                  profilePic ||
+                  "https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745.jpg",
+              }}
+              style={{ width: 120, height: 120, borderRadius: 60 }}
+            />
+          </TouchableOpacity>
+          <Text style={{ marginTop: 10, fontSize: 18 }}>{userName}</Text>
+          <Text style={{ fontSize: 16, color: "#888" }}>{userEmail}</Text>
         </View>
+
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
       <TouchableOpacity
@@ -116,7 +108,7 @@ const CustomDrawerContent = (props) => {
 };
 
 export const MainDrawerNavigator = () => {
-  const { userType, profilePic } = useSelector((state) => state.auth);
+  const { userType } = useSelector((state) => state.auth);
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -130,8 +122,6 @@ export const MainDrawerNavigator = () => {
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      {/* <Drawer.Screen name="Home" component={HomeStackNavigator} /> */}
-      {/* <Drawer.Screen name="Home" component={getHomeScreen(userType)} /> */}
       <Drawer.Screen
         name="Home"
         component={
@@ -304,6 +294,21 @@ export const AuthStack = () => {
         name="StudentTimetable"
         component={StudentTimetableScreen}
         options={{ title: "Student Timetable", headerShown: true }}
+      />
+      {/* <Stack.Screen
+        name="StudentDayTimetable"
+        component={StudentDayTimetableScreen}
+        options={{ title: "Student Day Timetable", headerShown: true }}
+      /> */}
+      <Stack.Screen
+        name="EventTimetable"
+        component={EventTimetableScreen}
+        options={{ title: "Event Timetable", headerShown: true }}
+      />
+      <Stack.Screen
+        name="StudentSubjectTimetable"
+        component={StudentSubjectTimetableScreen}
+        options={{ title: "Student Subject", headerShown: true }}
       />
     </Stack.Navigator>
   );

@@ -7,6 +7,7 @@ import {
   SET_USER_TYPE,
   SET_IS_LOGGED_IN,
   UPDATE_USER_PROFILE_PIC,
+  UPDATE_USER_DETAILS,
 } from "../actions/authActionTypes";
 
 const initialState = {
@@ -16,6 +17,8 @@ const initialState = {
     profilePic: "", // Initial profile picture URI
     // Other profile properties
   },
+  userName: "",
+  userEmail: "",
   // Other initial state properties
 };
 const authReducer = (state = initialState, action) => {
@@ -52,13 +55,24 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isLoggedIn: action.payload,
       };
-    case UPDATE_USER_PROFILE_PIC:
+    // case UPDATE_USER_PROFILE_PIC:
+    //   return {
+    //     ...state,
+    //     userProfile: {
+    //       ...state.userProfile,
+    //       profilePic: action.payload,
+    //     },
+    //   };
+    case "UPDATE_USER_PROFILE_PIC":
       return {
         ...state,
-        userProfile: {
-          ...state.userProfile,
-          profilePic: action.payload,
-        },
+        profilePic: action.payload,
+      };
+    case "UPDATE_USER_DETAILS":
+      return {
+        ...state,
+        userName: action.payload.userName,
+        userEmail: action.payload.userEmail,
       };
     default:
       return state;

@@ -5,7 +5,8 @@ import {
   LOGOUT,
   SET_IS_LOGGED_IN,
   SET_USER_TYPE,
-  UPDATE_USER_PROFILE_PIC,
+  // UPDATE_USER_PROFILE_PIC,
+  // UPDATE_USER_DETAILS
 } from "./authActionTypes";
 
 export const loginSuccess = (userType) => ({
@@ -50,13 +51,20 @@ export const login = (email, password) => {
   };
 };
 
-export const updateUserProfilePic = (newProfilePic) => {
-  return {
-    type: UPDATE_USER_PROFILE_PIC,
-    payload: newProfilePic,
-  };
-};
-
+// export const updateUserProfilePic = (newProfilePic) => {
+//   return {
+//     type: UPDATE_USER_PROFILE_PIC,
+//     payload: newProfilePic,
+//   };
+// };
+export const updateUserProfilePic = (profilePic) => ({
+  type: "UPDATE_USER_PROFILE_PIC",
+  payload: profilePic,
+});
+export const updateUserDetails = (userName, userEmail) => ({
+  type: "UPDATE_USER_DETAILS",
+  payload: { userName, userEmail },
+});
 // // Define the login action
 // export const login = (email, password) => {
 //   // Simulated login logic

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { BackHandler, Alert } from "react-native";
 import { useDispatch } from "react-redux";
-import { logout } from "../../context/actions/authActions";
-import { CommonActions } from "@react-navigation/native";
 import {
   DrawerActions,
   useIsFocused,
@@ -17,38 +15,12 @@ import {
   ScrollView,
   Image,
 } from "react-native";
-// import { BigCardCollage } from "../../features/MasterAdminFeatures/MACustomization";
-// import DrawerNavigator from "../../navigation/DrawerNavigator";
 const StudentHomePage = ({ route }) => {
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
-  const handleLogout = () => {
-    Alert.alert(
-      "Logout",
-      "Are you sure you want to logout?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => null,
-          style: "cancel",
-        },
-        { text: "Logout", onPress: () => handleLogoutConfirmation() },
-      ],
-      { cancelable: false }
-    );
-  };
 
-  const handleLogoutConfirmation = () => {
-    dispatch(logout());
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: "Login" }],
-      })
-    );
-  };
   const handleBackPress = () => {
     if (isFocused) {
       Alert.alert(
@@ -77,17 +49,13 @@ const StudentHomePage = ({ route }) => {
     );
 
     return () => backHandler.remove();
-  }, [isFocused]); // Add isFocused to the dependency array
+  }, [isFocused]);
   const handleNotifications = () => {
     navigation.navigate("Notification");
   };
   const openDrawer = () => {
     navigation.dispatch(DrawerActions.openDrawer());
   };
-
-  // const toggleDrawer = () => {
-  //   navigation.dispatch(DrawerActions.toggleDrawer());
-  // };
 
   const [collageName, setCollageName] = useState(
     route.params?.collageName || ""
@@ -102,9 +70,6 @@ const StudentHomePage = ({ route }) => {
   const handleCardPress = (screenName) => {
     navigation.navigate(screenName);
   };
-  // const handleLogout = () => {
-  //   navigation.navigate("Logout");
-  // };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -123,12 +88,7 @@ const StudentHomePage = ({ route }) => {
           </TouchableOpacity>
         </View>
 
-        {/* <BigCardCollage collageName={collageName} image={image} /> */}
-
-        <TouchableOpacity
-          // onPress={() => handleCardPress("Customization")}
-          style={styles.bigCard}
-        >
+        <TouchableOpacity style={styles.bigCard}>
           <Image
             source={require("../../image/3033337.png")}
             style={styles.bigCardImage}
@@ -174,21 +134,6 @@ const StudentHomePage = ({ route }) => {
             style={styles.card}
           >
             <Text style={styles.cardText}>ERP</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            // key="settings"
-            onPress={() => handleCardPress("Settings")}
-            style={styles.card}
-          >
-            <Text style={styles.cardText}>Settings</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            // key="Log Out"
-            onPress={handleLogout}
-            style={styles.card}
-          >
-            <Text style={styles.cardText}>Logout</Text>
           </TouchableOpacity>
         </View>
       </View>

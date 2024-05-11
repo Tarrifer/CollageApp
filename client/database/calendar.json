@@ -1,0 +1,50 @@
+{
+    "Sunday": [
+      {
+        "eventName": "Sunday Brunch",
+        "date": "2024-05-12",
+        "description": "Enjoy a delicious brunch with friends and family."
+      },
+      {
+        "eventName": "Family Picnic",
+        "date": "2024-05-12",
+        "description": "Fun outdoor picnic in the park."
+      }
+    ],
+    "Monday": [
+      {
+        "eventName": "Team Meeting",
+        "date": "2024-05-13",
+        "description": "Weekly team meeting to discuss project updates."
+      },
+      {
+        "eventName": "Workshop",
+        "date": "2024-05-13",
+        "description": "Educational workshop on new technologies."
+      }
+    ],
+    "Tuesday": [
+      {
+        "eventName": "Birthday Party",
+        "date": "2024-05-14",
+        "description": "Celebrating John's birthday at the office."
+      }
+    ],
+    "Wednesday": [
+      {
+        "eventName": "Holiday",
+        "date": "2024-05-15",
+        "description": "Office closed for public holiday."
+      }
+    ],
+    "Thursday": [],
+    "Friday": [
+      {
+        "eventName": "Company Event",
+        "date": "2024-05-17",
+        "description": "Annual company event at the convention center."
+      }
+    ],
+    "Saturday": []
+  }
+  

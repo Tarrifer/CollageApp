@@ -1,0 +1,64 @@
+{
+    "Monday": [
+      { "time": "9:00 AM - 10:00 AM", "subject": "Mathematics", "teacher": "Mr. Smith" },
+      { "time": "10:00 AM - 11:00 AM", "subject": "Physics", "teacher": "Ms. Johnson" },
+      { "time": "11:00 AM - 12:00 PM", "subject": "Chemistry", "teacher": "Dr. Brown" },
+      { "time": "12:00 PM - 12:55 PM", "subject": "Biology", "teacher": "Ms. Davis" },
+      { "time": "12:55 PM - 1:50 PM", "subject": "English", "teacher": "Mr. Wilson" },
+      { "time": "1:50 PM - 2:45 PM", "subject": "History", "teacher": "Ms. Lee" },
+      { "time": "2:45 PM - 3:40 PM", "subject": "Geography", "teacher": "Mr. Clark" },
+      { "time": "3:40 PM - 4:45 PM", "subject": "Computer Science", "teacher": "Ms. White" },
+      { "time": "4:35 PM - 5:15 PM", "subject": "Physical Education", "teacher": "Mr. Anderson" }
+    ],
+    "Tuesday": [
+        { "time": "9:00 AM - 10:00 AM", "subject": "Mathematics", "teacher": "Mr. Smith" },
+        { "time": "10:00 AM - 11:00 AM", "subject": "Physics", "teacher": "Ms. Johnson" },
+        { "time": "11:00 AM - 12:00 PM", "subject": "Chemistry", "teacher": "Dr. Brown" },
+        { "time": "12:00 PM - 12:55 PM", "subject": "Biology", "teacher": "Ms. Davis" },
+        { "time": "12:55 PM - 1:50 PM", "subject": "English", "teacher": "Mr. Wilson" },
+        { "time": "1:50 PM - 2:45 PM", "subject": "History", "teacher": "Ms. Lee" },
+        { "time": "2:45 PM - 3:40 PM", "subject": "Geography", "teacher": "Mr. Clark" },
+        { "time": "3:40 PM - 4:45 PM", "subject": "Computer Science", "teacher": "Ms. White" },
+        { "time": "4:35 PM - 5:15 PM", "subject": "Physical Education", "teacher": "Mr. Anderson" }
+    ],
+    "Wednesday": [
+        { "time": "9:00 AM - 10:00 AM", "subject": "Mathematics", "teacher": "Mr. Smith" },
+        { "time": "10:00 AM - 11:00 AM", "subject": "Physics", "teacher": "Ms. Johnson" },
+        { "time": "11:00 AM - 12:00 PM", "subject": "Chemistry", "teacher": "Dr. Brown" },
+        { "time": "12:00 PM - 12:55 PM", "subject": "Biology", "teacher": "Ms. Davis" },
+        { "time": "12:55 PM - 1:50 PM", "subject": "English", "teacher": "Mr. Wilson" },
+        { "time": "1:50 PM - 2:45 PM", "subject": "History", "teacher": "Ms. Lee" },
+        { "time": "2:45 PM - 3:40 PM", "subject": "Geography", "teacher": "Mr. Clark" },
+        { "time": "3:40 PM - 4:45 PM", "subject": "Computer Science", "teacher": "Ms. White" },
+        { "time": "4:35 PM - 5:15 PM", "subject": "Physical Education", "teacher": "Mr. Anderson" }
+    ],
+    "Thursday": [
+        { "time": "9:00 AM - 10:00 AM", "subject": "Mathematics", "teacher": "Mr. Smith" },
+        { "time": "10:00 AM - 11:00 AM", "subject": "Physics", "teacher": "Ms. Johnson" },
+        { "time": "11:00 AM - 12:00 PM", "subject": "Chemistry", "teacher": "Dr. Brown" },
+        { "time": "12:00 PM - 12:55 PM", "subject": "Biology", "teacher": "Ms. Davis" },
+        { "time": "12:55 PM - 1:50 PM", "subject": "English", "teacher": "Mr. Wilson" },
+        { "time": "1:50 PM - 2:45 PM", "subject": "History", "teacher": "Ms. Lee" },
+        { "time": "2:45 PM - 3:40 PM", "subject": "Geography", "teacher": "Mr. Clark" },
+        { "time": "3:40 PM - 4:45 PM", "subject": "Computer Science", "teacher": "Ms. White" },
+        { "time": "4:35 PM - 5:15 PM", "subject": "Physical Education", "teacher": "Mr. Anderson" }
+    ],
+    "Friday": [
+        { "time": "9:00 AM - 10:00 AM", "subject": "Mathematics", "teacher": "Mr. Smith" },
+        { "time": "10:00 AM - 11:00 AM", "subject": "Physics", "teacher": "Ms. Johnson" },
+        { "time": "11:00 AM - 12:00 PM", "subject": "Chemistry", "teacher": "Dr. Brown" },
+        { "time": "12:00 PM - 12:55 PM", "subject": "Biology", "teacher": "Ms. Davis" },
+        { "time": "12:55 PM - 1:50 PM", "subject": "English", "teacher": "Mr. Wilson" },
+        { "time": "1:50 PM - 2:45 PM", "subject": "History", "teacher": "Ms. Lee" },
+        { "time": "2:45 PM - 3:40 PM", "subject": "Geography", "teacher": "Mr. Clark" },
+        { "time": "3:40 PM - 4:45 PM", "subject": "Computer Science", "teacher": "Ms. White" },
+        { "time": "4:35 PM - 5:15 PM", "subject": "Physical Education", "teacher": "Mr. Anderson" }
+    ],
+    "Saturday": [
+       
+    ],
+    "Sunday": [
+      
+    ]
+  }
+  

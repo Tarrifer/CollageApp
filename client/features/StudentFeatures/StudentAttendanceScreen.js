@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { ScrollView } from "react-native-gesture-handler";
 
 const StudentAttendanceScreen = () => {
   // Sample data for subjects attendance
@@ -16,48 +17,51 @@ const StudentAttendanceScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Subject Attendance</Text>
-        <Text style={styles.date}>{new Date().toLocaleDateString()}</Text>
-      </View>
-      {subjectsAttendance.map((subject, index) => (
-        <View key={index} style={styles.card}>
-          <Text style={styles.subjectName}>{subject.subject}</Text>
-          <View style={styles.attendanceRow}>
-            <View style={[styles.attendanceItem, styles.absent]}>
-              <Text style={styles.attendanceText}>
-                Absent: {subject.absent}
-              </Text>
-            </View>
-            <View style={[styles.attendanceItem, styles.present]}>
-              <Text style={styles.attendanceText}>
-                Present: {subject.present}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.attendanceContainer}>
-            <Text style={styles.attendanceLabel}>Subject Attendance</Text>
-            <Text style={styles.percentage}>
-              {calculateAttendancePercentage(subject.absent, subject.present)}%
-            </Text>
-          </View>
-          <View style={styles.progressContainer}>
-            <View
-              style={[
-                styles.progressBar,
-                {
-                  width: `${calculateAttendancePercentage(
-                    subject.absent,
-                    subject.present
-                  )}%`,
-                },
-              ]}
-            />
-          </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Subject Attendance</Text>
+          <Text style={styles.date}>{new Date().toLocaleDateString()}</Text>
         </View>
-      ))}
-    </View>
+        {subjectsAttendance.map((subject, index) => (
+          <View key={index} style={styles.card}>
+            <Text style={styles.subjectName}>{subject.subject}</Text>
+            <View style={styles.attendanceRow}>
+              <View style={[styles.attendanceItem, styles.absent]}>
+                <Text style={styles.attendanceText}>
+                  Absent: {subject.absent}
+                </Text>
+              </View>
+              <View style={[styles.attendanceItem, styles.present]}>
+                <Text style={styles.attendanceText}>
+                  Present: {subject.present}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.attendanceContainer}>
+              <Text style={styles.attendanceLabel}>Subject Attendance</Text>
+              <Text style={styles.percentage}>
+                {calculateAttendancePercentage(subject.absent, subject.present)}
+                %
+              </Text>
+            </View>
+            <View style={styles.progressContainer}>
+              <View
+                style={[
+                  styles.progressBar,
+                  {
+                    width: `${calculateAttendancePercentage(
+                      subject.absent,
+                      subject.present
+                    )}%`,
+                  },
+                ]}
+              />
+            </View>
+          </View>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 

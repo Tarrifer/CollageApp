@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 const StudentERPScreen = () => {
   // Sample ERP links data
@@ -18,19 +19,21 @@ const StudentERPScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Student ERP</Text>
-      {erpLinks.map((erpLink, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.card}
-          onPress={() => handleRedirect(erpLink.url)}
-        >
-          <Text style={styles.cardText}>{erpLink.name}</Text>
-          <Text style={styles.cardText}>{erpLink.url}</Text>
-        </TouchableOpacity>
-      ))}
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.heading}>Student ERP</Text>
+        {erpLinks.map((erpLink, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.card}
+            onPress={() => handleRedirect(erpLink.url)}
+          >
+            <Text style={styles.cardText}>{erpLink.name}</Text>
+            <Text style={styles.cardText}>{erpLink.url}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 

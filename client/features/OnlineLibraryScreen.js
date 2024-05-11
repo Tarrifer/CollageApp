@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 const OnlineLibraryScreen = ({ navigation }) => {
   // Sample library data
@@ -18,19 +19,21 @@ const OnlineLibraryScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Online Library</Text>
-      {libraryLinks.map((libraryLink, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.card}
-          onPress={() => handleRedirect(libraryLink.url)}
-        >
-          <Text style={styles.cardText}>{libraryLink.name}</Text>
-          <Text style={styles.cardText}>{libraryLink.url}</Text>
-        </TouchableOpacity>
-      ))}
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.heading}>Online Library</Text>
+        {libraryLinks.map((libraryLink, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.card}
+            onPress={() => handleRedirect(libraryLink.url)}
+          >
+            <Text style={styles.cardText}>{libraryLink.name}</Text>
+            <Text style={styles.cardText}>{libraryLink.url}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 
