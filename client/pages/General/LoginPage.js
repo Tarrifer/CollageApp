@@ -111,15 +111,20 @@ const LoginPage = () => {
           <Text style={styles.title}>Login In to your Account</Text>
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>User Type:</Text>
+          <Text style={styles.pickerLabel}>User Type:</Text>
           <Picker
             selectedValue={localUserType}
             onValueChange={(itemValue, itemIndex) =>
               setLocalUserType(itemValue)
             }
-            style={styles.input}
+            style={styles.pickerBox}
+            itemStyle={styles.pickerItem}
           >
-            <Picker.Item label="Choose User Type" value="" />
+            <Picker.Item
+              style={{ color: "gray" }}
+              label="Choose User Type"
+              value=""
+            />
             <Picker.Item label="Student" value="Student" />
             <Picker.Item label="Teacher" value="Teacher" />
             <Picker.Item label="Admin" value="Admin" />
@@ -129,13 +134,18 @@ const LoginPage = () => {
 
         {/* College Selection */}
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>College:</Text>
+          <Text style={styles.pickerLabel}>College:</Text>
           <Picker
             selectedValue={college}
             onValueChange={(itemValue, itemIndex) => setCollege(itemValue)}
-            style={styles.input}
+            style={styles.pickerBox}
+            itemStyle={styles.pickerItem}
           >
-            <Picker.Item label="Choose College" value="" />
+            <Picker.Item
+              style={{ color: "gray" }}
+              label="Choose College"
+              value=""
+            />
             <Picker.Item
               label="Royal Global University"
               value="Royal Global University"
@@ -298,6 +308,25 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "gray",
     fontSize: 16,
+  },
+  pickerLabel: {
+    color: "#041E42", // Example color
+    fontSize: 16, // Example font size
+    marginBottom: 5, // Example margin bottom
+  },
+
+  // Add styles for picker box
+  pickerBox: {
+    backgroundColor: "#D0D0D0", // Example background color
+    borderRadius: 5, // Example border radius
+    paddingHorizontal: 10, // Example padding
+    marginVertical: 10, // Example vertical margin
+  },
+
+  // Add styles for picker item
+  pickerItem: {
+    fontSize: 16, // Example font size
+    color: "gray", // Example color
   },
 });
 

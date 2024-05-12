@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { BackHandler, Alert } from "react-native";
 import { useDispatch } from "react-redux";
-import { logout } from "../../context/actions/authActions";
-import { CommonActions } from "@react-navigation/native";
+
 import {
   DrawerActions,
   useIsFocused,
@@ -17,38 +16,12 @@ import {
   ScrollView,
   Image,
 } from "react-native";
-// import { BigCardCollage } from "../../features/MasterAdminFeatures/MACustomization";
-// import DrawerNavigator from "../../navigation/DrawerNavigator";
 const TeacherHomePage = ({ route }) => {
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
-  const handleLogout = () => {
-    Alert.alert(
-      "Logout",
-      "Are you sure you want to logout?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => null,
-          style: "cancel",
-        },
-        { text: "Logout", onPress: () => handleLogoutConfirmation() },
-      ],
-      { cancelable: false }
-    );
-  };
 
-  const handleLogoutConfirmation = () => {
-    dispatch(logout());
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: "Login" }],
-      })
-    );
-  };
   const handleBackPress = () => {
     if (isFocused) {
       Alert.alert(
@@ -85,10 +58,6 @@ const TeacherHomePage = ({ route }) => {
     navigation.dispatch(DrawerActions.openDrawer());
   };
 
-  // const toggleDrawer = () => {
-  //   navigation.dispatch(DrawerActions.toggleDrawer());
-  // };
-
   const [collageName, setCollageName] = useState(
     route.params?.collageName || ""
   );
@@ -102,9 +71,6 @@ const TeacherHomePage = ({ route }) => {
   const handleCardPress = (screenName) => {
     navigation.navigate(screenName);
   };
-  // const handleLogout = () => {
-  //   navigation.navigate("Logout");
-  // };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -123,12 +89,7 @@ const TeacherHomePage = ({ route }) => {
           </TouchableOpacity>
         </View>
 
-        {/* <BigCardCollage collageName={collageName} image={image} /> */}
-
-        <TouchableOpacity
-          // onPress={() => handleCardPress("Customization")}
-          style={styles.bigCard}
-        >
+        <TouchableOpacity style={styles.bigCard}>
           <Image
             source={require("../../image/3033337.png")}
             style={styles.bigCardImage}
@@ -140,13 +101,13 @@ const TeacherHomePage = ({ route }) => {
         </View>
         <View style={styles.cards}>
           <TouchableOpacity
-            onPress={() => handleCardPress("StudentAttendance")}
+            onPress={() => handleCardPress("TeacherAttendance")}
             style={styles.card}
           >
-            <Text style={styles.cardText}>Attendance</Text>
+            <Text style={styles.cardText}>Attendance Management</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => handleCardPress("StudentTimetable")}
+            onPress={() => handleCardPress("TeacherTimetable")}
             style={styles.card}
           >
             <Text style={styles.cardText}>Timetable</Text>
@@ -158,7 +119,7 @@ const TeacherHomePage = ({ route }) => {
             <Text style={styles.cardText}>Calendar</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => handleCardPress("StudentReport")}
+            onPress={() => handleCardPress("TeacherReport")}
             style={styles.card}
           >
             <Text style={styles.cardText}>Reports</Text>
@@ -175,20 +136,11 @@ const TeacherHomePage = ({ route }) => {
           >
             <Text style={styles.cardText}>ERP</Text>
           </TouchableOpacity>
-
           <TouchableOpacity
-            // key="settings"
-            onPress={() => handleCardPress("Settings")}
+            onPress={() => handleCardPress("TeacherNotice")}
             style={styles.card}
           >
-            <Text style={styles.cardText}>Settings</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            // key="Log Out"
-            onPress={handleLogout}
-            style={styles.card}
-          >
-            <Text style={styles.cardText}>Logout</Text>
+            <Text style={styles.cardText}>Notice</Text>
           </TouchableOpacity>
         </View>
       </View>

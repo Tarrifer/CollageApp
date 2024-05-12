@@ -51,6 +51,26 @@ import CalenderScreen from "../features/CalenderScreen";
 // import StudentDayTimetableScreen from "../features/StudentFeatures/StudentDayTimetableScreen";
 import EventTimetableScreen from "../features/StudentFeatures/EventTimetableScreen";
 import StudentSubjectTimetableScreen from "../features/StudentFeatures/StudentSubjectTimetableScreen";
+import TeacherAttendanceScreen from "../features/TeacherFeatures/TeacherAttendanceScreen";
+import TeacherNoticeScreen from "../features/TeacherFeatures/TeacherNoticeScreen";
+import TeacherTimetableScreen from "../features/TeacherFeatures/TeacherTimetableScreen";
+import TeacherReportScreen from "../features/TeacherFeatures/TeacherReportScreen";
+import AdminAttendanceScreen from "../features/AdminFeatures/AdminAttendanceScreen";
+import AdminNoticeScreen from "../features/AdminFeatures/AdminNoticeScreen";
+import AdminReportScreen from "../features/AdminFeatures/AdminReportScreen";
+import AdminTimetableScreen from "../features/AdminFeatures/AdminTimetableScreen";
+import SearchStudentAttendance from "../features/TeacherFeatures/SearchStudentAttendance";
+import TeacherAttendanceViewScreen from "../features/TeacherFeatures/TeacherAttendanceViewScreen";
+import TeacherAttendanceTakingScreen from "../features/TeacherFeatures/TeacherAttendanceTakingScreen";
+import TeacherAttendenceFilterScreen from "../features/TeacherFeatures/TeacherAttendenceFilterScreen";
+import TAttendanceScreen from "../features/TeacherFeatures/TAttendanceScreen";
+import TeacherSubjectTimetableScreen from "../features/TeacherFeatures/TeacherSubjectTimetableScreen";
+import PendingPage from "../pages/General/PendingPage";
+import AdminAssignedView from "../features/AdminFeatures/AdminAssignedView";
+import AdminAssignSubject from "../features/AdminFeatures/AdminAssignSubject";
+import AdminTimetableCreate from "../features/AdminFeatures/AdminTimetableCreate";
+import AdminTimetableView from "../features/AdminFeatures/AdminTimetableView";
+import TimetableSlot from "../features/AdminFeatures/TimetableSlot";
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -164,7 +184,6 @@ export const AuthStack = () => {
       <Stack.Screen name="Register" component={SignupPage} />
       <Stack.Screen name="ForgotPassword" component={ForgotPasswordPage} />
       <Stack.Screen name="MainDrawer" component={MainDrawerNavigator} />
-
       <Stack.Screen
         name="Notification"
         component={NotificationScreen}
@@ -188,7 +207,6 @@ export const AuthStack = () => {
           headerShown: false,
         }}
       />
-
       <Stack.Screen
         name="DataBaseCreation"
         component={MAdminDataBaseCreation}
@@ -259,7 +277,6 @@ export const AuthStack = () => {
         component={CandidateDetailsViewScreen}
         options={{ title: "View Screen", headerShown: false }}
       />
-
       <Stack.Screen
         name="Search"
         component={SearchUser}
@@ -309,6 +326,111 @@ export const AuthStack = () => {
         name="StudentSubjectTimetable"
         component={StudentSubjectTimetableScreen}
         options={{ title: "Student Subject", headerShown: true }}
+      />
+      <Stack.Screen
+        name="TeacherAttendance"
+        component={TeacherAttendanceScreen}
+        options={{ title: "Teacher Attendance", headerShown: true }}
+      />
+      <Stack.Screen
+        name="TAttendance"
+        component={TAttendanceScreen}
+        options={{ title: "Teacher Attendance Taking", headerShown: true }}
+      />
+      <Stack.Screen
+        name="SearchStudent"
+        component={SearchStudentAttendance}
+        options={{ title: "SearchStudent", headerShown: true }}
+      />
+      <Stack.Screen
+        name="TeacherAttendanceView"
+        component={TeacherAttendanceViewScreen}
+        options={{ title: "Teacher Attendance View", headerShown: true }}
+      />
+      <Stack.Screen
+        name="TeacherAttendanceTaking"
+        component={TeacherAttendanceTakingScreen}
+        options={{ title: "Teacher Attendance Taking", headerShown: true }}
+      />
+      <Stack.Screen
+        name="TeacherAttendenceFilter"
+        component={TeacherAttendenceFilterScreen}
+        options={{ title: "Teacher Attendance Filter", headerShown: true }}
+      />
+      <Stack.Screen
+        name="TeacherNotice"
+        component={TeacherNoticeScreen}
+        options={{ title: "Teacher Notice", headerShown: true }}
+      />
+      <Stack.Screen
+        name="TeacherReport"
+        component={TeacherReportScreen}
+        options={{ title: "Teacher Report", headerShown: true }}
+      />
+      <Stack.Screen
+        name="TeacherTimetable"
+        component={TeacherTimetableScreen}
+        options={{ title: "Teacher Timetable", headerShown: true }}
+      />
+      <Stack.Screen
+        name="TeacherSubjectTimetable"
+        component={TeacherSubjectTimetableScreen}
+        options={{ title: "Teacher Timetable", headerShown: true }}
+      />
+      <Stack.Screen
+        name="AdminAttendance"
+        component={AdminAttendanceScreen}
+        options={{ title: "Admin Attendance", headerShown: true }}
+      />
+      <Stack.Screen
+        name="AdminNotice"
+        component={AdminNoticeScreen}
+        options={{ title: "Admin Notice", headerShown: true }}
+      />
+      <Stack.Screen
+        name="AdminReport"
+        component={AdminReportScreen}
+        options={{ title: "Admin Report", headerShown: true }}
+      />
+      <Stack.Screen
+        name="AdminAssignedView"
+        component={AdminAssignedView}
+        options={{ title: "Admin Timetable", headerShown: true }}
+      />
+      <Stack.Screen
+        name="AdminAttendanceScreen"
+        component={AdminAttendanceScreen}
+        options={{ title: "Admin Timetable", headerShown: true }}
+      />
+      <Stack.Screen
+        name="AdminAssignSubject"
+        component={AdminAssignSubject}
+        options={{ title: "Admin Timetable", headerShown: true }}
+      />
+      <Stack.Screen
+        name="AdminTimetableCreate"
+        component={AdminTimetableCreate}
+        options={{ title: "Admin Timetable", headerShown: true }}
+      />
+      <Stack.Screen
+        name="AdminTimetable"
+        component={AdminTimetableScreen}
+        options={{ title: "Admin Timetable", headerShown: true }}
+      />
+      <Stack.Screen
+        name="AdminTimetableView"
+        component={AdminTimetableView}
+        options={{ title: "Admin Timetable", headerShown: true }}
+      />
+      <Stack.Screen
+        name="TimetableSlot"
+        component={TimetableSlot}
+        options={{ title: "Admin Timetable", headerShown: true }}
+      />
+      <Stack.Screen
+        name="Pending"
+        component={PendingPage}
+        options={{ title: "Pending...", headerShown: true }}
       />
     </Stack.Navigator>
   );

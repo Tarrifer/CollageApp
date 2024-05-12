@@ -7,6 +7,7 @@ import {
   SET_USER_TYPE,
   // UPDATE_USER_PROFILE_PIC,
   // UPDATE_USER_DETAILS
+  UPDATE_STUDENT_LIST,
 } from "./authActionTypes";
 
 export const loginSuccess = (userType) => ({
@@ -65,6 +66,11 @@ export const updateUserDetails = (userName, userEmail) => ({
   type: "UPDATE_USER_DETAILS",
   payload: { userName, userEmail },
 });
+export const updateStudentList = (studentList) => ({
+  type: UPDATE_STUDENT_LIST,
+  payload: studentList,
+});
+
 // // Define the login action
 // export const login = (email, password) => {
 //   // Simulated login logic

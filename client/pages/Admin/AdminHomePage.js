@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { BackHandler, Alert } from "react-native";
 import { useDispatch } from "react-redux";
-import { logout } from "../../context/actions/authActions";
-import { CommonActions } from "@react-navigation/native";
+// import { logout } from "../../context/actions/authActions";
+// import { CommonActions } from "@react-navigation/native";
 import {
   DrawerActions,
   useIsFocused,
@@ -23,31 +23,31 @@ const AdminHomePage = ({ route }) => {
 
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
-  const handleLogout = () => {
-    Alert.alert(
-      "Logout",
-      "Are you sure you want to logout?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => null,
-          style: "cancel",
-        },
-        { text: "Logout", onPress: () => handleLogoutConfirmation() },
-      ],
-      { cancelable: false }
-    );
-  };
+  // const handleLogout = () => {
+  //   Alert.alert(
+  //     "Logout",
+  //     "Are you sure you want to logout?",
+  //     [
+  //       {
+  //         text: "Cancel",
+  //         onPress: () => null,
+  //         style: "cancel",
+  //       },
+  //       { text: "Logout", onPress: () => handleLogoutConfirmation() },
+  //     ],
+  //     { cancelable: false }
+  //   );
+  // };
 
-  const handleLogoutConfirmation = () => {
-    dispatch(logout());
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: "Login" }],
-      })
-    );
-  };
+  // const handleLogoutConfirmation = () => {
+  //   dispatch(logout());
+  //   navigation.dispatch(
+  //     CommonActions.reset({
+  //       index: 0,
+  //       routes: [{ name: "Login" }],
+  //     })
+  //   );
+  // };
   const handleBackPress = () => {
     if (isFocused) {
       Alert.alert(
@@ -84,10 +84,6 @@ const AdminHomePage = ({ route }) => {
     navigation.dispatch(DrawerActions.openDrawer());
   };
 
-  // const toggleDrawer = () => {
-  //   navigation.dispatch(DrawerActions.toggleDrawer());
-  // };
-
   const [collageName, setCollageName] = useState(
     route.params?.collageName || ""
   );
@@ -101,9 +97,6 @@ const AdminHomePage = ({ route }) => {
   const handleCardPress = (screenName) => {
     navigation.navigate(screenName);
   };
-  // const handleLogout = () => {
-  //   navigation.navigate("Logout");
-  // };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -122,12 +115,7 @@ const AdminHomePage = ({ route }) => {
           </TouchableOpacity>
         </View>
 
-        {/* <BigCardCollage collageName={collageName} image={image} /> */}
-
-        <TouchableOpacity
-          // onPress={() => handleCardPress("Customization")}
-          style={styles.bigCard}
-        >
+        <TouchableOpacity style={styles.bigCard}>
           <Image
             source={require("../../image/3033337.png")}
             style={styles.bigCardImage}
@@ -139,16 +127,16 @@ const AdminHomePage = ({ route }) => {
         </View>
         <View style={styles.cards}>
           <TouchableOpacity
-            onPress={() => handleCardPress("StudentAttendance")}
+            onPress={() => handleCardPress("AdminAttendance")}
             style={styles.card}
           >
             <Text style={styles.cardText}>Attendance</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => handleCardPress("StudentTimetable")}
+            onPress={() => handleCardPress("AdminTimetable")}
             style={styles.card}
           >
-            <Text style={styles.cardText}>Timetable</Text>
+            <Text style={styles.cardText}>Timetable Create</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => handleCardPress("Calender")}
@@ -157,7 +145,13 @@ const AdminHomePage = ({ route }) => {
             <Text style={styles.cardText}>Calendar</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => handleCardPress("StudentReport")}
+            onPress={() => handleCardPress("TeacherTimetable")}
+            style={styles.card}
+          >
+            <Text style={styles.cardText}>Timetable</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleCardPress("AdminReport")}
             style={styles.card}
           >
             <Text style={styles.cardText}>Reports</Text>
@@ -174,20 +168,11 @@ const AdminHomePage = ({ route }) => {
           >
             <Text style={styles.cardText}>ERP</Text>
           </TouchableOpacity>
-
           <TouchableOpacity
-            // key="settings"
-            onPress={() => handleCardPress("Settings")}
+            onPress={() => handleCardPress("AdminNotice")}
             style={styles.card}
           >
-            <Text style={styles.cardText}>Settings</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            // key="Log Out"
-            onPress={handleLogout}
-            style={styles.card}
-          >
-            <Text style={styles.cardText}>Logout</Text>
+            <Text style={styles.cardText}>Notice</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -199,7 +184,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: "#f0f0f0",
-    backgroundColor: "lightblue",
+    backgroundColor: "#FFFF8F",
   },
   scrollContainer: {
     flexGrow: 1,
@@ -244,7 +229,7 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    backgroundColor: "#007FFF",
+    backgroundColor: "#FFC000",
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -261,7 +246,7 @@ const styles = StyleSheet.create({
     width: "40%",
     aspectRatio: 1,
     // backgroundColor: "#fff",
-    backgroundColor: "#6490E8",
+    backgroundColor: "#FFEA00",
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",

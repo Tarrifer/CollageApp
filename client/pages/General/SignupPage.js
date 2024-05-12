@@ -108,6 +108,7 @@ const SignupPage = () => {
     // ...
 
     navigation.navigate("OTPVerification", { userType });
+    // navigation.navigate("Pending", { userType });
   };
 
   return (

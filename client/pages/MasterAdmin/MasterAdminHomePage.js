@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: "#f0f0f0",
-    backgroundColor: "lightblue",
+    backgroundColor: "#FAD5A5",
   },
   scrollContainer: {
     flexGrow: 1,
@@ -245,7 +245,8 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    backgroundColor: "#007FFF",
+    // backgroundColor: "#FF5F15",
+    backgroundColor: "#FF5733",
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -261,8 +262,8 @@ const styles = StyleSheet.create({
   card: {
     width: "40%",
     aspectRatio: 1,
-    // backgroundColor: "#fff",
-    backgroundColor: "#6490E8",
+    // backgroundColor: "#FF7F50",
+    backgroundColor: "	#ff4d00",
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
