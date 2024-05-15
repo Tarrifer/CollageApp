@@ -1,0 +1,45 @@
+[
+    {
+      "id": 1,
+      "selectedTeacher": "Amanda Clark",
+      "selectedSchool": "Royal School of Engineering",
+      "selectedSemester": "1",
+      "selectedDepartment": "Computer Science and Engineering",
+      "selectedSubject": {
+        "SubjectName": "Introduction to Programming",
+        "SubjectCredit": 4,
+        "SubjectType": "Core",
+        "SubjectCode": "CSE101"
+      },
+      "dateTime": "2024-05-14T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "selectedTeacher": "Matthew Harris",
+      "selectedSchool": "Royal School of Business",
+      "selectedSemester": "2",
+      "selectedDepartment": "Finance",
+      "selectedSubject": {
+        "SubjectName": "Financial Management",
+        "SubjectCredit": 3,
+        "SubjectType": "Core",
+        "SubjectCode": "FIN201"
+      },
+      "dateTime": "2024-05-14T11:00:00Z"
+    },
+    {
+      "id": 3,
+      "selectedTeacher": "Jennifer Smith",
+      "selectedSchool": "Royal School of Business",
+      "selectedSemester": "2",
+      "selectedDepartment": "Marketing",
+      "selectedSubject": {
+        "SubjectName": "Consumer Behavior",
+        "SubjectCredit": 3,
+        "SubjectType": "Core",
+        "SubjectCode": "CB01"
+      },
+      "dateTime": "2024-05-14T12:00:00Z"
+    }
+  ]
+  

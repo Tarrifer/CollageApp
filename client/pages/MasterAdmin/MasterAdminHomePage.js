@@ -5,6 +5,7 @@ import {
   DrawerActions,
   useNavigation,
   useIsFocused,
+  useRoute,
 } from "@react-navigation/native";
 import {
   View,
@@ -16,10 +17,11 @@ import {
 } from "react-native";
 import { BigCardCollage } from "../../features/MasterAdminFeatures/MACustomization";
 
-const MasterAdminHomePage = ({ route }) => {
+// const MasterAdminHomePage = ({ route }) => {
+const MasterAdminHomePage = () => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-
+  const route = useRoute();
   const handleBackPress = () => {
     if (isFocused) {
       Alert.alert(
@@ -82,14 +84,16 @@ const MasterAdminHomePage = ({ route }) => {
   // const handleCardPress = (screenName) => {
   //   navigation.navigate(screenName);
   // };
+  // const handleCardPress = (screenName) => {
+  //   if (screenName === "Customization") {
+  //     navigation.navigate(screenName);
+  //   } else {
+  //     navigation.navigate(screenName);
+  //   }
+  // };
   const handleCardPress = (screenName) => {
-    if (screenName === "Customization") {
-      navigation.navigate(screenName);
-    } else {
-      navigation.navigate(screenName);
-    }
+    navigation.navigate(screenName);
   };
-
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
@@ -183,13 +187,6 @@ const MasterAdminHomePage = ({ route }) => {
           >
             <Text style={styles.cardText}>Customization</Text>
           </TouchableOpacity> */}
-          <TouchableOpacity
-            // key="Customization"
-            onPress={() => handleCardPress("Settings")}
-            style={styles.card}
-          >
-            <Text style={styles.cardText}>Settings</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -262,8 +259,8 @@ const styles = StyleSheet.create({
   card: {
     width: "40%",
     aspectRatio: 1,
-    // backgroundColor: "#FF7F50",
-    backgroundColor: "	#ff4d00",
+    backgroundColor: "#FF7F50",
+    // backgroundColor: "	#f f4d00",
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",

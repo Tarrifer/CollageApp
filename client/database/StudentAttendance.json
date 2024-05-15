@@ -2,14 +2,14 @@
   {
     "rollNumber": 101,
     "studentName": "John Doe",
-    "departmentName": "Computer Science",
-    "subjectName": "Programming",
+    "departmentName": "BCA",
+    "subjectName": "C++",
     "semester": "1",
     "absent": 2,
     "present": 18
   },
   {
-    "rollNumber": 102,
+    "rollNumber": 122,
     "studentName": "Alice Smith",
     "departmentName": "Electrical Engineering",
     "subjectName": "Circuit Analysis",
@@ -18,7 +18,7 @@
     "present": 17
   },
   {
-    "rollNumber": 103,
+    "rollNumber": 123,
     "studentName": "Bob Johnson",
     "departmentName": "Mechanical Engineering",
     "subjectName": "Thermodynamics",
@@ -27,7 +27,7 @@
     "present": 15
   },
   {
-    "rollNumber": 104,
+    "rollNumber": 124,
     "studentName": "Emma Brown",
     "departmentName": "Civil Engineering",
     "subjectName": "Structural Analysis",
@@ -36,7 +36,7 @@
     "present": 19
   },
   {
-    "rollNumber": 105,
+    "rollNumber": 135,
     "studentName": "Jane Doe",
     "departmentName": "Computer Science",
     "subjectName": "Programming",
@@ -45,7 +45,7 @@
     "present": 16
   },
   {
-    "rollNumber": 106,
+    "rollNumber": 121,
     "studentName": "Peter Parker",
     "departmentName": "Electrical Engineering",
     "subjectName": "Circuit Analysis",
@@ -56,7 +56,7 @@
   
 
   {
-    "rollNumber": 101,
+    "rollNumber": 127,
     "studentName": "John Doe",
     "departmentName": "Computer Science",
     "subjectName": "Programming",
@@ -92,7 +92,7 @@
     "present": 19
   },
   {
-    "rollNumber": 105,
+    "rollNumber": 125,
     "studentName": "Jane Doe",
     "departmentName": "Computer Science",
     "subjectName": "Programming",

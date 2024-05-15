@@ -1,0 +1,65 @@
+
+{
+    "DepartmentName": "BCA",
+    "SchoolName": "RSIT",
+    "Timetable": {
+      "Monday": [
+        { "time": "9:00 AM - 10:00 AM", "subject": null, "teacher": "Mr. Smith" },
+        { "time": "10:00 AM - 11:00 AM", "subject": null, "teacher": "Ms. Johnson" },
+        { "time": "11:00 AM - 12:00 PM", "subject": null, "teacher": "Dr. Brown" },
+        { "time": "12:00 PM - 12:55 PM", "subject": null, "teacher": "Ms. Davis" },
+        { "time": "12:55 PM - 1:50 PM", "subject": null, "teacher": "Mr. Wilson" },
+        { "time": "1:50 PM - 2:45 PM", "subject": null, "teacher": "Ms. Lee" },
+        { "time": "2:45 PM - 3:40 PM", "subject": null, "teacher": "Mr. Clark" },
+        { "time": "3:40 PM - 4:45 PM", "subject": null, "teacher": "Ms. White" },
+        { "time": "4:35 PM - 5:15 PM", "subject": null, "teacher": "Mr. Anderson" }
+      ],
+      "Tuesday": [
+        { "time": "9:00 AM - 10:00 AM", "subject": null, "teacher": "Mr. Smith" },
+        { "time": "10:00 AM - 11:00 AM", "subject": null, "teacher": "Ms. Johnson" },
+        { "time": "11:00 AM - 12:00 PM", "subject": null, "teacher": "Dr. Brown" },
+        { "time": "12:00 PM - 12:55 PM", "subject": null, "teacher": "Ms. Davis" },
+        { "time": "12:55 PM - 1:50 PM", "subject": null, "teacher": "Mr. Wilson" },
+        { "time": "1:50 PM - 2:45 PM", "subject": null, "teacher": "Ms. Lee" },
+        { "time": "2:45 PM - 3:40 PM", "subject": null, "teacher": "Mr. Clark" },
+        { "time": "3:40 PM - 4:45 PM", "subject": null, "teacher": "Ms. White" },
+        { "time": "4:35 PM - 5:15 PM", "subject": null, "teacher": "Mr. Anderson" }
+      ],
+      "Wednesday": [
+        { "time": "9:00 AM - 10:00 AM", "subject": null, "teacher": "Mr. Smith" },
+        { "time": "10:00 AM - 11:00 AM", "subject": null, "teacher": "Ms. Johnson" },
+        { "time": "11:00 AM - 12:00 PM", "subject": null, "teacher": "Dr. Brown" },
+        { "time": "12:00 PM - 12:55 PM", "subject": null, "teacher": "Ms. Davis" },
+        { "time": "12:55 PM - 1:50 PM", "subject": null, "teacher": "Mr. Wilson" },
+        { "time": "1:50 PM - 2:45 PM", "subject": null, "teacher": "Ms. Lee" },
+        { "time": "2:45 PM - 3:40 PM", "subject": null, "teacher": "Mr. Clark" },
+        { "time": "3:40 PM - 4:45 PM", "subject": null, "teacher": "Ms. White" },
+        { "time": "4:35 PM - 5:15 PM", "subject": null, "teacher": "Mr. Anderson" }
+      ],
+      "Thursday": [
+        { "time": "9:00 AM - 10:00 AM", "subject": null, "teacher": "Mr. Smith" },
+        { "time": "10:00 AM - 11:00 AM", "subject": null, "teacher": "Ms. Johnson" },
+        { "time": "11:00 AM - 12:00 PM", "subject": null, "teacher": "Dr. Brown" },
+        { "time": "12:00 PM - 12:55 PM", "subject": null, "teacher": "Ms. Davis" },
+        { "time": "12:55 PM - 1:50 PM", "subject": null, "teacher": "Mr. Wilson" },
+        { "time": "1:50 PM - 2:45 PM", "subject": null, "teacher": "Ms. Lee" },
+        { "time": "2:45 PM - 3:40 PM", "subject": null, "teacher": "Mr. Clark" },
+        { "time": "3:40 PM - 4:45 PM", "subject": null, "teacher": "Ms. White" },
+        { "time": "4:35 PM - 5:15 PM", "subject": null, "teacher": "Mr. Anderson" }
+      ],
+      "Friday": [
+        { "time": "9:00 AM - 10:00 AM", "subject": null, "teacher": "Mr. Smith" },
+        { "time": "10:00 AM - 11:00 AM", "subject": null, "teacher": "Ms. Johnson" },
+        { "time": "11:00 AM - 12:00 PM", "subject": null, "teacher": "Dr. Brown" },
+        { "time": "12:00 PM - 12:55 PM", "subject": null, "teacher": "Ms. Davis" },
+        { "time": "12:55 PM - 1:50 PM", "subject": null, "teacher": "Mr. Wilson" },
+        { "time": "1:50 PM - 2:45 PM", "subject": null, "teacher": "Ms. Lee" },
+        { "time": "2:45 PM - 3:40 PM", "subject": null, "teacher": "Mr. Clark" },
+        { "time": "3:40 PM - 4:45 PM", "subject": null, "teacher": "Ms. White" },
+        { "time": "4:35 PM - 5:15 PM", "subject": null, "teacher": "Mr. Anderson" }
+      ],
+      "Saturday": [],
+      "Sunday": []
+    }
+  }
+  

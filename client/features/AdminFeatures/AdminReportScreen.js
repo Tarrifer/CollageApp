@@ -23,7 +23,7 @@ const AdminReportScreen = () => {
     "Report Non-Technical",
   ];
 
-  const senderTypes = ["Teacher", "Master Admin"];
+  const senderTypes = ["Student", "Teacher", "Master Admin"];
 
   const submitReport = () => {
     if (!reportType || !senderType || !description) {

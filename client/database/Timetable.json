@@ -1,0 +1,231 @@
+[
+    { "CourseType":"UG",
+      "SchoolName": "Royal School of Information Technology",
+      "SchoolShortName": "RSIT",
+      "Departments": {
+        "BCA": {
+          "1": [
+            {
+              "SubjectName": "Introduction to C",
+              "SubjectCode": "CL01",
+              "SubjectType": "Core",
+              "SubjectShortName": "ITC"
+            },
+            {
+              "SubjectName": "Fundamentals of Computer Science",
+              "SubjectCode": "CL02",
+              "SubjectType": "Core",
+              "SubjectShortName": "FOC"
+            },
+            {
+              "SubjectName": "Communicative English",
+              "SubjectCode": "ENG03",
+              "SubjectType": "AEEC",
+              "SubjectShortName": "CEN"
+            },
+            {
+              "SubjectName": "Mathematics-I",
+              "SubjectCode": "MAT1",
+              "SubjectType": "GE-I",
+              "SubjectShortName": "MAT-I"
+            }
+          ],
+          "2": [
+            {
+              "SubjectName": "Programming in Java",
+              "SubjectCode": "JAV01",
+              "SubjectType": "Core",
+              "SubjectShortName": "PJ"
+            },
+            {
+              "SubjectName": "Data Structures and Algorithms",
+              "SubjectCode": "DSA02",
+              "SubjectType": "Core",
+              "SubjectShortName": "DSA"
+            },
+            {
+              "SubjectName": "Digital Electronics",
+              "SubjectCode": "DE03",
+              "SubjectType": "Core",
+              "SubjectShortName": "DE"
+            },
+            {
+              "SubjectName": "Discrete Mathematics",
+              "SubjectCode": "DMAT2",
+              "SubjectType": "GE-II",
+              "SubjectShortName": "DM"
+            }
+          ]
+        },
+        "BSC-IT": {
+          "1": [
+            {
+              "SubjectName": "Introduction to Information Technology",
+              "SubjectCode": "IT101",
+              "SubjectType": "Core",
+              "SubjectShortName": "IT"
+            },
+            {
+              "SubjectName": "Computer Organization and Architecture",
+              "SubjectCode": "COA102",
+              "SubjectType": "Core",
+              "SubjectShortName": "COA"
+            },
+            {
+              "SubjectName": "Web Technologies",
+              "SubjectCode": "WEB103",
+              "SubjectType": "Core",
+              "SubjectShortName": "WEB"
+            },
+            {
+              "SubjectName": "Mathematics-I",
+              "SubjectCode": "MAT1",
+              "SubjectType": "GE-I",
+              "SubjectShortName": "MAT-I"
+            }
+          ],
+          "2": [
+            {
+              "SubjectName": "Database Management Systems",
+              "SubjectCode": "DBMS201",
+              "SubjectType": "Core",
+              "SubjectShortName": "DBMS"
+            },
+            {
+              "SubjectName": "Software Engineering",
+              "SubjectCode": "SE202",
+              "SubjectType": "Core",
+              "SubjectShortName": "SE"
+            },
+            {
+              "SubjectName": "Operating Systems",
+              "SubjectCode": "OS203",
+              "SubjectType": "Core",
+              "SubjectShortName": "OS"
+            },
+            {
+              "SubjectName": "Mathematics-II",
+              "SubjectCode": "MAT2",
+              "SubjectType": "GE-II",
+              "SubjectShortName": "MAT-II"
+            }
+          ]
+        }
+      }
+    },
+    { "CourseType":"UG",
+      "SchoolName": "St. Mary's School of Arts",
+      "SchoolShortName": "SMSA",
+      "Departments": {
+        "English": {
+          "1": [
+            {
+              "SubjectName": "Literature",
+              "SubjectCode": "LIT01",
+              "SubjectType": "Core",
+              "SubjectShortName": "LIT"
+            },
+            {
+              "SubjectName": "Grammar",
+              "SubjectCode": "GRAM02",
+              "SubjectType": "Core",
+              "SubjectShortName": "GRAM"
+            },
+            {
+              "SubjectName": "Writing Skills",
+              "SubjectCode": "WS03",
+              "SubjectType": "Core",
+              "SubjectShortName": "WS"
+            },
+            {
+              "SubjectName": "Communication Skills",
+              "SubjectCode": "COMMSK4",
+              "SubjectType": "AEEC",
+              "SubjectShortName": "CS"
+            }
+          ],
+          "2": [
+            {
+              "SubjectName": "Shakespearean Studies",
+              "SubjectCode": "SHAKES201",
+              "SubjectType": "Core",
+              "SubjectShortName": "SHK"
+            },
+            {
+              "SubjectName": "Modern Literature",
+              "SubjectCode": "MODLIT202",
+              "SubjectType": "Core",
+              "SubjectShortName": "MODLIT"
+            },
+            {
+              "SubjectName": "Creative Writing",
+              "SubjectCode": "CREWRI203",
+              "SubjectType": "Core",
+              "SubjectShortName": "CREWRI"
+            },
+            {
+              "SubjectName": "Public Speaking",
+              "SubjectCode": "PUBSPK204",
+              "SubjectType": "AEEC",
+              "SubjectShortName": "PS"
+            }
+          ]
+        },
+        "History": {
+          "1": [
+            {
+              "SubjectName": "Ancient History",
+              "SubjectCode": "ANC01",
+              "SubjectType": "Core",
+              "SubjectShortName": "ANC"
+            },
+            {
+              "SubjectName": "Medieval History",
+              "SubjectCode": "MED02",
+              "SubjectType": "Core",
+              "SubjectShortName": "MED"
+            },
+            {
+              "SubjectName": "Modern History",
+              "SubjectCode": "MOD03",
+              "SubjectType": "Core",
+              "SubjectShortName": "MOD"
+            },
+            {
+              "SubjectName": "World History",
+              "SubjectCode": "WORLD04",
+              "SubjectType": "GE-I",
+              "SubjectShortName": "WORLD"
+            }
+          ],
+          "2": [
+            {
+              "SubjectName": "European History",
+              "SubjectCode": "EURO201",
+              "SubjectType": "Core",
+              "SubjectShortName": "EURO"
+            },
+            {
+              "SubjectName": "American History",
+              "SubjectCode": "AMER202",
+              "SubjectType": "Core",
+              "SubjectShortName": "AMER"
+            },
+            {
+              "SubjectName": "Asian History",
+              "SubjectCode": "ASIA203",
+              "SubjectType": "Core",
+              "SubjectShortName": "ASIA"
+            },
+            {
+              "SubjectName": "African History",
+              "SubjectCode": "AFR204",
+              "SubjectType": "GE-II",
+              "SubjectShortName": "AFR"
+            }
+          ]
+        }
+      }
+    }
+  ]
+  

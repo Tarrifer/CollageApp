@@ -1,0 +1,92 @@
+[
+    {
+      "TeacherName": "John Smith",
+      "SchoolName": "School of Engineering",
+      "DepartmentName": "Computer Science and Engineering",
+      "RegistrationNumber": "T101",
+      "CreditStatus": 8
+    },
+    {
+      "TeacherName": "Emily Johnson",
+      "SchoolName": "School of Business",
+      "DepartmentName": "Finance",
+      "RegistrationNumber": "T102",
+      "CreditStatus": 6
+    },
+    {
+      "TeacherName": "Michael Brown",
+      "SchoolName": "School of Medicine",
+      "DepartmentName": "Neurology",
+      "RegistrationNumber": "T103",
+      "CreditStatus": 9
+    },
+    {
+      "TeacherName": "Sarah Lee",
+      "SchoolName": "School of Arts",
+      "DepartmentName": "English",
+      "RegistrationNumber": "T104",
+      "CreditStatus": 10
+    },
+    {
+      "TeacherName": "David Garcia",
+      "SchoolName": "School of Science",
+      "DepartmentName": "Physics",
+      "RegistrationNumber": "T105",
+      "CreditStatus": 7
+    },
+    {
+      "TeacherName": "Jennifer Martinez",
+      "SchoolName": "School of Engineering",
+      "DepartmentName": "Computer Science and Engineering",
+      "RegistrationNumber": "T106",
+      "CreditStatus": 5
+    },
+    {
+      "TeacherName": "Daniel Wilson",
+      "SchoolName": "School of Business",
+      "DepartmentName": "Management",
+      "RegistrationNumber": "T107",
+      "CreditStatus": 12
+    },
+    {
+      "TeacherName": "Jessica Taylor",
+      "SchoolName": "School of Medicine",
+      "DepartmentName": "Pathology",
+      "RegistrationNumber": "T108",
+      "CreditStatus": 8
+    },
+    {
+      "TeacherName": "William Rodriguez",
+      "SchoolName": "School of Arts",
+      "DepartmentName": "History",
+      "RegistrationNumber": "T109",
+      "CreditStatus": 11
+    },
+    {
+      "TeacherName": "Elizabeth Lopez",
+      "SchoolName": "School of Science",
+      "DepartmentName": "Chemistry",
+      "RegistrationNumber": "T110",
+      "CreditStatus": 6
+    },
+    {
+      "TeacherName": "Matthew Harris",
+      "SchoolName": "School of Engineering",
+      "DepartmentName": "Computer Science and Engineering",
+      "RegistrationNumber": "T111",
+      "CreditStatus": 9
+    },
+    {
+      "TeacherName": "Amanda Clark",
+      "SchoolName": "School of Business",
+      "DepartmentName": "Finance",
+      "RegistrationNumber": "T112",
+      "CreditStatus": 7
+    }
+  ]
+  
+
+
+ 
+ 
+ 

@@ -1,0 +1,123 @@
+[
+    {
+      "CourseType": "Undergraduate",
+      "SchoolName": "School of Engineering",
+      "SchoolShortName": "Engg School",
+      "DepartmentName": "Computer Science and Engineering",
+      "DepartmentShortName": "CSE",
+      "SemesterNumber": 1,
+      "SubjectName": "Introduction to Programming",
+      "SubjectCredit": 4,
+      "SubjectType": "Core",
+      "SubjectCode": "CSE101"
+    },
+    {
+      "CourseType": "Undergraduate",
+      "SchoolName": "School of Business",
+      "SchoolShortName": "Biz School",
+      "DepartmentName": "Finance",
+      "DepartmentShortName": "Fin",
+      "SemesterNumber": 1,
+      "SubjectName": "Principles of Accounting",
+      "SubjectCredit": 3,
+      "SubjectType": "Core",
+      "SubjectCode": "FIN101"
+    },
+    {
+      "CourseType": "Graduate",
+      "SchoolName": "School of Medicine",
+      "SchoolShortName": "Med School",
+      "DepartmentName": "Neurology",
+      "DepartmentShortName": "Neuro",
+      "SemesterNumber": 2,
+      "SubjectName": "Neuroscience Fundamentals",
+      "SubjectCredit": 3,
+      "SubjectType": "Elective",
+      "SubjectCode": "NEU202"
+    },
+    {
+      "CourseType": "Undergraduate",
+      "SchoolName": "School of Arts",
+      "SchoolShortName": "Arts School",
+      "DepartmentName": "English",
+      "DepartmentShortName": "Eng",
+      "SemesterNumber": 2,
+      "SubjectName": "Shakespearean Literature",
+      "SubjectCredit": 4,
+      "SubjectType": "Core",
+      "SubjectCode": "ENG201"
+    },
+    {
+      "CourseType": "Graduate",
+      "SchoolName": "School of Science",
+      "SchoolShortName": "Sci School",
+      "DepartmentName": "Physics",
+      "DepartmentShortName": "Phys",
+      "SemesterNumber": 3,
+      "SubjectName": "Quantum Mechanics",
+      "SubjectCredit": 3,
+      "SubjectType": "Core",
+      "SubjectCode": "PHY301"
+    },
+    {
+      "CourseType": "Undergraduate",
+      "SchoolName": "School of Engineering",
+      "SchoolShortName": "Engg School",
+      "DepartmentName": "Computer Science and Engineering",
+      "DepartmentShortName": "CSE",
+      "SemesterNumber": 1,
+      "SubjectName": "Data Structures and Algorithms",
+      "SubjectCredit": 4,
+      "SubjectType": "Core",
+      "SubjectCode": "CSE102"
+    },
+    {
+      "CourseType": "Undergraduate",
+      "SchoolName": "School of Business",
+      "SchoolShortName": "Biz School",
+      "DepartmentName": "Management",
+      "DepartmentShortName": "Mgmt",
+      "SemesterNumber": 1,
+      "SubjectName": "Business Ethics",
+      "SubjectCredit": 3,
+      "SubjectType": "Core",
+      "SubjectCode": "MGMT101"
+    },
+    {
+      "CourseType": "Graduate",
+      "SchoolName": "School of Medicine",
+      "SchoolShortName": "Med School",
+      "DepartmentName": "Pathology",
+      "DepartmentShortName": "Path",
+      "SemesterNumber": 2,
+      "SubjectName": "Advanced Pathophysiology",
+      "SubjectCredit": 3,
+      "SubjectType": "Elective",
+      "SubjectCode": "PTH202"
+    },
+    {
+      "CourseType": "Undergraduate",
+      "SchoolName": "School of Arts",
+      "SchoolShortName": "Arts School",
+      "DepartmentName": "History",
+      "DepartmentShortName": "Hist",
+      "SemesterNumber": 2,
+      "SubjectName": "World History",
+      "SubjectCredit": 4,
+      "SubjectType": "Core",
+      "SubjectCode": "HIST201"
+    },
+    {
+      "CourseType": "Graduate",
+      "SchoolName": "School of Science",
+      "SchoolShortName": "Sci School",
+      "DepartmentName": "Chemistry",
+      "DepartmentShortName": "Chem",
+      "SemesterNumber": 3,
+      "SubjectName": "Organic Chemistry",
+      "SubjectCredit": 4,
+      "SubjectType": "Core",
+      "SubjectCode": "CHEM301"
+    }
+  ]
+  

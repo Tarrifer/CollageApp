@@ -26,16 +26,16 @@ function NotificationScreen() {
         name="Technical"
         component={TechnicalNotificationScreen}
         options={{
-          tabBarLabel: "Technical",
+          tabBarLabel: "Event",
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="NonTechnical"
         component={NonTechnicalNotificationScreen}
         options={{
           tabBarLabel: "Non-Technical",
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }

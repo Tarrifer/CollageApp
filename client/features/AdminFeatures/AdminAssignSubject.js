@@ -1,762 +1,1841 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
-TouchableOpacity,
+  Button,
   ScrollView,
   StyleSheet,
+  TouchableOpacity,
   Alert,
 } from "react-native";
-// import axios from "axios";
+import { Picker } from "@react-native-picker/picker";
+import teacherData from "../../database/Batch.json";
+import subjectData from "../../database/Departments.json";
 
 const AdminAssignSubject = () => {
-  const [teacherName, setTeacherName] = useState("");
-  const [schoolName, setSchoolName] = useState("");
-  const [departmentName, setDepartmentName] = useState("");
-  const [semester, setSemester] = useState("");
-  const [subjects, setSubjects] = useState([]);
-  const [filteredSubjects, setFilteredSubjects] = useState([]);
-  const [selectedSubject, setSelectedSubject] = useState(null);
-  const [teachers, setTeachers] = useState([]);
-  const [filteredTeachers, setFilteredTeachers] = useState([]);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
-  const [remainingCredits, setRemainingCredits] = useState(12);
-  const [assignments, setAssignments] = useState([]);
-  const [editing, setEditing] = useState(false);
+  const [selectedSchool, setSelectedSchool] = useState(null);
+  const [selectedSemester, setSelectedSemester] = useState(null);
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
+  const [selectedSubject, setSelectedSubject] = useState(null);
+  const [teachersForSelectedSchool, setTeachersForSelectedSchool] = useState(
+    []
+  );
+  const [isTeacherPickerEnabled, setIsTeacherPickerEnabled] = useState(false);
 
-//   useEffect(() => {
-//     const fetchTeachers = async () => {
-//       try {
-//         const response = await axios.get(
-//           "https://your-api-url/teachers"
-//         );
-//         setTeachers(response.data);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
-
-//     const fetchSubjects = async () => {
-//       try {
-//         const response = await axios.get(
-//           "https://your-api-url/subjects"
-//         );
-//         setSubjects(response.data);
-//       } catch (error) {
-//         console.error(error);
-//       }
-
-//     fetchTeachers();
-//     fetchSubjects();
-//   }, []);
-
-  useEffect(() => {
-    if (selectedTeacher) {
-      const teacherAssignments = teachers.find(
-        (teacher) => teacher.id === selectedTeacher.id
-      ).assignments;
-
-      setAssignments(teacherAssignments);
+  const assignSubject = () => {
+    if (
+      !selectedTeacher ||
+      !selectedSchool ||
+      !selectedSemester ||
+      !selectedDepartment ||
+      !selectedSubject
+    ) {
+      Alert.alert("Please select all details.");
+      return;
     }
-  }, [selectedTeacher]);
+    const subjectCredit = selectedSubject.SubjectCredit || 0;
+    const creditStatus = selectedTeacherCreditStatus() || 0;
+    const totalCredit = subjectCredit + creditStatus;
 
-  useEffect(() => {
-    const filteredTeachers = teachers.filter(
-      (teacher) =>
-        teacher.schoolName.includes(schoolName) &&
-        teacher.departmentName.includes(departmentName)
-    );
-
-    setFilteredTeachers(filteredTeachers);
-  }, [schoolName, departmentName]);
-
-  useEffect(() => {
-    const filteredSubjects = subjects.filter(
-      (subject) =>
-        subject.schoolName.includes(schoolName) &&
-        subject.departmentName.includes(departmentName) &&
-        subject.semester.includes(semester)
-    );
-
-    setFilteredSubjects(filteredSubjects);
-  }, [schoolName, departmentName, semester]);
-
-  const handleFilterTeachers = () => {
-    const filteredTeachers = teachers.filter(
-      (teacher) =>
-        teacher.schoolName.includes(schoolName) &&
-        teacher.departmentName.includes(departmentName)
-    );
-
-    setFilteredTeachers(filteredTeachers);
-  };
-
-  const handleFilterSubjects = () => {
-    const filteredSubjects = subjects.filter(
-      (subject) =>
-        subject.schoolName.includes(schoolName) &&
-        subject.departmentName.includes(departmentName) &&
-        subject.semester.includes(semester)
-    );
-
-    setFilteredSubjects(filteredSubjects);
-  };
-
-  const handleSelectTeacher = (teacher) => {
-    setSelectedTeacher(teacher);
-    setRemainingCredits(teacher.maxCredits);
-    setSelectedSubject(null);
-  };
-
-  const handleSelectSubject = (subject) => {
-    if (remainingCredits - subject.credits >= 0) {
-      setSelectedSubject(subject);
-      setRemainingCredits(remainingCredits - subject.credits);
-    } else {
-      Alert.alert("Error", "Not enough credits remaining.");
+    if (totalCredit > 12) {
+      Alert.alert(
+        "Subject cannot be assigned.",
+        "The teacher's credit threshold has been reached."
+      );
+      return;
     }
+    const selectedData = {
+      selectedTeacher,
+      selectedSchool,
+      selectedSemester,
+      selectedDepartment,
+      selectedSubject,
+      dateTime: new Date().toISOString(),
+    };
+    console.log(JSON.stringify(selectedData));
+    // Code to assign subject goes here (to be implemented)
+
+    // Show alert saying subject is assigned
+    Alert.alert(`Subject ${selectedSubject.SubjectName} is assigned.`);
+
+    // Reset dropdowns
+    resetSelections();
   };
 
- const handleAddSubject = () => {
-    if (selectedTeacher && selectedSubject) {
-      const newAssignment = {
-        teacherId: selectedTeacher.id,
-        subjectId: selectedSubject.id,
-        semester: semester,
-      };
-
-      const updatedAssignments = [...assignments, newAssignment];
-
-      setAssignments(updatedAssignments);
-
-      const updatedTeacher = {
-        ...selectedTeacher,
-        assignments: updatedAssignments,
-      };
-
-      // axios.put(
-      //   `https://your-api-url/teachers/${selectedTeacher.id}`,
-      //   updatedTeacher
-      // );
-
-      setSelectedSubject(null);
-      setRemainingCredits(remainingCredits + selectedSubject.credits);
-      Alert.alert("Subject assigned successfully");
-    } else {
-      Alert.alert("Please select a teacher and subject");
-    }
-  };
-
-  const handleAssign = () => {
-    if (selectedTeacher) {
-      Alert.alert("Subjects assigned successfully");
-    } else {
-      Alert.alert("Please select a teacher");
-    }
-  };
-
-  const handleAssignNew = () => {
+  const resetSelections = () => {
     setSelectedTeacher(null);
+    setSelectedSchool(null);
+    setSelectedSemester(null);
+    setSelectedDepartment(null);
     setSelectedSubject(null);
-    setRemainingCredits(12);
-    setAssignments([]);
+    setTeachersForSelectedSchool([]);
+    setIsTeacherPickerEnabled(false);
   };
 
-  const handleSaveChanges = () => {
-    if (assignments.length > 0) {
-      const updatedTeacher = {
-        ...selectedTeacher,
-        assignments: assignments,
-      };
+  const handleSchoolChange = (schoolName) => {
+    setSelectedSchool(schoolName);
+    const selectedSchoolTeachers =
+      teacherData.find((school) => school.SchoolName === schoolName)
+        ?.Teachers || [];
+    setTeachersForSelectedSchool(selectedSchoolTeachers);
+    setSelectedTeacher(null);
+    setIsTeacherPickerEnabled(true);
+  };
 
-      // axios.put(
-      //   `https://your-api-url/teachers/${selectedTeacher.id}`,
-      //   updatedTeacher
-      // );
-
-      Alert.alert("Changes saved successfully");
-    } else {
-      Alert.alert("Please assign at least one subject");
+  const handleTeacherChange = (teacherValue) => {
+    if (!selectedSchool) {
+      Alert.alert("Please select School first.");
+      return;
     }
+    setSelectedTeacher(teacherValue);
   };
 
-  const handleDelete = () => {
-    Alert.alert(
-      "Delete",
-      "Are you sure you want to delete this teacher and their assigned subjects?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Delete",
-          onPress: () => {
-            const updatedTeachers = teachers.filter(
-              (teacher) => teacher.id !== selectedTeacher.id
-            );
+  const handleDepartmentChange = (departmentValue) => {
+    if (!selectedSchool) {
+      Alert.alert("Please select School first.");
+      return;
+    }
+    setSelectedDepartment(departmentValue);
+  };
 
-            setTeachers(updatedTeachers);
-            setSelectedTeacher(null);
-            setAssignments([]);
-            Alert.alert("Teacher and their assigned subjects deleted successfully");
-          },
-        },
-      ]
+  const handleSemesterChange = (semesterValue) => {
+    if (!selectedDepartment) {
+      Alert.alert("Please select Department first.");
+      return;
+    }
+    setSelectedSemester(semesterValue);
+  };
+
+  const handleSubjectChange = (subjectValue) => {
+    if (!selectedSemester) {
+      Alert.alert("Please select Semester first.");
+      return;
+    }
+    setSelectedSubject(subjectValue);
+  };
+
+  const filterSubjectsByDepartment = () => {
+    if (!selectedDepartment) return [];
+    const department = subjectData.find(
+      (dept) => dept.DepartmentName === selectedDepartment
     );
+    const semesterSubjects =
+      department && department.Semesters[selectedSemester];
+    return semesterSubjects || [];
+  };
+
+  const selectedTeacherCreditStatus = () => {
+    if (selectedTeacher) {
+      const teacher = teachersForSelectedSchool.find(
+        (t) => t.RegistrationNumber === selectedTeacher
+      );
+      return teacher ? teacher.CreditStatus : null;
+    }
+    return null;
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.filterContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Teacher Name"
-          value={teacherName}
-          onChangeText={setTeacherName}
-        />
-        <TouchableOpacity style={styles.button} onPress={handleFilterTeachers}>
-          <Text style={styles.buttonText}>Filter</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleFilterSubjects}>
-          <Text style={styles.buttonText}>Subject</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.assignmentContainer}>
-        <View style={styles.teacherContainer}>
-          <Text style={styles.label}>Teacher:</Text>
-          <ScrollView>
-            {filteredTeachers.map((teacher) => (
-              <TouchableOpacity
-                key={teacher.id}
-                style={styles.teacherButton}
-                onPress={() => handleSelectTeacher(teacher)}
-              >
-                <Text style={styles.teacherText}>{teacher.name}</Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </View>
-        <View style={styles.subjectContainer}>
-          <Text style={styles.label}>Subject:</Text>
-          <ScrollView>
-            {filteredSubjects.map((subject) => (
-              <TouchableOpacity
-                key={subject.id}
-                style={styles.subjectButton}
-                onPress={() => handleSelectSubject(subject)}
-              >
-                <Text style={styles.subjectText}>
-                  {subject.name} ({subject.credits} credits)
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </View>
-        <View style={styles.creditContainer}>
-          <Text style={styles.label}>Remaining Credits:</Text>
-          <Text style={styles.creditText}>{remainingCredits}</Text>
-        </View>
-        <TouchableOpacity style={styles.button} onPress={handleAddSubject}>
-          <Text style={styles.buttonText}>Add Subject</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.assignmentCard}>
-        {selectedTeacher && (
-          <View style={styles.cardContainer}>
-            <Text style={styles.cardTitle}>{selectedTeacher.name}</Text>
-            <View style={styles.cardSubjects}>
-              {assignments.map((assignment) => (
-                <View key={assignment.subjectId} style={styles.cardSubject}>
-                  <Text style={styles.cardSubjectText}>
-                    {assignment.subjectId} ({assignment.semester})
-                  </Text>
-                </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.headertext}>
+        Please select according to number order
+      </Text>
+      <TouchableOpacity onPress={() => setSelectedTeacher(null)}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>1. Select School:</Text>
+          <ScrollView style={styles.scrollContainer}>
+            <Picker
+              selectedValue={selectedSchool}
+              onValueChange={handleSchoolChange}
+            >
+              <Picker.Item label="Select School" value={null} />
+              {teacherData.map((school, index) => (
+                <Picker.Item
+                  key={index}
+                  label={school.SchoolName}
+                  value={school.SchoolName}
+                />
               ))}
-            </View>
-          </View>
-        )}
-      </View>
-      <View style={styles.buttonContainer}>
-        {editing ? (
-          <>
-            <TouchableOpacity style={styles.button} onPress={handleSaveChanges}>
-              <Text style={styles.buttonText}>Save Changes</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleDelete}>
-              <Text style={styles.buttonText}>Delete</Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <TouchableOpacity style={styles.button} onPress={handleAssignNew}>
-            <Text style={styles.buttonText}>Assign New</Text>
-          </TouchableOpacity>
-        )}
-        {editing ? (
-          <TouchableOpacity style={styles.button} onPress={() => setEditing(false)}>
-            <Text style={styles.buttonText}>Change</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity style={styles.button} onPress={handleAssign}>
-            <Text style={styles.buttonText}>Assign</Text>
-          </TouchableOpacity>
-        )}
-      </View>
-      {editing && (
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => setEditing(false)}>
-            <Text style={styles.buttonText}>Cancel</Text>
-          </TouchableOpacity>
+            </Picker>
+          </ScrollView>
         </View>
-      )}
-      {assignments.length > 0 && !editing && (
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => setEditing(true)}>
-            <Text style={styles.buttonText}>Change</Text>
-          </TouchableOpacity>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => setIsTeacherPickerEnabled(false)}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>2. Select Teacher:</Text>
+          <ScrollView style={styles.scrollContainer}>
+            <Picker
+              selectedValue={selectedTeacher}
+              enabled={isTeacherPickerEnabled}
+              onValueChange={handleTeacherChange}
+            >
+              <Picker.Item label="Select Teacher" value={null} />
+              {teachersForSelectedSchool.map((teacher, index) => (
+                <Picker.Item
+                  key={index}
+                  label={teacher.TeacherName}
+                  value={teacher.RegistrationNumber}
+                />
+              ))}
+            </Picker>
+          </ScrollView>
         </View>
-      )}
-      {!editing && (
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={handleSaveChanges}>
-            <Text style={styles.buttonText}>Save Changes</Text>
-          </TouchableOpacity>
+      </TouchableOpacity>
+
+      <Text style={styles.creditStatus}>
+        Credit Status: {selectedTeacherCreditStatus() || ""}
+      </Text>
+
+      <View style={styles.hrLine} />
+
+      <TouchableOpacity onPress={() => setSelectedDepartment(null)}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>1. Select Department:</Text>
+          <ScrollView style={styles.scrollContainer}>
+            <Picker
+              selectedValue={selectedDepartment}
+              onValueChange={handleDepartmentChange}
+            >
+              <Picker.Item label="Select Department" value={null} />
+              {subjectData.map((subject, index) => (
+                <Picker.Item
+                  key={index}
+                  label={subject.DepartmentName}
+                  value={subject.DepartmentName}
+                />
+              ))}
+            </Picker>
+          </ScrollView>
         </View>
-      )}
-    </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => setSelectedSemester(null)}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>2. Select Semester:</Text>
+          <ScrollView style={styles.scrollContainer}>
+            <Picker
+              enabled={!!selectedDepartment}
+              selectedValue={selectedSemester}
+              onValueChange={handleSemesterChange}
+            >
+              <Picker.Item label="Select Semester" value={null} />
+              {selectedDepartment &&
+                subjectData.find(
+                  (dept) => dept.DepartmentName === selectedDepartment
+                )?.Semesters &&
+                Object.keys(
+                  subjectData.find(
+                    (dept) => dept.DepartmentName === selectedDepartment
+                  ).Semesters
+                ).map((semester, index) => (
+                  <Picker.Item key={index} label={semester} value={semester} />
+                ))}
+            </Picker>
+          </ScrollView>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => setSelectedSubject(null)}>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>3. Select Subject:</Text>
+          <ScrollView style={styles.scrollContainer}>
+            <Picker
+              enabled={!!selectedSemester}
+              selectedValue={selectedSubject}
+              onValueChange={handleSubjectChange}
+            >
+              <Picker.Item label="Select Subject (Subject code)" value={null} />
+              {filterSubjectsByDepartment().map((subject, index) => (
+                <Picker.Item
+                  key={index}
+                  label={`${subject.SubjectName} (${subject.SubjectCode})`}
+                  value={subject}
+                />
+              ))}
+            </Picker>
+          </ScrollView>
+        </View>
+      </TouchableOpacity>
+      <Text style={styles.subjectCredit}>
+        Subject Credit: {selectedSubject ? selectedSubject.SubjectCredit : null}
+      </Text>
+
+      <Button title="Assign" onPress={assignSubject} />
+    </ScrollView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    padding: 16,
-  },
-  filterContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 16,
-  },
-  input: {
-    width: "40%",
-    height: 40,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 4,
-    paddingHorizontal: 8,
-  },
-  button: {
-    backgroundColor: "#007bff",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 4,
-    marginLeft: 8,
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  assignmentContainer: {
-    flex: 1,
-    marginBottom: 16,
-  },
-  teacherContainer: {
-    flex: 1,
-    marginRight: 16,
-  },
-  subjectContainer: {
-    flex: 1,
-  },
-  teacherButton: {
-    backgroundColor: "#f5f5f5",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 4,
-    marginBottom: 8,
-  },
-  teacherText: {
-    fontSize: 16,
-    color: "#333",
-  },
-  subjectButton: {
-    backgroundColor: "#f5f5f5",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 4,
-    marginBottom: 8,
-  },
-  subjectText: {
-    fontSize: 16,
-    color: "#333",
-  },
-  creditContainer: {
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  creditText: {
-    fontSize: 16,
-    color: "#333",
-  },
-  assignmentCard: {
-    marginBottom: 16,
-  },
-  cardContainer: {
-    backgroundColor: "#f5f5f5",
-    padding: 16,
-    borderRadius: 4,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  cardSubjects: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  cardSubject: {
-    backgroundColor: "#ddd",
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    borderRadius: 4,
-    marginRight: 8,
-    marginBottom: 8,
-  },
-  cardSubjectText: {
-    fontSize: 14,
-    color: "#333",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-});
-
 export default AdminAssignSubject;
 
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    justifyContent: "center",
+  },
+  inputContainer: {
+    marginBottom: 20,
+  },
+  headertext: {
+    fontSize: 20,
+    marginBottom: 10,
+    fontWeight: "bold",
+  },
+  label: {
+    fontSize: 18,
+    marginBottom: 5,
+  },
+  scrollContainer: {
+    maxHeight: 200,
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 5,
+  },
+  hrLine: {
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    marginBottom: 20,
+  },
+  creditStatus: {
+    fontSize: 18,
+    marginBottom: 10,
+    fontWeight: "bold",
+  },
+  subjectCredit: {
+    fontSize: 18,
+    marginBottom: 10,
+    fontWeight: "bold",
+  },
+});
+//-------------------------------------------------------
 // import React, { useState, useEffect } from "react";
 // import {
 //   View,
 //   Text,
-//   TextInput,
-//   TouchableOpacity,
+//   Button,
 //   ScrollView,
 //   StyleSheet,
+//   TouchableOpacity,
 //   Alert,
 // } from "react-native";
-// import axios from "axios";
+// import { Picker } from "@react-native-picker/picker";
+// import { useNavigation, useRoute } from "@react-navigation/native";
+// import teacherData from "../../database/Batch.json";
+// import subjectData from "../../database/Departments.json";
+
+// const AdminAssignSubject = ({ route }) => {
+//   const { assignment, teachers, departments, semesters, subjects } =
+//     route.params || {};
+
+//   const [selectedTeacher, setSelectedTeacher] = useState(
+//     assignment ? assignment.selectedTeacher : null
+//   );
+//   const [selectedSchool, setSelectedSchool] = useState(
+//     assignment ? assignment.selectedSchool : null
+//   );
+//   const [selectedSemester, setSelectedSemester] = useState(
+//     assignment ? assignment.selectedSemester : null
+//   );
+//   const [selectedDepartment, setSelectedDepartment] = useState(
+//     assignment ? assignment.selectedDepartment : null
+//   );
+//   const [selectedSubject, setSelectedSubject] = useState(
+//     assignment ? assignment.selectedSubject : null
+//   );
+
+//   const [isTeacherPickerEnabled, setIsTeacherPickerEnabled] = useState(true);
+
+//   const teachersForSelectedSchool = teachers
+//     ? teachers.filter((teacher) => teacher.SchoolName === selectedSchool)
+//     : [];
+
+//   useEffect(() => {
+//     setIsTeacherPickerEnabled(true);
+//   }, []);
+
+//   const assignSubject = () => {
+//     if (
+//       !selectedTeacher ||
+//       !selectedSchool ||
+//       !selectedSemester ||
+//       !selectedDepartment ||
+//       !selectedSubject
+//     ) {
+//       Alert.alert("Please select all details.");
+//       return;
+//     }
+//     const subjectCredit = selectedSubject.SubjectCredit || 0;
+//     const creditStatus = selectedTeacherCreditStatus() || 0;
+//     const totalCredit = subjectCredit + creditStatus;
+
+//     if (totalCredit > 12) {
+//       Alert.alert(
+//         "Subject cannot be assigned.",
+//         "The teacher's credit threshold has been reached."
+//       );
+//       return;
+//     }
+//     const selectedData = {
+//       selectedTeacher,
+//       selectedSchool,
+//       selectedSemester,
+//       selectedDepartment,
+//       selectedSubject,
+//       dateTime: new Date().toISOString(),
+//     };
+//     console.log(JSON.stringify(selectedData));
+//     // Code to assign subject goes here (to be implemented)
+
+//     // Show alert saying subject is assigned
+//     Alert.alert(`Subject ${selectedSubject.SubjectName} is assigned.`);
+
+//     // Reset dropdowns
+//     resetSelections();
+//   };
+
+//   const resetSelections = () => {
+//     setSelectedTeacher(null);
+//     setSelectedSchool(null);
+//     setSelectedSemester(null);
+//     setSelectedDepartment(null);
+//     setSelectedSubject(null);
+//     setIsTeacherPickerEnabled(false);
+//   };
+
+//   const handleSchoolChange = (schoolName) => {
+//     setSelectedSchool(schoolName);
+//     const selectedSchoolTeachers =
+//       teacherData.find((school) => school.SchoolName === schoolName)
+//         ?.Teachers || [];
+//     setTeachersForSelectedSchool(selectedSchoolTeachers);
+//     setSelectedTeacher(null);
+//     setIsTeacherPickerEnabled(true);
+//   };
+
+//   const handleTeacherChange = (teacherValue) => {
+//     if (!selectedSchool) {
+//       Alert.alert("Please select School first.");
+//       return;
+//     }
+//     setSelectedTeacher(teacherValue);
+//   };
+
+//   const handleDepartmentChange = (departmentValue) => {
+//     if (!selectedSchool) {
+//       Alert.alert("Please select School first.");
+//       return;
+//     }
+//     setSelectedDepartment(departmentValue);
+//   };
+
+//   const handleSemesterChange = (semesterValue) => {
+//     if (!selectedDepartment) {
+//       Alert.alert("Please select Department first.");
+//       return;
+//     }
+//     setSelectedSemester(semesterValue);
+//   };
+
+//   const handleSubjectChange = (subjectValue) => {
+//     if (!selectedSemester) {
+//       Alert.alert("Please select Semester first.");
+//       return;
+//     }
+//     setSelectedSubject(subjectValue);
+//   };
+
+//   const filterSubjectsByDepartment = () => {
+//     if (!selectedDepartment) return [];
+//     const department = subjectData.find(
+//       (dept) => dept.DepartmentName === selectedDepartment
+//     );
+//     const semesterSubjects =
+//       department && department.Semesters[selectedSemester];
+//     return semesterSubjects || [];
+//   };
+
+//   const selectedTeacherCreditStatus = () => {
+//     if (selectedTeacher) {
+//       const teacher = teachersForSelectedSchool.find(
+//         (t) => t.RegistrationNumber === selectedTeacher
+//       );
+//       return teacher ? teacher.CreditStatus : null;
+//     }
+//     return null;
+//   };
+
+//   return (
+//     <ScrollView contentContainerStyle={styles.container}>
+//       <Text style={styles.headertext}>
+//         Please select according to number order
+//       </Text>
+//       <TouchableOpacity onPress={() => setSelectedTeacher(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>1. Select School:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedSchool}
+//               onValueChange={handleSchoolChange}
+//             >
+//               <Picker.Item label="Select School" value={null} />
+//               {teacherData.map((school, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={school.SchoolName}
+//                   value={school.SchoolName}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity onPress={() => setIsTeacherPickerEnabled(false)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>2. Select Teacher:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedTeacher}
+//               enabled={isTeacherPickerEnabled}
+//               onValueChange={handleTeacherChange}
+//             >
+//               <Picker.Item label="Select Teacher" value={null} />
+//               {teachersForSelectedSchool.map((teacher, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={teacher.TeacherName}
+//                   value={teacher.RegistrationNumber}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+
+//       <Text style={styles.creditStatus}>
+//         Credit Status: {selectedTeacherCreditStatus() || ""}
+//       </Text>
+
+//       <View style={styles.hrLine} />
+
+//       <TouchableOpacity onPress={() => setSelectedDepartment(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>1. Select Department:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedDepartment}
+//               onValueChange={handleDepartmentChange}
+//             >
+//               <Picker.Item label="Select Department" value={null} />
+//               {subjectData.map((subject, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={subject.DepartmentName}
+//                   value={subject.DepartmentName}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+//       <TouchableOpacity onPress={() => setSelectedSemester(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>2. Select Semester:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               enabled={!!selectedDepartment}
+//               selectedValue={selectedSemester}
+//               onValueChange={handleSemesterChange}
+//             >
+//               <Picker.Item label="Select Semester" value={null} />
+//               {selectedDepartment &&
+//                 subjectData.find(
+//                   (dept) => dept.DepartmentName === selectedDepartment
+//                 )?.Semesters &&
+//                 Object.keys(
+//                   subjectData.find(
+//                     (dept) => dept.DepartmentName === selectedDepartment
+//                   ).Semesters
+//                 ).map((semester, index) => (
+//                   <Picker.Item key={index} label={semester} value={semester} />
+//                 ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity onPress={() => setSelectedSubject(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>3. Select Subject:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               enabled={!!selectedSemester}
+//               selectedValue={selectedSubject}
+//               onValueChange={handleSubjectChange}
+//             >
+//               <Picker.Item label="Select Subject (Subject code)" value={null} />
+//               {filterSubjectsByDepartment().map((subject, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={`${subject.SubjectName} (${subject.SubjectCode})`}
+//                   value={subject}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+//       <Text style={styles.subjectCredit}>
+//         Subject Credit: {selectedSubject ? selectedSubject.SubjectCredit : null}
+//       </Text>
+
+//       <Button title="Assign" onPress={assignSubject} />
+//     </ScrollView>
+//   );
+// };
+
+// export default AdminAssignSubject;
+
+// const styles = StyleSheet.create({
+//   container: {
+//     padding: 20,
+//     justifyContent: "center",
+//   },
+//   inputContainer: {
+//     marginBottom: 20,
+//   },
+//   headertext: {
+//     fontSize: 20,
+//     marginBottom: 10,
+//     fontWeight: "bold",
+//   },
+//   label: {
+//     fontSize: 18,
+//     marginBottom: 5,
+//   },
+//   scrollContainer: {
+//     maxHeight: 200,
+//     borderWidth: 1,
+//     borderColor: "gray",
+//     borderRadius: 5,
+//   },
+//   hrLine: {
+//     borderBottomColor: "black",
+//     borderBottomWidth: 1,
+//     marginBottom: 20,
+//   },
+//   creditStatus: {
+//     fontSize: 18,
+//     marginBottom: 10,
+//     fontWeight: "bold",
+//   },
+//   subjectCredit: {
+//     fontSize: 18,
+//     marginBottom: 10,
+//     fontWeight: "bold",
+//   },
+// });
+
+//------------------------------------------------------------------------
+// import React, { useState, useEffect } from "react";
+// import {
+//   View,
+//   Text,
+//   Button,
+//   ScrollView,
+//   StyleSheet,
+//   TouchableOpacity,
+//   Alert,
+// } from "react-native";
+// import { Picker } from "@react-native-picker/picker";
+// import { useNavigation, useRoute } from "@react-navigation/native";
+// import teacherData from "../../database/Batch.json";
+// import subjectData from "../../database/Departments.json";
 
 // const AdminAssignSubject = () => {
-//   const [teacherName, setTeacherName] = useState("");
-//   const [schoolName, setSchoolName] = useState("");
-//   const [departmentName, setDepartmentName] = useState("");
-//   const [semester, setSemester] = useState("");
-//   const [subjects, setSubjects] = useState([]);
-//   const [filteredSubjects, setFilteredSubjects] = useState([]);
-//   const [selectedSubject, setSelectedSubject] = useState(null);
-//   const [teachers, setTeachers] = useState([]);
-//   const [filteredTeachers, setFilteredTeachers] = useState([]);
+//   const navigation = useNavigation();
+//   const route = useRoute();
+
 //   const [selectedTeacher, setSelectedTeacher] = useState(null);
-//   const [remainingCredits, setRemainingCredits] = useState(12);
+//   const [selectedSchool, setSelectedSchool] = useState(null);
+//   const [selectedSemester, setSelectedSemester] = useState(null);
+//   const [selectedDepartment, setSelectedDepartment] = useState(null);
+//   const [selectedSubject, setSelectedSubject] = useState(null);
+//   const [teachersForSelectedSchool, setTeachersForSelectedSchool] = useState(
+//     []
+//   );
+//   const [isTeacherPickerEnabled, setIsTeacherPickerEnabled] = useState(false);
 
-// //   useEffect(() => {
-// //     const fetchTeachers = async () => {
-// //       try {
-// //         const response = await axios.get(
-// //           "https://your-api-url/teachers"
-// //         );
-// //         setTeachers(response.data);
-// //       } catch (error) {
-// //         console.error(error);
-// //       }
-// //     };
+//   useEffect(() => {
+//     if (route.params?.assignment) {
+//       const {
+//         selectedTeacher,
+//         selectedSchool,
+//         selectedSemester,
+//         selectedDepartment,
+//         selectedSubject,
+//       } = route.params.assignment;
+//       setSelectedTeacher(selectedTeacher);
+//       setSelectedSchool(selectedSchool);
+//       setSelectedSemester(selectedSemester);
+//       setSelectedDepartment(selectedDepartment);
+//       setSelectedSubject(selectedSubject);
+//       // } else {
+//       //   // Handle the case when assignment data is not passed
+//       //   // For example, you may want to initialize the state with default values
+//       //   resetSelections();
+//     }
+//   }, [route.params?.assignment]);
 
-// //     const fetchSubjects = async () => {
-// //       try {
-// //         const response = await axios.get(
-// //           "https://your-api-url/subjects"
-// //         );
-// //         setSubjects(response.data);
-// //       } catch (error) {
-// //         console.error(error);
-// //       }
+//   const assignSubject = () => {
+//     if (
+//       !selectedTeacher ||
+//       !selectedSchool ||
+//       !selectedSemester ||
+//       !selectedDepartment ||
+//       !selectedSubject
+//     ) {
+//       Alert.alert("Please select all details.");
+//       return;
+//     }
+//     const subjectCredit = selectedSubject.SubjectCredit || 0;
+//     const creditStatus = selectedTeacherCreditStatus() || 0;
+//     const totalCredit = subjectCredit + creditStatus;
 
-// //     fetchTeachers();
-// //     fetchSubjects();
-// //   }, []);
-
-//   const handleFilterTeachers = () => {
-//     const filteredTeachers = teachers.filter(
-//       (teacher) =>
-//         teacher.schoolName.includes(schoolName) &&
-//         teacher.departmentName.includes(departmentName)
-//     );
-
-//     setFilteredTeachers(filteredTeachers);
-//   };
-
-//   const handleFilterSubjects = () => {
-//     const filteredSubjects = subjects.filter(
-//       (subject) =>
-//         subject.schoolName.includes(schoolName) &&
-//         subject.departmentName.includes(departmentName) &&
-//         subject.semester.includes(semester)
-//     );
-
-//     setFilteredSubjects(filteredSubjects);
-//   };
-
-//   const handleSelectTeacher = (teacher) => {
-//     setSelectedTeacher(teacher);
-//     setRemainingCredits(teacher.maxCredits);
-//     setSelectedSubject(null);
-//   };
-
-//   const handleSelectSubject = (subject) => {
-//     setSelectedSubject(subject);
-//     setRemainingCredits(remainingCredits - subject.credits);
-//   };
-
-//   const handleAddSubject = () => {
-//     if (selectedTeacher && selectedSubject) {
-//       const newAssignment = {
-//         teacherId: selectedTeacher.id,
-//         subjectId: selectedSubject.id,
-//         semester: semester,
-//       };
-
-//       const updatedTeacher = teachers.find(
-//         (teacher) => teacher.id === selectedTeacher.id
+//     if (totalCredit > 12) {
+//       Alert.alert(
+//         "Subject cannot be assigned.",
+//         "The teacher's credit threshold has been reached."
 //       );
-
-//       if (updatedTeacher.assignments) {
-//         updatedTeacher.assignments.push(newAssignment);
-//       } else {
-//         updatedTeacher.assignments = [newAssignment];
-//       }
-
-//       axios.put(`https://your-api-url/teachers/${updatedTeacher.id}`, updatedTeacher);
-
-//       setSelectedSubject(null);
-//       setRemainingCredits(remainingCredits + selectedSubject.credits);
-//       Alert.alert("Subject assigned successfully");
-//     } else {
-//       Alert.alert("Please select a teacher and subject");
+//       return;
 //     }
+//     const selectedData = {
+//       selectedTeacher,
+//       selectedSchool,
+//       selectedSemester,
+//       selectedDepartment,
+//       selectedSubject,
+//       dateTime: new Date().toISOString(),
+//     };
+//     console.log(JSON.stringify(selectedData));
+//     // Code to assign subject goes here (to be implemented)
+
+//     // Show alert saying subject is assigned
+//     Alert.alert(`Subject ${selectedSubject.SubjectName} is assigned.`);
+
+//     // Reset dropdowns
+//     resetSelections();
 //   };
 
-//   const handleAssign = () => {
-//     if (selectedTeacher) {
-//       Alert.alert("Subjects assigned successfully");
-//     } else {
-//       Alert.alert("Please select a teacher");
+//   const resetSelections = () => {
+//     setSelectedTeacher(null);
+//     setSelectedSchool(null);
+//     setSelectedSemester(null);
+//     setSelectedDepartment(null);
+//     setSelectedSubject(null);
+//     setTeachersForSelectedSchool([]);
+//     setIsTeacherPickerEnabled(false);
+//   };
+
+//   const handleSchoolChange = (schoolName) => {
+//     setSelectedSchool(schoolName);
+//     const selectedSchoolTeachers =
+//       teacherData.find((school) => school.SchoolName === schoolName)
+//         ?.Teachers || [];
+//     setTeachersForSelectedSchool(selectedSchoolTeachers);
+//     setSelectedTeacher(null);
+//     setIsTeacherPickerEnabled(true);
+//   };
+
+//   const handleTeacherChange = (teacherValue) => {
+//     if (!selectedSchool) {
+//       Alert.alert("Please select School first.");
+//       return;
 //     }
+//     setSelectedTeacher(teacherValue);
+//   };
+
+//   const handleDepartmentChange = (departmentValue) => {
+//     if (!selectedSchool) {
+//       Alert.alert("Please select School first.");
+//       return;
+//     }
+//     setSelectedDepartment(departmentValue);
+//   };
+
+//   const handleSemesterChange = (semesterValue) => {
+//     if (!selectedDepartment) {
+//       Alert.alert("Please select Department first.");
+//       return;
+//     }
+//     setSelectedSemester(semesterValue);
+//   };
+
+//   const handleSubjectChange = (subjectValue) => {
+//     if (!selectedSemester) {
+//       Alert.alert("Please select Semester first.");
+//       return;
+//     }
+//     setSelectedSubject(subjectValue);
+//   };
+
+//   const filterSubjectsByDepartment = () => {
+//     if (!selectedDepartment) return [];
+//     const department = subjectData.find(
+//       (dept) => dept.DepartmentName === selectedDepartment
+//     );
+//     const semesterSubjects =
+//       department && department.Semesters[selectedSemester];
+//     return semesterSubjects || [];
+//   };
+
+//   const selectedTeacherCreditStatus = () => {
+//     if (selectedTeacher) {
+//       const teacher = teachersForSelectedSchool.find(
+//         (t) => t.RegistrationNumber === selectedTeacher
+//       );
+//       return teacher ? teacher.CreditStatus : null;
+//     }
+//     return null;
+//   };
+
+//   return (
+//     <ScrollView contentContainerStyle={styles.container}>
+//       <Text style={styles.headertext}>
+//         Please select according to number order
+//       </Text>
+//       <TouchableOpacity onPress={() => setSelectedTeacher(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>1. Select School:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedSchool}
+//               onValueChange={handleSchoolChange}
+//             >
+//               <Picker.Item label="Select School" value={null} />
+//               {teacherData.map((school, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={school.SchoolName}
+//                   value={school.SchoolName}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity onPress={() => setIsTeacherPickerEnabled(false)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>2. Select Teacher:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedTeacher}
+//               enabled={isTeacherPickerEnabled}
+//               onValueChange={handleTeacherChange}
+//             >
+//               <Picker.Item label="Select Teacher" value={null} />
+//               {teachersForSelectedSchool.map((teacher, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={teacher.TeacherName}
+//                   value={teacher.RegistrationNumber}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+
+//       <Text style={styles.creditStatus}>
+//         Credit Status: {selectedTeacherCreditStatus() || ""}
+//       </Text>
+
+//       <View style={styles.hrLine} />
+
+//       <TouchableOpacity onPress={() => setSelectedDepartment(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>1. Select Department:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedDepartment}
+//               onValueChange={handleDepartmentChange}
+//             >
+//               <Picker.Item label="Select Department" value={null} />
+//               {subjectData.map((subject, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={subject.DepartmentName}
+//                   value={subject.DepartmentName}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+//       <TouchableOpacity onPress={() => setSelectedSemester(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>2. Select Semester:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               enabled={!!selectedDepartment}
+//               selectedValue={selectedSemester}
+//               onValueChange={handleSemesterChange}
+//             >
+//               <Picker.Item label="Select Semester" value={null} />
+//               {selectedDepartment &&
+//                 subjectData.find(
+//                   (dept) => dept.DepartmentName === selectedDepartment
+//                 )?.Semesters &&
+//                 Object.keys(
+//                   subjectData.find(
+//                     (dept) => dept.DepartmentName === selectedDepartment
+//                   ).Semesters
+//                 ).map((semester, index) => (
+//                   <Picker.Item key={index} label={semester} value={semester} />
+//                 ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity onPress={() => setSelectedSubject(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>3. Select Subject:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               enabled={!!selectedSemester}
+//               selectedValue={selectedSubject}
+//               onValueChange={handleSubjectChange}
+//             >
+//               <Picker.Item label="Select Subject (Subject code)" value={null} />
+//               {filterSubjectsByDepartment().map((subject, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={`${subject.SubjectName} (${subject.SubjectCode})`}
+//                   value={subject}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+//       <Text style={styles.subjectCredit}>
+//         Subject Credit: {selectedSubject ? selectedSubject.SubjectCredit : null}
+//       </Text>
+
+//       <Button title="Assign" onPress={assignSubject} />
+//     </ScrollView>
+//   );
+// };
+
+// export default AdminAssignSubject;
+
+// const styles = StyleSheet.create({
+//   container: {
+//     padding: 20,
+//     justifyContent: "center",
+//   },
+//   inputContainer: {
+//     marginBottom: 20,
+//   },
+//   headertext: {
+//     fontSize: 20,
+//     marginBottom: 10,
+//     fontWeight: "bold",
+//   },
+//   label: {
+//     fontSize: 18,
+//     marginBottom: 5,
+//   },
+//   scrollContainer: {
+//     maxHeight: 200,
+//     borderWidth: 1,
+//     borderColor: "gray",
+//     borderRadius: 5,
+//   },
+//   hrLine: {
+//     borderBottomColor: "black",
+//     borderBottomWidth: 1,
+//     marginBottom: 20,
+//   },
+//   creditStatus: {
+//     fontSize: 18,
+//     marginBottom: 10,
+//     fontWeight: "bold",
+//   },
+//   subjectCredit: {
+//     fontSize: 18,
+//     marginBottom: 10,
+//     fontWeight: "bold",
+//   },
+// });
+//---------------------------------------------------------------------------------------
+// import React, { useState } from "react";
+// import {
+//   View,
+//   Text,
+//   Button,
+//   ScrollView,
+//   StyleSheet,
+//   TouchableOpacity,
+//   Alert,
+// } from "react-native";
+// import { Picker } from "@react-native-picker/picker";
+// import teacherData from "../../database/Batch.json";
+// import subjectData from "../../database/Departments.json";
+
+// const AdminAssignSubject = () => {
+//   const [selectedTeacher, setSelectedTeacher] = useState(null);
+//   const [selectedSchool, setSelectedSchool] = useState(null);
+//   const [selectedSemester, setSelectedSemester] = useState(null);
+//   const [selectedDepartment, setSelectedDepartment] = useState(null);
+//   const [selectedSubject, setSelectedSubject] = useState(null);
+//   const [teachersForSelectedSchool, setTeachersForSelectedSchool] = useState(
+//     []
+//   );
+//   const [isTeacherPickerEnabled, setIsTeacherPickerEnabled] = useState(false);
+
+//   const assignSubject = () => {
+//     if (
+//       !selectedTeacher ||
+//       !selectedSchool ||
+//       !selectedSemester ||
+//       !selectedDepartment ||
+//       !selectedSubject
+//     ) {
+//       Alert.alert("Please select all details.");
+//       return;
+//     }
+//     const subjectCredit = selectedSubject.SubjectCredit || 0;
+//     const creditStatus = selectedTeacherCreditStatus() || 0;
+//     const totalCredit = subjectCredit + creditStatus;
+
+//     if (totalCredit > 12) {
+//       Alert.alert(
+//         "Subject cannot be assigned.",
+//         "The teacher's credit threshold has been reached."
+//       );
+//       return;
+//     }
+//     const selectedData = {
+//       selectedTeacher,
+//       selectedSchool,
+//       selectedSemester,
+//       selectedDepartment,
+//       selectedSubject,
+//       dateTime: new Date().toISOString(),
+//     };
+//     console.log(JSON.stringify(selectedData));
+//     // Code to assign subject goes here (to be implemented)
+
+//     // Show alert saying subject is assigned
+//     Alert.alert(`Subject ${selectedSubject.SubjectName} is assigned.`);
+
+//     // Reset dropdowns
+//     resetSelections();
+//   };
+
+//   const resetSelections = () => {
+//     setSelectedTeacher(null);
+//     setSelectedSchool(null);
+//     setSelectedSemester(null);
+//     setSelectedDepartment(null);
+//     setSelectedSubject(null);
+//     setTeachersForSelectedSchool([]);
+//     setIsTeacherPickerEnabled(false);
+//   };
+
+//   const handleSchoolChange = (schoolName) => {
+//     setSelectedSchool(schoolName);
+//     const selectedSchoolTeachers =
+//       teacherData.find((school) => school.SchoolName === schoolName)
+//         ?.Teachers || [];
+//     setTeachersForSelectedSchool(selectedSchoolTeachers);
+//     setSelectedTeacher(null);
+//     setIsTeacherPickerEnabled(true);
+//   };
+
+//   const handleTeacherChange = (teacherValue) => {
+//     if (!selectedSchool) {
+//       Alert.alert("Please select School first.");
+//       return;
+//     }
+//     setSelectedTeacher(teacherValue);
+//   };
+
+//   const handleDepartmentChange = (departmentValue) => {
+//     if (!selectedSchool) {
+//       Alert.alert("Please select School first.");
+//       return;
+//     }
+//     setSelectedDepartment(departmentValue);
+//   };
+
+//   const handleSemesterChange = (semesterValue) => {
+//     if (!selectedDepartment) {
+//       Alert.alert("Please select Department first.");
+//       return;
+//     }
+//     setSelectedSemester(semesterValue);
+//   };
+
+//   const handleSubjectChange = (subjectValue) => {
+//     if (!selectedSemester) {
+//       Alert.alert("Please select Semester first.");
+//       return;
+//     }
+//     setSelectedSubject(subjectValue);
+//   };
+
+//   const filterSubjectsByDepartment = () => {
+//     if (!selectedDepartment) return [];
+//     const department = subjectData.find(
+//       (dept) => dept.DepartmentName === selectedDepartment
+//     );
+//     const semesterSubjects =
+//       department && department.Semesters[selectedSemester];
+//     return semesterSubjects || [];
+//   };
+
+//   const selectedTeacherCreditStatus = () => {
+//     if (selectedTeacher) {
+//       const teacher = teachersForSelectedSchool.find(
+//         (t) => t.RegistrationNumber === selectedTeacher
+//       );
+//       return teacher ? teacher.CreditStatus : null;
+//     }
+//     return null;
+//   };
+
+//   return (
+//     <ScrollView contentContainerStyle={styles.container}>
+//       <Text style={styles.headertext}>
+//         Please select according to number order
+//       </Text>
+//       <TouchableOpacity onPress={() => setSelectedTeacher(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>1. Select School:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedSchool}
+//               onValueChange={handleSchoolChange}
+//             >
+//               <Picker.Item label="Select School" value={null} />
+//               {teacherData.map((school, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={school.SchoolName}
+//                   value={school.SchoolName}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity onPress={() => setIsTeacherPickerEnabled(false)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>2. Select Teacher:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedTeacher}
+//               enabled={isTeacherPickerEnabled}
+//               onValueChange={handleTeacherChange}
+//             >
+//               <Picker.Item label="Select Teacher" value={null} />
+//               {teachersForSelectedSchool.map((teacher, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={teacher.TeacherName}
+//                   value={teacher.RegistrationNumber}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+
+//       <Text style={styles.creditStatus}>
+//         Credit Status: {selectedTeacherCreditStatus() || ""}
+//       </Text>
+
+//       <View style={styles.hrLine} />
+
+//       <TouchableOpacity onPress={() => setSelectedDepartment(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>1. Select Department:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedDepartment}
+//               onValueChange={handleDepartmentChange}
+//             >
+//               <Picker.Item label="Select Department" value={null} />
+//               {subjectData.map((subject, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={subject.DepartmentName}
+//                   value={subject.DepartmentName}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+//       <TouchableOpacity onPress={() => setSelectedSemester(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>2. Select Semester:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               enabled={!!selectedDepartment}
+//               selectedValue={selectedSemester}
+//               onValueChange={handleSemesterChange}
+//             >
+//               <Picker.Item label="Select Semester" value={null} />
+//               {selectedDepartment &&
+//                 subjectData.find(
+//                   (dept) => dept.DepartmentName === selectedDepartment
+//                 )?.Semesters &&
+//                 Object.keys(
+//                   subjectData.find(
+//                     (dept) => dept.DepartmentName === selectedDepartment
+//                   ).Semesters
+//                 ).map((semester, index) => (
+//                   <Picker.Item key={index} label={semester} value={semester} />
+//                 ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity onPress={() => setSelectedSubject(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>3. Select Subject:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               enabled={!!selectedSemester}
+//               selectedValue={selectedSubject}
+//               onValueChange={handleSubjectChange}
+//             >
+//               <Picker.Item label="Select Subject (Subject code)" value={null} />
+//               {filterSubjectsByDepartment().map((subject, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={`${subject.SubjectName} (${subject.SubjectCode})`}
+//                   value={subject}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+//       <Text style={styles.subjectCredit}>
+//         Subject Credit: {selectedSubject ? selectedSubject.SubjectCredit : null}
+//       </Text>
+
+//       <Button title="Assign" onPress={assignSubject} />
+//     </ScrollView>
+//   );
+// };
+
+// export default AdminAssignSubject;
+
+// const styles = StyleSheet.create({
+//   container: {
+//     padding: 20,
+//     justifyContent: "center",
+//   },
+//   inputContainer: {
+//     marginBottom: 20,
+//   },
+//   headertext: {
+//     fontSize: 20,
+//     marginBottom: 10,
+//     fontWeight: "bold",
+//   },
+//   label: {
+//     fontSize: 18,
+//     marginBottom: 5,
+//   },
+//   scrollContainer: {
+//     maxHeight: 200,
+//     borderWidth: 1,
+//     borderColor: "gray",
+//     borderRadius: 5,
+//   },
+//   hrLine: {
+//     borderBottomColor: "black",
+//     borderBottomWidth: 1,
+//     marginBottom: 20,
+//   },
+//   creditStatus: {
+//     fontSize: 18,
+//     marginBottom: 10,
+//     fontWeight: "bold",
+//   },
+//   subjectCredit: {
+//     fontSize: 18,
+//     marginBottom: 10,
+//     fontWeight: "bold",
+//   },
+// });
+
+//-----------------------------------------------------------------------------------------------------------------------------
+// import React, { useState } from "react";
+// import {
+//   View,
+//   Text,
+//   Button,
+//   ScrollView,
+//   StyleSheet,
+//   TouchableOpacity,
+//   Alert,
+// } from "react-native";
+// import { Picker } from "@react-native-picker/picker";
+// import teacherData from "../../database/Batch.json";
+// import subjectData from "../../database/Departments.json";
+
+// const AdminAssignSubject = () => {
+//   const [selectedTeacher, setSelectedTeacher] = useState(null);
+//   const [selectedSchool, setSelectedSchool] = useState(null);
+//   const [selectedSemester, setSelectedSemester] = useState(null);
+//   const [selectedDepartment, setSelectedDepartment] = useState(null);
+//   const [selectedSubject, setSelectedSubject] = useState(null);
+//   const [teachersForSelectedSchool, setTeachersForSelectedSchool] = useState(
+//     []
+//   );
+//   const [isTeacherPickerEnabled, setIsTeacherPickerEnabled] = useState(false);
+
+//   const assignSubject = () => {
+//     if (
+//       !selectedTeacher ||
+//       !selectedSchool ||
+//       !selectedSemester ||
+//       !selectedDepartment ||
+//       !selectedSubject
+//     ) {
+//       Alert.alert("Please select all details.");
+//       return;
+//     }
+
+//     // Code to assign subject goes here (to be implemented)
+
+//     // Show alert saying subject is assigned
+//     Alert.alert(`Subject ${selectedSubject.SubjectName} is assigned.`);
+
+//     // Reset dropdowns
+//     resetSelections();
+//   };
+
+//   const resetSelections = () => {
+//     setSelectedTeacher(null);
+//     setSelectedSchool(null);
+//     setSelectedSemester(null);
+//     setSelectedDepartment(null);
+//     setSelectedSubject(null);
+//     setTeachersForSelectedSchool([]);
+//     setIsTeacherPickerEnabled(false);
+//   };
+
+//   const handleSchoolChange = (schoolName) => {
+//     setSelectedSchool(schoolName);
+//     const selectedSchoolTeachers =
+//       teacherData.find((school) => school.SchoolName === schoolName)
+//         ?.Teachers || [];
+//     setTeachersForSelectedSchool(selectedSchoolTeachers);
+//     setSelectedTeacher(null);
+//     setIsTeacherPickerEnabled(true);
+//   };
+
+//   const handleTeacherChange = (teacherValue) => {
+//     if (!selectedSchool) {
+//       Alert.alert("Please select School first.");
+//       return;
+//     }
+//     setSelectedTeacher(teacherValue);
+//   };
+
+//   const handleDepartmentChange = (departmentValue) => {
+//     if (!selectedSchool) {
+//       Alert.alert("Please select School first.");
+//       return;
+//     }
+//     setSelectedDepartment(departmentValue);
+//   };
+
+//   const handleSemesterChange = (semesterValue) => {
+//     if (!selectedDepartment) {
+//       Alert.alert("Please select Department first.");
+//       return;
+//     }
+//     setSelectedSemester(semesterValue);
+//   };
+
+//   const handleSubjectChange = (subjectValue) => {
+//     if (!selectedSemester) {
+//       Alert.alert("Please select Semester first.");
+//       return;
+//     }
+//     setSelectedSubject(subjectValue);
+//   };
+
+//   const filterSubjectsByDepartment = () => {
+//     if (!selectedDepartment) return [];
+//     const department = subjectData.find(
+//       (dept) => dept.DepartmentName === selectedDepartment
+//     );
+//     const semesterSubjects =
+//       department && department.Semesters[selectedSemester];
+//     return semesterSubjects || [];
 //   };
 
 //   return (
 //     <View style={styles.container}>
-//       <View style={styles.filterContainer}>
-//         <TextInput
-//           style={styles.input}
-//           placeholder="Teacher Name"
-//           value={teacherName}
-//           onChangeText={setTeacherName}
-//         />
-//         <TouchableOpacity style={styles.button} onPress={handleFilterTeachers}>
-//           <Text style={styles.buttonText}>Filter</Text>
-//         </TouchableOpacity>
-//         <TouchableOpacity style={styles.button} onPress={handleFilterSubjects}>
-//           <Text style={styles.buttonText}>Subject</Text>
-//         </TouchableOpacity>
-//       </View>
-//       <View style={styles.assignmentContainer}>
-//         <View style={styles.teacherContainer}>
-//           <Text style={styles.label}>Teacher:</Text>
-//           <ScrollView>
-//             {filteredTeachers.map((teacher) => (
-//               <TouchableOpacity
-//                 key={teacher.id}
-//                 style={styles.teacherButton}
-//                 onPress={() => handleSelectTeacher(teacher)}
-//               >
-//                 <Text style={styles.teacherText}>{teacher.name}</Text>
-//               </TouchableOpacity>
-//             ))}
+//       <Text style={styles.headertext}>
+//         Please select according to number order
+//       </Text>
+//       <TouchableOpacity onPress={() => setSelectedTeacher(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>1. Select School:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedSchool}
+//               onValueChange={handleSchoolChange}
+//             >
+//               <Picker.Item label="Select School" value={null} />
+//               {teacherData.map((school, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={school.SchoolName}
+//                   value={school.SchoolName}
+//                 />
+//               ))}
+//             </Picker>
 //           </ScrollView>
 //         </View>
-//         <View style={styles.subjectContainer}>
-//           <Text style={styles.label}>Subject:</Text>
-//           <ScrollView>
-//             {filteredSubjects.map((subject) => (
-//               <TouchableOpacity
-//                 key={subject.id}
-//                 style={styles.subjectButton}
-//                 onPress={() => handleSelectSubject(subject)}
-//               >
-//                 <Text style={styles.subjectText}>
-//                   {subject.name} ({subject.credits} credits)
-//                 </Text>
-//               </TouchableOpacity>
-//             ))}
+//       </TouchableOpacity>
+
+//       <TouchableOpacity onPress={() => setIsTeacherPickerEnabled(false)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>2. Select Teacher:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedTeacher}
+//               enabled={isTeacherPickerEnabled}
+//               onValueChange={handleTeacherChange}
+//             >
+//               <Picker.Item label="Select Teacher" value={null} />
+//               {teachersForSelectedSchool.map((teacher, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={teacher.TeacherName}
+//                   value={teacher.RegistrationNumber}
+//                 />
+//               ))}
+//             </Picker>
 //           </ScrollView>
 //         </View>
-//         <View style={styles.creditContainer}>
-//           <Text style={styles.label}>Remaining Credits:</Text>
-//           <Text style={styles.creditText}>{remainingCredits}</Text>
+//       </TouchableOpacity>
+
+//       <View style={styles.hrLine} />
+
+//       <TouchableOpacity onPress={() => setSelectedDepartment(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>1. Select Department:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedDepartment}
+//               onValueChange={handleDepartmentChange}
+//             >
+//               <Picker.Item label="Select Department" value={null} />
+//               {subjectData.map((subject, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={subject.DepartmentName}
+//                   value={subject.DepartmentName}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
 //         </View>
-//         <TouchableOpacity style={styles.button} onPress={handleAddSubject}>
-//           <Text style={styles.buttonText}>Add Subject</Text>
-//         </TouchableOpacity>
-//       </View>
-//       <View style={styles.assignmentCard}>
-//         {selectedTeacher && (
-//           <View style={styles.cardContainer}>
-//             <Text style={styles.cardTitle}>{selectedTeacher.name}</Text>
-//             <View style={styles.cardSubjects}>
-//               {selectedTeacher.assignments &&
-//                 selectedTeacher.assignments.map((assignment) => (
-//                   <View key={assignment.subjectId} style={styles.cardSubject}>
-//                     <Text style={styles.cardSubjectText}>
-//                       {assignment.subjectId} ({assignment.semester})
-//                     </Text>
-//                   </View>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity onPress={() => setSelectedSemester(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>2. Select Semester:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               enabled={!!selectedDepartment}
+//               selectedValue={selectedSemester}
+//               onValueChange={handleSemesterChange}
+//             >
+//               <Picker.Item label="Select Semester" value={null} />
+//               {selectedDepartment &&
+//                 subjectData.find(
+//                   (dept) => dept.DepartmentName === selectedDepartment
+//                 )?.Semesters &&
+//                 Object.keys(
+//                   subjectData.find(
+//                     (dept) => dept.DepartmentName === selectedDepartment
+//                   ).Semesters
+//                 ).map((semester, index) => (
+//                   <Picker.Item key={index} label={semester} value={semester} />
 //                 ))}
-//             </View>
-//           </View>
-//         )}
-//       </View>
-//       <View style={styles.buttonContainer}>
-//         <TouchableOpacity style={styles.button} onPress={handleAssign}>
-//           <Text style={styles.buttonText}>Assign</Text>
-//         </TouchableOpacity>
-//         <TouchableOpacity style={styles.button}>
-//           <Text style={styles.buttonText}>Assign New</Text>
-//         </TouchableOpacity>
-//         <TouchableOpacity style={styles.button}>
-//           <Text style={styles.buttonText}>Change</Text>
-//         </TouchableOpacity>
-//       </View>
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity onPress={() => setSelectedSubject(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>3. Select Subject:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               enabled={!!selectedSemester}
+//               selectedValue={selectedSubject}
+//               onValueChange={handleSubjectChange}
+//             >
+//               <Picker.Item label="Select Subject" value={null} />
+//               {filterSubjectsByDepartment().map((subject, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={subject.SubjectName}
+//                   value={subject}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+
+//       <Button title="Assign" onPress={assignSubject} />
 //     </View>
 //   );
 // };
 
+// export default AdminAssignSubject;
+
 // const styles = StyleSheet.create({
 //   container: {
 //     flex: 1,
-//     backgroundColor: "#fff",
-//     padding: 16,
+//     padding: 20,
+//     justifyContent: "center",
 //   },
-//   filterContainer: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     marginBottom: 16,
+//   inputContainer: {
+//     marginBottom: 20,
 //   },
-//   input: {
-//     width: "40%",
-//     height: 40,
-//     borderColor: "#ccc",
-//     borderWidth: 1,
-//     borderRadius: 4,
-// paddingHorizontal: 8,
-//   },
-//   button: {
-//     backgroundColor: "#007bff",
-//     paddingVertical: 8,
-//     paddingHorizontal: 16,
-//     borderRadius: 4,
-//     marginLeft: 8,
-//   },
-//   buttonText: {
-//     color: "#fff",
+//   headertext: {
+//     fontSize: 20,
+//     marginBottom: 10,
 //     fontWeight: "bold",
-//   },
-//   assignmentContainer: {
-//     flex: 1,
-//     marginBottom: 16,
-//   },
-//   teacherContainer: {
-//     flex: 1,
-//     marginRight: 16,
-//   },
-//   subjectContainer: {
-//     flex: 1,
-//   },
-//   teacherButton: {
-//     backgroundColor: "#f5f5f5",
-//     paddingVertical: 8,
-//     paddingHorizontal: 16,
-//     borderRadius: 4,
-//     marginBottom: 8,
-//   },
-//   teacherText: {
-//     fontSize: 16,
-//     color: "#333",
-//   },
-//   subjectButton: {
-//     backgroundColor: "#f5f5f5",
-//     paddingVertical: 8,
-//     paddingHorizontal: 16,
-//     borderRadius: 4,
-//     marginBottom: 8,
-//   },
-//   subjectText: {
-//     fontSize: 16,
-//     color: "#333",
-//   },
-//   creditContainer: {
-//     alignItems: "center",
-//     marginBottom: 16,
 //   },
 //   label: {
-//     fontSize: 16,
-//     fontWeight: "bold",
-//     marginBottom: 8,
-//   },
-//   creditText: {
-//     fontSize: 16,
-//     color: "#333",
-//   },
-//   assignmentCard: {
-//     marginBottom: 16,
-//   },
-//   cardContainer: {
-//     backgroundColor: "#f5f5f5",
-//     padding: 16,
-//     borderRadius: 4,
-//   },
-//   cardTitle: {
 //     fontSize: 18,
-//     fontWeight: "bold",
-//     marginBottom: 8,
+//     marginBottom: 5,
 //   },
-//   cardSubjects: {
-//     flexDirection: "row",
-//     flexWrap: "wrap",
+//   scrollContainer: {
+//     maxHeight: 200,
+//     borderWidth: 1,
+//     borderColor: "gray",
+//     borderRadius: 5,
 //   },
-//   cardSubject: {
-//     backgroundColor: "#ddd",
-//     paddingVertical: 4,
-//     paddingHorizontal: 8,
-//     borderRadius: 4,
-//     marginRight: 8,
-//     marginBottom: 8,
-//   },
-//   cardSubjectText: {
-//     fontSize: 14,
-//     color: "#333",
-//   },
-//   buttonContainer: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
+//   hrLine: {
+//     borderBottomColor: "black",
+//     borderBottomWidth: 1,
+//     marginBottom: 20,
 //   },
 // });
+//-------------------------------------------------------------------------------------------------------------------------------
+// import React, { useState } from "react";
+// import {
+//   View,
+//   Text,
+//   Button,
+//   ScrollView,
+//   StyleSheet,
+//   TouchableOpacity,
+//   Alert,
+// } from "react-native";
+// import { Picker } from "@react-native-picker/picker";
+// import teacherData from "../../database/Batch.json";
+// import subjectData from "../../database/Departments.json";
+
+// const AdminAssignSubject = () => {
+//   const [selectedTeacher, setSelectedTeacher] = useState(null);
+//   const [selectedSchool, setSelectedSchool] = useState(null);
+//   const [selectedSemester, setSelectedSemester] = useState(null);
+//   const [selectedDepartment, setSelectedDepartment] = useState(null);
+//   const [selectedSubject, setSelectedSubject] = useState(null);
+//   const [teachersForSelectedSchool, setTeachersForSelectedSchool] = useState(
+//     []
+//   );
+
+//   const assignSubject = () => {
+//     if (
+//       !selectedTeacher ||
+//       !selectedSchool ||
+//       !selectedSemester ||
+//       !selectedDepartment ||
+//       !selectedSubject
+//     ) {
+//       Alert.alert("Please select all details.");
+//       return;
+//     }
+//     const subjectCredit = selectedSubject.SubjectCredit || 0;
+//     const creditStatus = selectedTeacherCreditStatus() || 0;
+//     const totalCredit = subjectCredit + creditStatus;
+
+//     if (totalCredit > 12) {
+//       Alert.alert(
+//         "Subject cannot be assigned.",
+//         "The teacher's credit threshold has been reached."
+//       );
+//       return;
+//     }
+
+//     // Code to assign subject goes here (to be implemented)
+
+//     // Show alert saying subject is assigned
+//     Alert.alert(`Subject ${selectedSubject.SubjectName} is assigned.`);
+
+//     // Reset dropdowns
+//     resetSelections();
+//   };
+
+//   const resetSelections = () => {
+//     setSelectedTeacher(null);
+//     setSelectedSchool(null);
+//     setSelectedSemester(null);
+//     setSelectedDepartment(null);
+//     setSelectedSubject(null);
+//     setTeachersForSelectedSchool([]);
+//   };
+
+//   const handleSchoolChange = (schoolName) => {
+//     setSelectedSchool(schoolName);
+//     const selectedSchoolTeachers =
+//       teacherData.find((school) => school.SchoolName === schoolName)
+//         ?.Teachers || [];
+//     setTeachersForSelectedSchool(selectedSchoolTeachers);
+//     setSelectedTeacher(null);
+//   };
+
+//   const handleTeacherChange = (teacherValue) => {
+//     if (!selectedSchool) {
+//       Alert.alert("Please select School first.");
+//       return;
+//     }
+//     setSelectedTeacher(teacherValue);
+//   };
+
+//   const handleDepartmentChange = (departmentValue) => {
+//     if (!selectedSchool) {
+//       Alert.alert("Please select School first.");
+//       return;
+//     }
+//     setSelectedDepartment(departmentValue);
+//   };
+
+//   const handleSemesterChange = (semesterValue) => {
+//     if (!selectedDepartment) {
+//       Alert.alert("Please select Department first.");
+//       return;
+//     }
+//     setSelectedSemester(semesterValue);
+//   };
+
+//   const handleSubjectChange = (subjectValue) => {
+//     if (!selectedSemester) {
+//       Alert.alert("Please select Semester first.");
+//       return;
+//     }
+//     setSelectedSubject(subjectValue);
+//   };
+
+//   const filterSubjectsByDepartment = () => {
+//     if (!selectedDepartment) return [];
+//     const department = subjectData.find(
+//       (dept) => dept.DepartmentName === selectedDepartment
+//     );
+//     const semesterSubjects =
+//       department && department.Semesters[selectedSemester];
+//     return semesterSubjects || [];
+//   };
+
+//   const selectedTeacherCreditStatus = () => {
+//     if (selectedTeacher) {
+//       const teacher = teachersForSelectedSchool.find(
+//         (t) => t.RegistrationNumber === selectedTeacher
+//       );
+//       return teacher ? teacher.CreditStatus : null;
+//     }
+//     return null;
+//   };
+
+//   return (
+//     <ScrollView contentContainerStyle={styles.container}>
+//       <Text style={styles.headertext}>
+//         Please select according to number order
+//       </Text>
+//       <TouchableOpacity onPress={() => setSelectedTeacher(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>1. Select School:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedSchool}
+//               onValueChange={handleSchoolChange}
+//             >
+//               <Picker.Item label="Select School" value={null} />
+//               {teacherData.map((school, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={school.SchoolName}
+//                   value={school.SchoolName}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity onPress={() => setSelectedTeacher(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>2. Select Teacher:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedTeacher}
+//               onValueChange={handleTeacherChange}
+//             >
+//               <Picker.Item label="Select Teacher" value={null} />
+//               {teachersForSelectedSchool.map((teacher, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={teacher.TeacherName}
+//                   value={teacher.RegistrationNumber}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+
+//       <Text style={styles.creditStatus}>
+//         Credit Status: {selectedTeacherCreditStatus() || ""}
+//       </Text>
+
+//       <View style={styles.hrLine} />
+
+//       <TouchableOpacity onPress={() => setSelectedDepartment(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>1. Select Department:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedDepartment}
+//               onValueChange={handleDepartmentChange}
+//             >
+//               <Picker.Item label="Select Department" value={null} />
+//               {subjectData.map((subject, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={subject.DepartmentName}
+//                   value={subject.DepartmentName}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+//       <TouchableOpacity onPress={() => setSelectedSemester(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>2. Select Semester:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedSemester}
+//               onValueChange={handleSemesterChange}
+//             >
+//               <Picker.Item label="Select Semester" value={null} />
+//               {selectedDepartment &&
+//                 subjectData.find(
+//                   (dept) => dept.DepartmentName === selectedDepartment
+//                 )?.Semesters &&
+//                 Object.keys(
+//                   subjectData.find(
+//                     (dept) => dept.DepartmentName === selectedDepartment
+//                   ).Semesters
+//                 ).map((semester, index) => (
+//                   <Picker.Item key={index} label={semester} value={semester} />
+//                 ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity onPress={() => setSelectedSubject(null)}>
+//         <View style={styles.inputContainer}>
+//           <Text style={styles.label}>3. Select Subject:</Text>
+//           <ScrollView style={styles.scrollContainer}>
+//             <Picker
+//               selectedValue={selectedSubject}
+//               onValueChange={handleSubjectChange}
+//             >
+//               <Picker.Item label="Select Subject (Subject code)" value={null} />
+//               {filterSubjectsByDepartment().map((subject, index) => (
+//                 <Picker.Item
+//                   key={index}
+//                   label={`${subject.SubjectName} (${subject.SubjectCode})`}
+//                   value={subject}
+//                 />
+//               ))}
+//             </Picker>
+//           </ScrollView>
+//         </View>
+//       </TouchableOpacity>
+//       <Text style={styles.subjectCredit}>
+//         Subject Credit: {selectedSubject ? selectedSubject.SubjectCredit : null}
+//       </Text>
+
+//       <Button title="Assign" onPress={assignSubject} />
+//     </ScrollView>
+//   );
+// };
 
 // export default AdminAssignSubject;
 
+// const styles = StyleSheet.create({
+//   container: {
+//     padding: 20,
+//     justifyContent: "center",
+//   },
+//   inputContainer: {
+//     marginBottom: 20,
+//   },
+//   headertext: {
+//     fontSize: 20,
+//     marginBottom: 10,
+//     fontWeight: "bold",
+//   },
+//   label: {
+//     fontSize: 18,
+//     marginBottom: 5,
+//   },
+//   scrollContainer: {
+//     maxHeight: 200,
+//     borderWidth: 1,
+//     borderColor: "gray",
+//     borderRadius: 5,
+//   },
+//   hrLine: {
+//     borderBottomColor: "black",
+//     borderBottomWidth: 1,
+//     marginBottom: 20,
+//   },
+//   creditStatus: {
+//     fontSize: 18,
+//     marginBottom: 10,
+//     fontWeight: "bold",
+//   },
+//   subjectCredit: {
+//     fontSize: 18,
+//     marginBottom: 10,
+//     fontWeight: "bold",
+//   },
+// });

@@ -174,6 +174,13 @@ const AdminHomePage = ({ route }) => {
           >
             <Text style={styles.cardText}>Notice</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => handleCardPress("AdminAssign")}
+            style={styles.card}
+          >
+            <Text style={styles.cardText}>Assign Subjects</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>

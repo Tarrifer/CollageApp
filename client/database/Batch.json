@@ -1,0 +1,169 @@
+[
+    {
+      "SchoolName": "Royal School of Engineering",
+      "SchoolShortName": "RSOE",
+      "Teachers": [
+        {
+          "TeacherName": "Amanda Clark",
+          "RegistrationNumber": "T112",
+          "CreditStatus": 7,
+          "AssignedSubjects": [
+            {
+              "DepartmentName": "Finance",
+              "DepartmentShortName": "FIN",
+              "SubjectName": "Tally",
+              "CreditNumber": 3,
+              "SubjectCode": "BUS01",
+              "SemesterNumber": "1",
+              "Section": "A",
+              "SubjectType": "Core",
+              "Batch": "2020",
+              "SchoolName": "Royal School of Finance",
+              "SchoolShortName": "RSOF",
+              "CourseType": "UG"
+            },
+            {
+              "DepartmentName": "Ecommerce",
+              "DepartmentShortName": "ECO",
+              "SubjectName": "Cryptocurrency",
+              "CreditNumber": 4,
+              "SubjectCode": "CRP02",
+              "SemesterNumber": "2",
+              "Section": "B",
+              "SubjectType": "AEEC",
+              "Batch": "2021",
+              "SchoolName": "Royal School of Ecommerce",
+              "SchoolShortName": "RSOE",
+              "CourseType": "PG"
+            }
+          ]
+        },
+        {
+          "TeacherName": "Matthew Harris",
+          "RegistrationNumber": "T111",
+          "CreditStatus": 8,
+          "AssignedSubjects": [
+            {
+              "DepartmentName": "Computer Science",
+              "DepartmentShortName": "CS",
+              "SubjectName": "Artificial Intelligence",
+              "CreditNumber": 4,
+              "SubjectCode": "AI01",
+              "SemesterNumber": "3",
+              "Section": "C",
+              "SubjectType": "Core",
+              "Batch": "2022",
+              "SchoolName": "Royal School of Computer Science",
+              "SchoolShortName": "RSOCS",
+              "CourseType": "UG"
+            },
+            {
+              "DepartmentName": "Mechanical Engineering",
+              "DepartmentShortName": "ME",
+              "SubjectName": "Thermodynamics",
+              "CreditNumber": 4,
+              "SubjectCode": "THM02",
+              "SemesterNumber": "4",
+              "Section": "A",
+              "SubjectType": "Core",
+              "Batch": "2023",
+              "SchoolName": "Royal School of Mechanical Engineering",
+              "SchoolShortName": "RSOME",
+              "CourseType": "UG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "SchoolName": "Royal School of Business",
+      "SchoolShortName": "RSOB",
+      "Teachers": [
+        {
+          "TeacherName": "Jennifer Smith",
+          "RegistrationNumber": "T113",
+          "CreditStatus": 9,
+          "AssignedSubjects": [
+            {
+              "DepartmentName": "Marketing",
+              "DepartmentShortName": "MKT",
+              "SubjectName": "Consumer Behavior",
+              "CreditNumber": 3,
+              "SubjectCode": "CB01",
+              "SemesterNumber": "2",
+              "Section": "B",
+              "SubjectType": "Core",
+              "Batch": "2021",
+              "SchoolName": "Royal School of Marketing",
+              "SchoolShortName": "RSOM",
+              "CourseType": "UG"
+            },
+            {
+              "DepartmentName": "Finance",
+              "DepartmentShortName": "FIN",
+              "SubjectName": "Financial Management",
+              "CreditNumber": 3,
+              "SubjectCode": "FM02",
+              "SemesterNumber": "3",
+              "Section": "C",
+              "SubjectType": "Core",
+              "Batch": "2022",
+              "SchoolName": "Royal School of Finance",
+              "SchoolShortName": "RSOF",
+              "CourseType": "UG"
+            },
+            {
+              "DepartmentName": "Entrepreneurship",
+              "DepartmentShortName": "ENT",
+              "SubjectName": "Startup Management",
+              "CreditNumber": 3,
+              "SubjectCode": "SM01",
+              "SemesterNumber": "2",
+              "Section": "B",
+              "SubjectType": "Core",
+              "Batch": "2021",
+              "SchoolName": "Royal School of Entrepreneurship",
+              "SchoolShortName": "RSOENT",
+              "CourseType": "PG"
+            }
+          ]
+        },
+        {
+          "TeacherName": "Michael Brown",
+          "RegistrationNumber": "T114",
+          "CreditStatus": 6,
+          "AssignedSubjects": [
+            {
+              "DepartmentName": "Entrepreneurship",
+              "DepartmentShortName": "ENT",
+              "SubjectName": "Startup Management",
+              "CreditNumber": 3,
+              "SubjectCode": "SM01",
+              "SemesterNumber": "2",
+              "Section": "B",
+              "SubjectType": "Core",
+              "Batch": "2021",
+              "SchoolName": "Royal School of Entrepreneurship",
+              "SchoolShortName": "RSOENT",
+              "CourseType": "PG"
+            },
+            {
+              "DepartmentName": "Operations Management",
+              "DepartmentShortName": "OM",
+              "SubjectName": "Supply Chain Management",
+              "CreditNumber": 3,
+              "SubjectCode": "SCM02",
+              "SemesterNumber": "3",
+              "Section": "C",
+              "SubjectType": "Core",
+              "Batch": "2022",
+              "SchoolName": "Royal School of Operations Management",
+              "SchoolShortName": "RSOOM",
+              "CourseType": "PG"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  

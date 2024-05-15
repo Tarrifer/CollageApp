@@ -68,9 +68,11 @@ import TeacherSubjectTimetableScreen from "../features/TeacherFeatures/TeacherSu
 import PendingPage from "../pages/General/PendingPage";
 import AdminAssignedView from "../features/AdminFeatures/AdminAssignedView";
 import AdminAssignSubject from "../features/AdminFeatures/AdminAssignSubject";
-import AdminTimetableCreate from "../features/AdminFeatures/AdminTimetableCreate";
+import AdminTimetableCreate from "../features/AdminFeatures/AdminTimetableCreate1";
 import AdminTimetableView from "../features/AdminFeatures/AdminTimetableView";
 import TimetableSlot from "../features/AdminFeatures/TimetableSlot";
+import AdminAssignScreen from "../features/AdminFeatures/AdminAssignScreen";
+import AdminCustomScrollView from "../features/AdminFeatures/AdminCustomScrollView ";
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -255,7 +257,7 @@ export const AuthStack = () => {
       <Stack.Screen
         name="MasterReports"
         component={MAdminReports}
-        options={{ title: "Master Reports", headerShown: false }}
+        options={{ title: "Master Reports", headerShown: true }}
       />
       <Stack.Screen
         name="Customization"
@@ -408,6 +410,11 @@ export const AuthStack = () => {
         options={{ title: "Admin Timetable", headerShown: true }}
       />
       <Stack.Screen
+        name="AdminAssign"
+        component={AdminAssignScreen}
+        options={{ title: "Admin Assign", headerShown: true }}
+      />
+      <Stack.Screen
         name="AdminTimetableCreate"
         component={AdminTimetableCreate}
         options={{ title: "Admin Timetable", headerShown: true }}
@@ -426,6 +433,11 @@ export const AuthStack = () => {
         name="TimetableSlot"
         component={TimetableSlot}
         options={{ title: "Admin Timetable", headerShown: true }}
+      />
+      <Stack.Screen
+        name="CustomScrollView"
+        component={AdminCustomScrollView}
+        options={{ title: "Admin Timetable Scroll View", headerShown: true }}
       />
       <Stack.Screen
         name="Pending"

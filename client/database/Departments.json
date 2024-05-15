@@ -1,0 +1,74 @@
+[
+    {
+        "DepartmentName": "Finance",
+        "DepartmentShortName": "Fin",
+        "CourseType": "Undergraduate",
+        "SchoolName": "School of Business",
+        "Semesters": {
+            "1": [
+                {
+                    "SubjectName": "Principles of Accounting",
+                    "SubjectCredit": 3,
+                    "SubjectType": "Core",
+                    "SubjectCode": "FIN101"
+                },
+                {
+                    "SubjectName": "Business Ethics",
+                    "SubjectCredit": 3,
+                    "SubjectType": "Core",
+                    "SubjectCode": "FIN102"
+                }
+            ],
+            "2": [
+                {
+                    "SubjectName": "Financial Management",
+                    "SubjectCredit": 3,
+                    "SubjectType": "Core",
+                    "SubjectCode": "FIN201"
+                },
+                {
+                    "SubjectName": "Investment Analysis",
+                    "SubjectCredit": 3,
+                    "SubjectType": "Elective",
+                    "SubjectCode": "FIN202"
+                }
+            ]
+        }
+    },
+    {
+        "DepartmentName": "Computer Science and Engineering",
+        "DepartmentShortName": "CSE",
+        "CourseType": "Undergraduate",
+        "SchoolName": "School of Engineering",
+        "Semesters": {
+            "1": [
+                {
+                    "SubjectName": "Introduction to Programming",
+                    "SubjectCredit": 4,
+                    "SubjectType": "Core",
+                    "SubjectCode": "CSE101"
+                },
+                {
+                    "SubjectName": "Data Structures and Algorithms",
+                    "SubjectCredit": 4,
+                    "SubjectType": "Core",
+                    "SubjectCode": "CSE102"
+                }
+            ],
+            "2": [
+                {
+                    "SubjectName": "Database Systems",
+                    "SubjectCredit": 3,
+                    "SubjectType": "Core",
+                    "SubjectCode": "CSE201"
+                },
+                {
+                    "SubjectName": "Operating Systems",
+                    "SubjectCredit": 3,
+                    "SubjectType": "Core",
+                    "SubjectCode": "CSE202"
+                }
+            ]
+        }
+    }
+]

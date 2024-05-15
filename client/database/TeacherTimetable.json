@@ -1,0 +1,92 @@
+{
+    "TeacherTimetables": [
+      {
+        "TeacherName": "Mr. Smith",
+        "TeacherRegistration": "TCH123",
+        "SchoolName": "School of Engineering",
+        "Timetable": {
+          "Monday": [
+            { "time": "9:00 AM - 10:00 AM", "subject": "Introduction to Programming", "subjectCode": "CSE101", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "10:00 AM - 11:00 AM", "subject": "Data Structures and Algorithms", "subjectCode": "CSE102", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "11:00 AM - 12:00 PM", "subject": "Operating Systems", "subjectCode": "CSE103", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "12:00 PM - 1:00 PM", "subject": "Database Management Systems", "subjectCode": "CSE104", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "1:00 PM - 2:00 PM", "subject": "Web Development", "subjectCode": "CSE105", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "2:00 PM - 3:00 PM", "subject": "Software Engineering", "subjectCode": "CSE106", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "3:00 PM - 4:00 PM", "subject": "Computer Networks", "subjectCode": "CSE107", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "4:00 PM - 4:35 PM", "subject": "Machine Learning", "subjectCode": "CSE108", "DepartmentName": "Computer Science and Engineering" }
+          ],
+          "Tuesday": [],
+          "Wednesday": [
+            { "time": "9:00 AM - 10:00 AM", "subject": "Introduction to Programming", "subjectCode": "CSE101", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "10:00 AM - 11:00 AM", "subject": "Data Structures and Algorithms", "subjectCode": "CSE102", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "11:00 AM - 12:00 PM", "subject": "Operating Systems", "subjectCode": "CSE103", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "12:00 PM - 1:00 PM", "subject": "Database Management Systems", "subjectCode": "CSE104", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "1:00 PM - 2:00 PM", "subject": "Web Development", "subjectCode": "CSE105", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "2:00 PM - 3:00 PM", "subject": "Software Engineering", "subjectCode": "CSE106", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "3:00 PM - 4:00 PM", "subject": "Computer Networks", "subjectCode": "CSE107", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "4:00 PM - 4:35 PM", "subject": "Machine Learning", "subjectCode": "CSE108", "DepartmentName": "Computer Science and Engineering" }
+          ],
+          "Thursday": [],
+          "Friday": [
+            { "time": "9:00 AM - 10:00 AM", "subject": "Introduction to Programming", "subjectCode": "CSE101", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "10:00 AM - 11:00 AM", "subject": "Data Structures and Algorithms", "subjectCode": "CSE102", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "11:00 AM - 12:00 PM", "subject": "Operating Systems", "subjectCode": "CSE103", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "12:00 PM - 1:00 PM", "subject": "Database Management Systems", "subjectCode": "CSE104", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "1:00 PM - 2:00 PM", "subject": "Web Development", "subjectCode": "CSE105", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "2:00 PM - 3:00 PM", "subject": "Software Engineering", "subjectCode": "CSE106", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "3:00 PM - 4:00 PM", "subject": "Computer Networks", "subjectCode": "CSE107", "DepartmentName": "Computer Science and Engineering" },
+            { "time": "4:00 PM - 4:35 PM", "subject": "Machine Learning", "subjectCode": "CSE108", "DepartmentName": "Computer Science and Engineering" }
+          ],
+          "Saturday": [],
+          "Sunday": []
+        }
+      },
+      {
+        "TeacherName": "Ms. Johnson",
+        "TeacherRegistration": "TCH124",
+        "SchoolName": "School of Science",
+        "Timetable": {
+          "Monday": [
+            { "time": "10:00 AM - 11:00 AM", "subject": "Physics", "subjectCode": "PHY301", "DepartmentName": "Physics" },
+            { "time": "11:00 AM - 12:00 PM", "subject": "Quantum Mechanics", "subjectCode": "PHY302", "DepartmentName": "Physics" }
+          ],
+          "Tuesday": [],
+          "Wednesday": [
+            { "time": "10:00 AM - 11:00 AM", "subject": "Physics", "subjectCode": "PHY301", "DepartmentName": "Physics" },
+            { "time": "11:00 AM - 12:00 PM", "subject": "Quantum Mechanics", "subjectCode": "PHY302", "DepartmentName": "Physics" }
+          ],
+          "Thursday": [],
+          "Friday": [
+            { "time": "10:00 AM - 11:00 AM", "subject": "Physics", "subjectCode": "PHY301", "DepartmentName": "Physics" },
+            { "time": "11:00 AM - 12:00 PM", "subject": "Quantum Mechanics", "subjectCode": "PHY302", "DepartmentName": "Physics" }
+          ],
+          "Saturday": [],
+          "Sunday": []
+        }
+      },
+      {
+        "TeacherName": "Dr. Brown",
+        "TeacherRegistration": "TCH125",
+        "SchoolName": "School of Science",
+        "Timetable": {
+          "Monday": [
+            { "time": "11:00 AM - 12:00 PM", "subject": "Chemistry", "subjectCode": "CHEM301", "DepartmentName": "Chemistry" },
+            { "time": "12:00 PM - 1:00 PM", "subject": "Organic Chemistry", "subjectCode": "CHEM302", "DepartmentName": "Chemistry" }
+          ],
+          "Tuesday": [],
+          "Wednesday": [
+            { "time": "11:00 AM - 12:00 PM", "subject": "Chemistry", "subjectCode": "CHEM301", "DepartmentName": "Chemistry" },
+            { "time": "12:00 PM - 1:00 PM", "subject": "Organic Chemistry", "subjectCode": "CHEM302", "DepartmentName": "Chemistry" }
+          ],
+          "Thursday": [],
+          "Friday": [
+            { "time": "11:00 AM - 12:00 PM", "subject": "Chemistry", "subjectCode": "CHEM301", "DepartmentName": "Chemistry" },
+            { "time": "12:00 PM - 1:00 PM", "subject": "Organic Chemistry", "subjectCode": "CHEM302", "DepartmentName": "Chemistry" }
+          ],
+          "Saturday": [],
+          "Sunday": []
+        }
+      }
+    ]
+  }
+  
