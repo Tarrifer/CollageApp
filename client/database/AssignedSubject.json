@@ -2,11 +2,11 @@
     {
       "id": 1,
       "selectedTeacher": "Amanda Clark",
-      "selectedSchool": "Royal School of Engineering",
+      "selectedSchool": "Royal School of Information Technology",
       "selectedSemester": "1",
-      "selectedDepartment": "Computer Science and Engineering",
+      "selectedDepartment": "BCA",
       "selectedSubject": {
-        "SubjectName": "Introduction to Programming",
+        "SubjectName": "Introduction to C",
         "SubjectCredit": 4,
         "SubjectType": "Core",
         "SubjectCode": "CSE101"

@@ -76,7 +76,7 @@ const StudentHomePage = ({ route }) => {
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={openDrawer} style={styles.iconContainer}>
-            <Ionicons name="md-menu" size={30} color="white" />
+            <Ionicons name="menu" size={30} color="white" />
           </TouchableOpacity>
 
           <Text style={styles.headerText}>My College App</Text>
@@ -84,7 +84,7 @@ const StudentHomePage = ({ route }) => {
             onPress={handleNotifications}
             style={styles.iconContainer}
           >
-            <Ionicons name="md-notifications" size={30} color="white" />
+            <Ionicons name="notifications" size={30} color="white" />
           </TouchableOpacity>
         </View>
 

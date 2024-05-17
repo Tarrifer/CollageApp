@@ -5,6 +5,8 @@ import { RadioButton } from "react-native-paper";
 const TeacherAttendanceTakingScreen = ({
   filteredStudents = [],
   onSubmitAttendance,
+  filterOptions, // Add filterOptions prop
+  onApplyFilter, // Add onApplyFilter prop
 }) => {
   const [attendanceData, setAttendanceData] = useState(
     filteredStudents.map((student) => ({
