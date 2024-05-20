@@ -1,0 +1,148 @@
+[
+    {
+      "rollNumber": 101,
+      "studentName": "John Doe",
+      "departmentName": "BCA",
+      "semester": "1",
+      "absent": 2,
+      "present": 18
+    },
+    {
+        "rollNumber": 201,
+        "studentName": "Rahul Das",
+        "departmentName": "BCA",
+        "semester": "1",
+        "absent": 0,
+        "present": 20
+      },
+      {
+        "rollNumber": 211,
+        "studentName": "Akash Das",
+        "departmentName": "MCA",
+        "semester": "2",
+        "absent": 0,
+        "present": 20
+      },
+    {
+      "rollNumber": 122,
+      "studentName": "Alice Smith",
+      "departmentName": "Electrical Engineering",
+      "semester": "2",
+      "absent": 3,
+      "present": 17
+    },
+    {
+      "rollNumber": 123,
+      "studentName": "Bob Johnson",
+      "departmentName": "Mechanical Engineering",
+      "semester": "3",
+      "absent": 5,
+      "present": 15
+    },
+    {
+      "rollNumber": 124,
+      "studentName": "Emma Brown",
+      "departmentName": "Civil Engineering",
+      "semester": "5",
+      "absent": 1,
+      "present": 19
+    },
+    {
+      "rollNumber": 135,
+      "studentName": "Jane Doe",
+      "departmentName": "Computer Science",
+      "semester": "4",
+      "absent": 4,
+      "present": 16
+    },
+    {
+      "rollNumber": 121,
+      "studentName": "Peter Parker",
+      "departmentName": "Electrical Engineering",
+      "semester": "6",
+      "absent": 2,
+      "present": 18
+    },
+    {
+      "rollNumber": 127,
+      "studentName": "John Doe",
+      "departmentName": "Computer Science",
+      "semester": "1",
+      "absent": 2,
+      "present": 18
+    },
+    {
+      "rollNumber": 102,
+      "studentName": "Alice Smith",
+      "departmentName": "Electrical Engineering",
+      "semester": "3",
+      "absent": 3,
+      "present": 17
+    },
+    {
+      "rollNumber": 103,
+      "studentName": "Bob Johnson",
+      "departmentName": "Mechanical Engineering",
+      "semester": "3",
+      "absent": 5,
+      "present": 15
+    },
+    {
+      "rollNumber": 104,
+      "studentName": "Emma Brown",
+      "departmentName": "Civil Engineering",
+      "semester": "5",
+      "absent": 1,
+      "present": 19
+    },
+    {
+      "rollNumber": 125,
+      "studentName": "Jane Doe",
+      "departmentName": "Computer Science",
+      "semester": "1",
+      "absent": 4,
+      "present": 16
+    },
+    {
+      "rollNumber": 106,
+      "studentName": "Peter Parker",
+      "departmentName": "Electrical Engineering",
+      "semester": "3",
+      "absent": 2,
+      "present": 18
+    },
+    {
+      "rollNumber": 107,
+      "studentName": "Michael Johnson",
+      "departmentName": "Mechanical Engineering",
+      "semester": "4",
+      "absent": 6,
+      "present": 14
+    },
+    {
+      "rollNumber": 108,
+      "studentName": "Sarah Brown",
+      "departmentName": "Civil Engineering",
+      "semester": "6",
+      "absent": 2,
+      "present": 18
+    },
+    {
+      "rollNumber": 109,
+      "studentName": "David Smith",
+      "departmentName": "Computer Science",
+      "semester": "2",
+      "absent": 3,
+      "present": 17
+    },
+    {
+      "rollNumber": 110,
+      "studentName": "Jennifer Lee",
+      "departmentName": "Electrical Engineering",
+
+      "semester": "5",
+      "absent": 1,
+      "present": 19
+    }
+  ]
+  

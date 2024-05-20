@@ -126,8 +126,14 @@ const AdminHomePage = ({ route }) => {
           <Text style={styles.featuresText}>Features</Text>
         </View>
         <View style={styles.cards}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => handleCardPress("AdminAttendance")}
+            style={styles.card}
+          >
+            <Text style={styles.cardText}>Attendance</Text>
+          </TouchableOpacity> */}
+          <TouchableOpacity
+            onPress={() => handleCardPress("TeacherAttendance")}
             style={styles.card}
           >
             <Text style={styles.cardText}>Attendance</Text>

@@ -1,0 +1,59 @@
+{
+    "id": 1,
+    "selectedTeacher": "Amanda Clark",
+    "selectedSchool": "Royal School of Information Technology",
+    "selectedSubject": {
+        "1": [
+            {
+                "SubjectName": "Introduction to C",
+                "SubjectCredit": 4,
+                "SubjectType": "Core",
+                "SubjectCode": "CSE101",
+                "dateTime": "2024-05-14T10:00:00Z",
+                "additionalFields": {
+                    "selectedSemester": "1",
+                    "selectedSchool": "Royal School of Information Technology",
+                    "Batch": 2021,
+                    "selectedDepartment": "BCA",
+                    "SelectedSection": "N/A"
+                }
+            }
+        ],
+        "2": [
+        
+            {
+                "SubjectName": "Data Structures and Algorithms",
+                "SubjectCredit": 4,
+                "SubjectType": "Core",
+                "SubjectCode": "CSE102",
+                "dateTime": "2024-05-16T10:00:00Z",
+                "additionalFields": {
+                    "selectedSemester": "2",
+                    "selectedSchool": "Royal School of Information Technology",
+                    "Batch": 2022,
+                    "selectedDepartment": "MCA",
+                    "SelectedSection": "B"
+                }
+            }
+           
+        ],
+        "3": [
+            {
+                "SubjectName": "Principles of Programming Languages",
+                "SubjectCredit": 3,
+                "SubjectType": "Elective",
+                "SubjectCode": "CSE103",
+                "dateTime": "2024-05-18T10:00:00Z",
+                "additionalFields": {
+                    "selectedSemester": "1",
+                    "selectedSchool": "Royal School of Information Technology",
+                    "Batch": 2021,
+                    "selectedDepartment": "BCA",
+                    "SelectedSection": "A"
+                }
+            }
+        
+       
+        ]
+    }
+}

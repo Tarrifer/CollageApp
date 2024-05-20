@@ -1,0 +1,82 @@
+{
+    "id": 1,
+    "selectedTeacher": "Amanda Clark",
+    "selectedSchool": "Royal School of Information Technology",
+    "selectedSubject": {
+        "1": [
+            {
+                "SubjectName": "Introduction to C",
+                "SubjectCredit": 4,
+                "SubjectType": "Core",
+                "SubjectCode": "CSE101",
+                "dateTime": "2024-05-14T10:00:00Z"
+            },{
+                "selectedSemester": "1",
+                "selectedSchool": "Royal School of Information Technology",
+                "Batch":2021,
+                "selectedDepartment": "BCA",
+                "SelectedSection":"N/A"
+            }
+        ],
+        "2": [
+            {
+                "SubjectName": "Data Structures and Algorithms",
+                "SubjectCredit": 4,
+                "SubjectType": "Core",
+                "SubjectCode": "CSE102",
+                "dateTime": "2024-05-15T10:00:00Z"
+            },{
+                "selectedSemester": "1",
+                "selectedSchool": "Royal School of Information Technology",
+                "Batch":2021,
+                "selectedDepartment": "BCA",
+                "SelectedSection":"A"
+            }
+        ],
+        "3": [
+            {
+                "SubjectName": "Principles of Programming Languages",
+                "SubjectCredit": 3,
+                "SubjectType": "Elective",
+                "SubjectCode": "CSE103",
+                "dateTime": "2024-05-18T10:00:00Z"
+            },{
+                "selectedSemester": "1",
+                "selectedSchool": "Royal School of Information Technology",
+                "Batch":2021,
+                "selectedDepartment": "BCA",
+                "SelectedSection":"B"
+            }
+        ],
+        "4": [
+            {
+                "SubjectName": "Computer Organization",
+                "SubjectCredit": 4,
+                "SubjectType": "Core",
+                "SubjectCode": "CSE104",
+                "dateTime": "2024-05-19T10:00:00Z"
+            },{
+                "selectedSemester": "1",
+                "selectedSchool": "Royal School of Information Technology",
+                "Batch":2021,
+                "selectedDepartment": "BCA",
+                "SelectedSection":"C"
+            }
+        ],
+        "5": [
+            {
+                "SubjectName": "Operating System",
+                "SubjectCredit": 4,
+                "SubjectType": "Core",
+                "SubjectCode": "CSE105",
+                "dateTime": "2024-05-20T10:00:00Z"
+            },{
+                "selectedSemester": "1",
+                "selectedSchool": "Royal School of Information Technology",
+                "Batch":2021,
+                "selectedDepartment": "BCA",
+                "SelectedSection":"D"
+            }
+        ]
+    }
+}

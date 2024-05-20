@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import TeacherAttendanceViewScreen from "./TeacherAttendanceViewScreen";
-// import TeacherAttendanceTakingScreen from "./TeacherAttendanceTakingScreen";
+import TeacherAttendanceTakingScreen from "./TeacherAttendanceTakingScreen";
 // import studentsData from "../../database/StudentAttendance.json";
-import TAttendanceScreen from "./TAttendanceScreen";
+// import TAttendanceScreen from "./TAttendanceScreen";
 const Tab = createMaterialTopTabNavigator();
 
 const TeacherAttendanceScreen = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen name="View" component={TeacherAttendanceViewScreen} />
-      {/* <Tab.Screen name="Taking" component={TAttendanceScreen} /> */}
+      <Tab.Screen name="Taking" component={TeacherAttendanceTakingScreen} />
     </Tab.Navigator>
   );
 };

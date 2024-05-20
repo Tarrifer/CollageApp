@@ -10,6 +10,7 @@ import {
   Pressable,
   ScrollView,
   Alert,
+  Modal,
 } from "react-native";
 // import { getUserType, setUserType } from "../../components/userType";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -19,6 +20,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import ImageModal from "../../components/ImageModal";
+import {
+  launchBurstModeCamera,
+  launchImageLibrary,
+} from "../../utils/imageUtils";
 
 const SignupPage = () => {
   // const userType = getUserType();
@@ -40,7 +46,9 @@ const SignupPage = () => {
   const [postcode, setPostcode] = useState("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
-  const [userImage, setUserImage] = useState(null);
+  // const [userImage, setUserImage] = useState(null);
+  const [userImages, setUserImages] = useState([]);
+  const [isModalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -48,52 +56,108 @@ const SignupPage = () => {
       setUserImage(null);
     }
   }, [userType]);
+
   const handleImageUpload = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert(
-        "Permission Required",
-        "Please grant permission to access photos"
-      );
-      return;
-    }
-
-    try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-
-      if (!result.canceled) {
-        if (result.assets && result.assets.length > 0) {
-          setUserImage(result.assets[0].uri);
-        }
-      }
-    } catch (error) {
-      console.log("Error selecting image:", error);
-      Alert.alert("Error", "An error occurred while selecting image");
+    const images = await launchBurstModeCamera();
+    if (images.length > 0) {
+      setUserImages(images);
     }
   };
 
-  const handleRemoveImage = () => {
-    setUserImage(null);
+  const handleRemoveImage = (index) => {
+    const updatedImages = [...userImages];
+    updatedImages.splice(index, 1);
+    setUserImages(updatedImages);
   };
+
+  const handleReuploadImages = async () => {
+    const images = await launchImageLibrary();
+    if (images.length > 0) {
+      setUserImages(images);
+    }
+  };
+  // const handleImageUpload = async () => {
+  //   const images = await launchBurstModeCamera();
+  //   if (images.length > 0) {
+  //     setUserImages(images);
+  //   }
+  // };
+
+  // const handleSelectImages = async () => {
+  //   const images = await launchImageLibrary();
+  //   if (images.length > 0) {
+  //     setUserImages(images);
+  //   }
+  // };
+
+  // const handleRemoveImage = (index) => {
+  //   const updatedImages = [...userImages];
+  //   updatedImages.splice(index, 1);
+  //   setUserImages(updatedImages);
+  // };
+
+  // const handleReuploadImages = async () => {
+  //   const images = await launchImageLibrary();
+  //   if (images.length > 0) {
+  //     setUserImages(images);
+  //   }
+  // };
+
+  // const handleImageUpload = async () => {
+  //   const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  //   if (status !== "granted") {
+  //     Alert.alert(
+  //       "Permission Required",
+  //       "Please grant permission to access photos"
+  //     );
+  //     return;
+  //   }
+
+  //   try {
+  //     const result = await ImagePicker.launchImageLibraryAsync({
+  //       mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //       allowsEditing: true,
+  //       aspect: [4, 3],
+  //       quality: 1,
+  //     });
+
+  //     if (!result.canceled) {
+  //       if (result.assets && result.assets.length > 0) {
+  //         setUserImage(result.assets[0].uri);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log("Error selecting image:", error);
+  //     Alert.alert("Error", "An error occurred while selecting image");
+  //   }
+  // };
+
+  // const handleRemoveImage = () => {
+  //   setUserImage(null);
+  // };
 
   const handleSignup = () => {
     if (
       !email ||
       !password ||
+      !universityName ||
       !confirmPassword ||
       !name ||
       !schoolName ||
       !department ||
       !registerNumber ||
-      !rollNumber ||
+      (userType === "Student" && !rollNumber) ||
       !phoneNumber ||
+      (userType === "Master Admin" &&
+        (!country ||
+          !location ||
+          !universityCode ||
+          !postcode ||
+          !city ||
+          !address)) ||
       !userType ||
-      (userType !== "Master Admin" && !userImage)
+      // (userType !== "Master Admin" && !userImage)
+      (userType !== "Master Admin" && userImages.length === 0)
     ) {
       Alert.alert("Error", "Please fill in all fields");
       return;
@@ -110,6 +174,37 @@ const SignupPage = () => {
     navigation.navigate("OTPVerification", { userType });
     // navigation.navigate("Pending", { userType });
   };
+  // const handleSignup = () => {
+  //   if (
+  //     !email ||
+  //     !password ||
+  //     !confirmPassword ||
+  //     !name ||
+  //     !schoolName ||
+  //     !department ||
+  //     !registerNumber ||
+  //     // !rollNumber ||
+  //     (userType === "Student" && !rollNumber) ||
+  //     !phoneNumber ||
+  //     !universityName ||
+  //     !userType ||
+  //     (userType !== "Master Admin" && !userImage)
+  //   ) {
+  //     Alert.alert("Error", "Please fill in all fields");
+  //     return;
+  //   }
+
+  //   if (password !== confirmPassword) {
+  //     Alert.alert("Error", "Passwords do not match");
+  //     return;
+  //   }
+
+  //   // Signup logic
+  //   // ...
+
+  //   navigation.navigate("OTPVerification", { userType });
+  //   // navigation.navigate("Pending", { userType });
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -165,6 +260,23 @@ const SignupPage = () => {
                 color="gray"
               />
               <TextInput
+                value={universityName}
+                onChangeText={(text) => setUniversityName(text)}
+                style={styles.input}
+                placeholder="Enter university name"
+              />
+            </View>
+          </View>
+
+          <View style={styles.inputContainer}>
+            <View style={styles.inputWrapper}>
+              <MaterialIcons
+                style={styles.inputIcon}
+                name="school"
+                size={24}
+                color="gray"
+              />
+              <TextInput
                 value={schoolName}
                 onChangeText={(text) => setSchoolName(text)}
                 style={styles.input}
@@ -206,7 +318,7 @@ const SignupPage = () => {
               />
             </View>
           </View>
-
+          {/* 
           <View style={styles.inputContainer}>
             <View style={styles.inputWrapper}>
               <MaterialCommunityIcons
@@ -222,7 +334,25 @@ const SignupPage = () => {
                 placeholder="Enter your roll number"
               />
             </View>
-          </View>
+          </View> */}
+          {userType === "Student" && (
+            <View style={styles.inputContainer}>
+              <View style={styles.inputWrapper}>
+                <MaterialCommunityIcons
+                  style={styles.inputIcon}
+                  name="rollupjs"
+                  size={24}
+                  color="gray"
+                />
+                <TextInput
+                  value={rollNumber}
+                  onChangeText={(text) => setRollNumber(text)}
+                  style={styles.input}
+                  placeholder="Enter your roll number"
+                />
+              </View>
+            </View>
+          )}
 
           <View style={styles.inputContainer}>
             <View style={styles.inputWrapper}>
@@ -295,7 +425,7 @@ const SignupPage = () => {
           </View>
 
           {/* Image upload */}
-          {!userImage && userType !== "Master Admin" && (
+          {/* {!userImage && userType !== "Master Admin" && (
             <View style={styles.inputContainer}>
               <Pressable
                 onPress={handleImageUpload}
@@ -304,8 +434,17 @@ const SignupPage = () => {
                 <Text style={styles.buttonText}>Upload Image</Text>
               </Pressable>
             </View>
+          )} */}
+          {userType !== "Master Admin" && (
+            <Pressable
+              style={styles.uploadButton}
+              onPress={() => setModalVisible(true)}
+            >
+              <Text style={styles.buttonText}>Upload Images</Text>
+            </Pressable>
           )}
-          {userImage && (
+
+          {/* {userImage && (
             <View style={styles.inputContainer}>
               <Pressable
                 onPress={handleRemoveImage}
@@ -315,7 +454,14 @@ const SignupPage = () => {
               </Pressable>
               <Image source={{ uri: userImage }} style={styles.imagePreview} />
             </View>
-          )}
+          )} */}
+          <ImageModal
+            visible={isModalVisible}
+            images={userImages}
+            onClose={() => setModalVisible(false)}
+            onRemove={handleRemoveImage}
+            onReupload={handleImageUpload}
+          />
           {/* <View style={styles.inputContainer}>
             <Pressable onPress={handleImageUpload} style={styles.uploadButton}>
               <Text style={styles.buttonText}>Upload Image</Text>
@@ -332,7 +478,7 @@ const SignupPage = () => {
           {userType === "Master Admin" && (
             <KeyboardAvoidingView>
               <>
-                <View style={styles.inputContainer}>
+                {/* <View style={styles.inputContainer}>
                   <View style={styles.inputWrapper}>
                     <MaterialIcons
                       style={styles.inputIcon}
@@ -347,7 +493,7 @@ const SignupPage = () => {
                       placeholder="Enter university name"
                     />
                   </View>
-                </View>
+                </View> */}
                 <View style={styles.inputContainer}>
                   <View style={styles.inputWrapper}>
                     <MaterialIcons
