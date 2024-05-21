@@ -11,6 +11,7 @@ import {
   ScrollView,
   Alert,
   Modal,
+  Button,
 } from "react-native";
 // import { getUserType, setUserType } from "../../components/userType";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -22,7 +23,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import ImageModal from "../../components/ImageModal";
 import {
-  launchBurstModeCamera,
+  // launchBurstModeCamera,
   launchImageLibrary,
 } from "../../utils/imageUtils";
 
@@ -46,60 +47,72 @@ const SignupPage = () => {
   const [postcode, setPostcode] = useState("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
-  // const [userImage, setUserImage] = useState(null);
-  const [userImages, setUserImages] = useState([]);
-  const [isModalVisible, setModalVisible] = useState(false);
+  // const [userImage, setImages] = useState(null);
+  // const [images, setimages] = useState([]);
+  const [images, setImages] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  // const [isModalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
-
+  let requiredFieldsFilled = true;
   useEffect(() => {
     if (userType == "Master Admin") {
-      setUserImage(null);
+      setImages([]);
     }
   }, [userType]);
 
-  const handleImageUpload = async () => {
-    const images = await launchBurstModeCamera();
-    if (images.length > 0) {
-      setUserImages(images);
-    }
+  // const handleImageUpload = async () => {
+  //   const images = await launchBurstModeCamera();
+  //   if (images.length > 0) {
+  //     setimages(images);
+  //   }
+  // };
+
+  // const handleRemoveImage = (index) => {
+  //   const updatedImages = [...images];
+  //   updatedImages.splice(index, 1);
+  //   setimages(updatedImages);
+  // };
+
+  // const handleReuploadImages = async () => {
+  //   const images = await launchImageLibrary();
+  //   if (images.length > 0) {
+  //     setimages(images);
+  //   }
+  // };
+
+  const handleReupload = async () => {
+    const newImages = await launchImageLibrary();
+    setImages([...images, ...newImages]);
   };
 
   const handleRemoveImage = (index) => {
-    const updatedImages = [...userImages];
-    updatedImages.splice(index, 1);
-    setUserImages(updatedImages);
-  };
-
-  const handleReuploadImages = async () => {
-    const images = await launchImageLibrary();
-    if (images.length > 0) {
-      setUserImages(images);
-    }
+    const updatedImages = images.filter((_, i) => i !== index);
+    setImages(updatedImages);
   };
   // const handleImageUpload = async () => {
   //   const images = await launchBurstModeCamera();
   //   if (images.length > 0) {
-  //     setUserImages(images);
+  //     setimages(images);
   //   }
   // };
 
   // const handleSelectImages = async () => {
   //   const images = await launchImageLibrary();
   //   if (images.length > 0) {
-  //     setUserImages(images);
+  //     setimages(images);
   //   }
   // };
 
   // const handleRemoveImage = (index) => {
-  //   const updatedImages = [...userImages];
+  //   const updatedImages = [...images];
   //   updatedImages.splice(index, 1);
-  //   setUserImages(updatedImages);
+  //   setimages(updatedImages);
   // };
 
   // const handleReuploadImages = async () => {
   //   const images = await launchImageLibrary();
   //   if (images.length > 0) {
-  //     setUserImages(images);
+  //     setimages(images);
   //   }
   // };
 
@@ -123,7 +136,7 @@ const SignupPage = () => {
 
   //     if (!result.canceled) {
   //       if (result.assets && result.assets.length > 0) {
-  //         setUserImage(result.assets[0].uri);
+  //         setImages(result.assets[0].uri);
   //       }
   //     }
   //   } catch (error) {
@@ -133,9 +146,57 @@ const SignupPage = () => {
   // };
 
   // const handleRemoveImage = () => {
-  //   setUserImage(null);
+  //   setImages(null);
   // };
 
+  // const handleSignup = () => {
+  //   if (
+  //     !email ||
+  //     !password ||
+  //     !universityName ||
+  //     !confirmPassword ||
+  //     !name ||
+  //     !schoolName ||
+  //     !department ||
+  //     !registerNumber ||
+  //     (userType === "Student" && !rollNumber) ||
+  //     !phoneNumber ||
+  //     (userType === "Master Admin" &&
+  //       (!country ||
+  //         !location ||
+  //         !universityCode ||
+  //         !postcode ||
+  //         !city ||
+  //         !address)) ||
+  //     !userType ||
+  //     // (userType !== "Master Admin" && !userImage)
+  //     (userType !== "Master Admin" && images.length === 0)
+  //   ) {
+  //     requiredFieldsFilled = false;
+  //     Alert.alert("Error", "Please fill in all fields");
+  //     return;
+  //   }
+
+  //   if (!requiredFieldsFilled) {
+  //     Alert.alert("Error", "Please fill in all fields");
+  //     return;
+  //   }
+
+  //   if (images.length < 100) {
+  //     Alert.alert("Error", "Please upload 100 images");
+  //     return;
+  //   }
+  //   if (password !== confirmPassword) {
+  //     Alert.alert("Error", "Passwords do not match");
+  //     return;
+  //   }
+
+  //   // Signup logic
+  //   // ...
+
+  //   navigation.navigate("OTPVerification", { userType });
+  //   // navigation.navigate("Pending", { userType });
+  // };
   const handleSignup = () => {
     if (
       !email ||
@@ -155,12 +216,31 @@ const SignupPage = () => {
           !postcode ||
           !city ||
           !address)) ||
-      !userType ||
-      // (userType !== "Master Admin" && !userImage)
-      (userType !== "Master Admin" && userImages.length === 0)
+      !userType
     ) {
+      // requiredFieldsFilled = false;
       Alert.alert("Error", "Please fill in all fields");
       return;
+    }
+
+    if (!requiredFieldsFilled) {
+      Alert.alert("Error", "Please fill in all fields");
+      return;
+    }
+
+    if (userType !== "Master Admin") {
+      if (images.length === 0) {
+        Alert.alert("Error", "Please upload 100 images");
+        return;
+      }
+      if (images.length < 100) {
+        Alert.alert("Error", "Please upload 100 images");
+        return;
+      }
+      if (images.length > 100) {
+        Alert.alert("Error", "Only 100 images can be uploaded");
+        return;
+      }
     }
 
     if (password !== confirmPassword) {
@@ -174,6 +254,7 @@ const SignupPage = () => {
     navigation.navigate("OTPVerification", { userType });
     // navigation.navigate("Pending", { userType });
   };
+
   // const handleSignup = () => {
   //   if (
   //     !email ||
@@ -423,7 +504,7 @@ const SignupPage = () => {
               />
             </View>
           </View>
-
+          <View style={{ marginTop: 15 }} />
           {/* Image upload */}
           {/* {!userImage && userType !== "Master Admin" && (
             <View style={styles.inputContainer}>
@@ -436,12 +517,16 @@ const SignupPage = () => {
             </View>
           )} */}
           {userType !== "Master Admin" && (
-            <Pressable
-              style={styles.uploadButton}
+            // <Pressable
+            //   style={styles.uploadButton}
+            //   onPress={() => setModalVisible(true)}
+            // >
+            //   <Text style={styles.buttonText}>Upload Images</Text>
+            // </Pressable>
+            <Button
+              title="Upload Images"
               onPress={() => setModalVisible(true)}
-            >
-              <Text style={styles.buttonText}>Upload Images</Text>
-            </Pressable>
+            />
           )}
 
           {/* {userImage && (
@@ -455,12 +540,20 @@ const SignupPage = () => {
               <Image source={{ uri: userImage }} style={styles.imagePreview} />
             </View>
           )} */}
-          <ImageModal
+          {/* <ImageModal
             visible={isModalVisible}
-            images={userImages}
+            images={images}
             onClose={() => setModalVisible(false)}
             onRemove={handleRemoveImage}
             onReupload={handleImageUpload}
+          /> */}
+          {/* <Button title="Upload Images" onPress={() => setModalVisible(true)} /> */}
+          <ImageModal
+            visible={modalVisible}
+            images={images}
+            onClose={() => setModalVisible(false)}
+            onRemove={handleRemoveImage}
+            onReupload={handleReupload}
           />
           {/* <View style={styles.inputContainer}>
             <Pressable onPress={handleImageUpload} style={styles.uploadButton}>
@@ -622,7 +715,7 @@ const SignupPage = () => {
             style={styles.goBackButton}
           >
             <Text style={styles.text}>
-              Already have an account?{" "}
+              Already have an account?
               <Text style={styles.signIn}>Sign In</Text>
             </Text>
           </Pressable>
